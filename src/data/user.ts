@@ -73,6 +73,7 @@ export const users: UserT[] = [
       "dashboard.index.delete.action",
 
       "products.create",
+      "products.edit",
       "products.manage",
       "products.manage.edit.action",
       "products.manage.view.action",

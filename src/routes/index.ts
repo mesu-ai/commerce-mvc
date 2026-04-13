@@ -5,6 +5,8 @@ import authRouters from "./auth/auth";
 import roleRouters from "./roles/roles";
 import categoryRouters from "./categories/categories";
 import shopRouters from "./shops/shops";
+import inventoryRouters from "./inventory/inventory";
+import columnsRoutes from "./columns/columns";
 
 const router = Router();
 
@@ -15,6 +17,8 @@ router.use("/auth", authRouters);
 router.use("/roles", roleRouters);
 router.use("/categories", categoryRouters);
 router.use("/shops", shopRouters);
+router.use("/inventory", inventoryRouters );
+router.use("/columns", columnsRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -28,6 +32,9 @@ router.get("/", (req: Request, res: Response) => {
       auth: "/api/v1/auth",
       roles: "/api/v1/roles",
       categories: "/api/v1/categories",
+      shops: "/api/v1/shops",
+      inventory:"/api/v1/inventory",
+      columns: "/api/v1/columns"
     },
   });
 });
