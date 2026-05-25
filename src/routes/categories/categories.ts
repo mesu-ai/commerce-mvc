@@ -1,4 +1,4 @@
-import { categories, categoriesWithLayer } from "../../data/category";
+import { categories, categoriesTree, categoriesWithLayer } from "../../data/category";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
 import { Router, Request, Response } from "express";
 
@@ -9,6 +9,14 @@ router.get("/", verifyAccessToken, (req: Request, res: Response) => {
     success: true,
     message: "Category retrieved successfully",
     data: categories,
+  });
+});
+
+router.get("/tree", verifyAccessToken, (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Category tree retrieved successfully",
+    data: categoriesTree,
   });
 });
 
@@ -34,23 +42,23 @@ router.get("/suggessions", verifyAccessToken, (req: Request, res: Response) => {
   });
 });
 
-// router.get("/:id", (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const roleData = category.find((role) => role.id === Number(id));
+router.get("/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const categoryData = categories.find((c) => c.categoryId === Number(id));
 
-//   if (!roleData) {
-//     return res.status(404).json({
-//       success: false,
-//       message: "Role not found",
-//       data: {},
-//     });
-//   }
+  if (!categoryData) {
+    return res.status(404).json({
+      success: false,
+      message: "Category not found",
+      data: {},
+    });
+  }
 
-//   return res.status(200).json({
-//     success: true,
-//     message: "Role Retrived successfylly",
-//     data: roleData,
-//   });
-// });
+  return res.status(200).json({
+    success: true,
+    message: "Category retrieved successfully",
+    data: categoryData,
+  });
+});
 
 export default router;

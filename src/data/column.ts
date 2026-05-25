@@ -7,7 +7,7 @@ export interface ColumnSetting {
 }
 
 export const columns: ColumnSetting[] = [
-  { label: 'Product ID', value: 'productId', isVisible: true },
+  { label: 'Product ID', value: 'productId' },
   { label: 'Product Name', value: 'productName', disabled: true, isVisible: true },
   { label: 'Shop Name', value: 'shopName', disabled: true, isVisible: true },
   { label: 'SKU', value: 'sku', disabled: true, isVisible: true },

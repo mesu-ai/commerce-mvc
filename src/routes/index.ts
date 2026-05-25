@@ -7,6 +7,8 @@ import categoryRouters from "./categories/categories";
 import shopRouters from "./shops/shops";
 import inventoryRouters from "./inventory/inventory";
 import columnsRoutes from "./columns/columns";
+import sellersRoutes from "./sellers/sellers";
+import brandsRoutes from "./brands/brands";
 
 const router = Router();
 
@@ -19,7 +21,8 @@ router.use("/categories", categoryRouters);
 router.use("/shops", shopRouters);
 router.use("/inventory", inventoryRouters );
 router.use("/columns", columnsRoutes);
-
+router.use("/sellers", sellersRoutes);
+router.use("/brands", brandsRoutes);
 // Root API route
 router.get("/", (req: Request, res: Response) => {
   res.json({
@@ -34,7 +37,9 @@ router.get("/", (req: Request, res: Response) => {
       categories: "/api/v1/categories",
       shops: "/api/v1/shops",
       inventory:"/api/v1/inventory",
-      columns: "/api/v1/columns"
+      columns: "/api/v1/columns",
+      sellers: "/api/v1/sellers",
+      brands: "/api/v1/brands"
     },
   });
 });

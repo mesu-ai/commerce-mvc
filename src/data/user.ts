@@ -74,9 +74,27 @@ export const users: UserT[] = [
 
       "products.create",
       "products.edit",
+      "products.duplicate",
+      
       "products.manage",
       "products.manage.edit.action",
       "products.manage.view.action",
+
+      "orders.create",
+      "orders.manage",
+      "orders.cancel",
+
+      "sellers.index",
+      "sellers.create",
+      "sellers.edit",
+      "sellers.banks",
+      "brands.index",
+      "brands.create",
+      "brands.edit",
+      "categories.index",
+      "categories.create",
+      "categories.edit",
+
       "access-control.employees",
       "access-control.employees.view.action",
       "access-control.employees.create",
@@ -84,9 +102,7 @@ export const users: UserT[] = [
       "access-control.roles",
       "access-control.roles.create",
       "access-control.roles.edit",
-      "orders.create",
-      "orders.manage",
-      "orders.cancel",
+      
     ],
   },
 ];
