@@ -1,4 +1,3 @@
-import { UserT } from "@/types/user";
 import { users } from "../../data/user";
 import { Request, Response, Router } from "express";
 

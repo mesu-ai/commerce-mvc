@@ -6,9 +6,9 @@ export interface UserT {
   email: string;
   nid: string;
   photo: File | string;
-  depertment: string;
+  department: string;
   role: string;
-  gender: "femele" | "male";
+  gender: "female" | "male";
   status: "Y" | "N";
   permissions: string[];
   // token: { access: string; refresh: string };

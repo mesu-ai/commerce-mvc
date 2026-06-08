@@ -10,7 +10,7 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: '01521316455',
-    depertment: 'e-commerce',
+    department: '2',
     nid: '2154784541',
     photo: '/images/user44.jpg',
     permissions: [
@@ -36,7 +36,7 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: '01912345678',
-    depertment: 'hr',
+    department: '2',
     nid: '2154784541',
     photo: '/images/user54.png',
     permissions: [
@@ -62,7 +62,7 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: '01812547896',
-    depertment: 'e-commerce',
+    department: '4',
     nid: '2154784541',
     photo: '/images/user66.jpg',
     permissions: [
@@ -84,16 +84,21 @@ export const users: UserT[] = [
       "orders.manage",
       "orders.cancel",
 
-      "sellers.index",
-      "sellers.create",
-      "sellers.edit",
-      "sellers.banks",
-      "brands.index",
-      "brands.create",
-      "brands.edit",
-      "categories.index",
-      "categories.create",
-      "categories.edit",
+      "settings.sellers.index",
+      "settings.sellers.create",
+      "settings.sellers.edit",
+      "settings.sellers.banks",
+      "settings.brands.index",
+      "settings.brands.create",
+      "settings.brands.edit",
+      "settings.categories.index",
+      "settings.categories.create",
+      "settings.categories.edit",
+
+      "settings.variants.attributes",
+      "settings.variants.attribute-values",
+      "settings.variants.category-configurations",
+
 
       "access-control.employees",
       "access-control.employees.view.action",

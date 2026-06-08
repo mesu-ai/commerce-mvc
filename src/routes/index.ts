@@ -9,6 +9,7 @@ import inventoryRouters from "./inventory/inventory";
 import columnsRoutes from "./columns/columns";
 import sellersRoutes from "./sellers/sellers";
 import brandsRoutes from "./brands/brands";
+import variantsRoutes from "./variants/variants";
 
 const router = Router();
 
@@ -23,6 +24,8 @@ router.use("/inventory", inventoryRouters );
 router.use("/columns", columnsRoutes);
 router.use("/sellers", sellersRoutes);
 router.use("/brands", brandsRoutes);
+router.use("/variants", variantsRoutes);
+
 // Root API route
 router.get("/", (req: Request, res: Response) => {
   res.json({
@@ -39,7 +42,8 @@ router.get("/", (req: Request, res: Response) => {
       inventory:"/api/v1/inventory",
       columns: "/api/v1/columns",
       sellers: "/api/v1/sellers",
-      brands: "/api/v1/brands"
+      brands: "/api/v1/brands",
+      variants: "/api/v1/variants"
     },
   });
 });

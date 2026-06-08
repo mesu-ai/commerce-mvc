@@ -13,6 +13,16 @@ export const roles: RoleT[] = [
       "products.manage",
       "products.manage.edit.action",
       "products.manage.view.action",
+
+      "orders.create",
+      "orders.manage",
+      "orders.cancel",
+
+      "settings.sellers.index",
+      "settings.sellers.create",
+      "settings.sellers.edit",
+      "settings.sellers.banks",
+
       "access-control.employees",
       "access-control.employees.view.action",
       "access-control.employees.create",
@@ -20,9 +30,6 @@ export const roles: RoleT[] = [
       "access-control.roles",
       "access-control.roles.create",
       "access-control.roles.edit",
-      "orders.create",
-      "orders.manage",
-      "orders.cancel",
     ],
   },
   {
@@ -75,8 +82,6 @@ export const roles: RoleT[] = [
     id: 5,
     role: "accountant",
     status: "N",
-    permissions: [
-      "dashboard.index",
-    ],
+    permissions: ["dashboard.index"],
   },
 ];
