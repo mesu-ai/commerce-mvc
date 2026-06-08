@@ -73,6 +73,29 @@ router.get("/attributes", verifyAccessToken, (req: Request, res: Response) => {
 });
 
 router.get(
+  "/attributes/:id",
+  verifyAccessToken,
+  (req: Request, res: Response) => {
+    const { id } = req.params;
+    const attribute = variantAttributes.find((attr) => attr.productVariantId === Number(id));
+
+    if (!attribute) {
+      return res.status(404).json({
+        success: false,
+        message: "Variant attribute not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Variant attribute retrieved successfully",
+        data: attribute,
+      });
+    }
+  },
+);
+
+
+router.get(
   "/attribute-values",
   verifyAccessToken,
   (req: Request, res: Response) => {

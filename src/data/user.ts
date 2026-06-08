@@ -96,6 +96,9 @@ export const users: UserT[] = [
       "settings.categories.edit",
 
       "settings.variants.attributes",
+      "settings.variants.attributes.create",
+      "settings.variants.attributes.edit",
+      
       "settings.variants.attribute-values",
       "settings.variants.category-configurations",
 
