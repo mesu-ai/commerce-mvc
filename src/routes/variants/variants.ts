@@ -1,4 +1,5 @@
-import { variantAttributeValues } from "../../data/variantAttributeValues";
+import { variantCategoryCombinations } from "../../data/variantCategoryCombination";
+import { variantAttributeValues } from "../../data/variantAttributeValue";
 import { variantAttributes } from "../../data/variantAttribute";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
 import { Router, Request, Response } from "express";
@@ -6,17 +7,22 @@ import { Router, Request, Response } from "express";
 const router = Router();
 
 router.get("/attributes", verifyAccessToken, (req: Request, res: Response) => {
-  const { keyword, status, variantSetupTempleteId, itemsPerPage, currentPage } = req.query;
+  const { keyword, status, variantSetupTempleteId, itemsPerPage, currentPage } =
+    req.query;
 
-  const keywordStr = typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+  const keywordStr =
+    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
   const statusStr = typeof status === "string" ? status : undefined;
-  const variantSetupTempleteIdStr = typeof variantSetupTempleteId === "string" ? variantSetupTempleteId : undefined;
+  const variantSetupTempleteIdStr =
+    typeof variantSetupTempleteId === "string"
+      ? variantSetupTempleteId
+      : undefined;
 
   let filtered = [...variantAttributes];
 
   if (keywordStr) {
     filtered = filtered.filter((attribute) =>
-      attribute.variantName.toLowerCase().includes(keywordStr)
+      attribute.variantName.toLowerCase().includes(keywordStr),
     );
   }
 
@@ -25,7 +31,10 @@ router.get("/attributes", verifyAccessToken, (req: Request, res: Response) => {
   }
 
   if (variantSetupTempleteIdStr) {
-    filtered = filtered.filter((attribute) => attribute.variantSetupTempleteId === Number(variantSetupTempleteIdStr));
+    filtered = filtered.filter(
+      (attribute) =>
+        attribute.variantSetupTempleteId === Number(variantSetupTempleteIdStr),
+    );
   }
 
   const perPage =
@@ -77,7 +86,9 @@ router.get(
   verifyAccessToken,
   (req: Request, res: Response) => {
     const { id } = req.params;
-    const attribute = variantAttributes.find((attr) => attr.productVariantId === Number(id));
+    const attribute = variantAttributes.find(
+      (attr) => attr.productVariantId === Number(id),
+    );
 
     if (!attribute) {
       return res.status(404).json({
@@ -94,16 +105,231 @@ router.get(
   },
 );
 
-
 router.get(
   "/attribute-values",
   verifyAccessToken,
   (req: Request, res: Response) => {
-    res.status(200).json({
+    const { keyword, productVariantId, itemsPerPage, currentPage, getAll } = req.query;
+
+    const keywordStr =
+      typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+    const productVariantIdStr = typeof productVariantId === "string" ? productVariantId : undefined;
+    // const variantSetupTempleteIdStr = typeof variantSetupTempleteId === "string" ? variantSetupTempleteId : undefined;
+
+    let filtered = [...variantAttributeValues];
+
+    if (productVariantIdStr) {
+      filtered = filtered.filter(
+        (attribute) =>
+          attribute.productVariantId === Number(productVariantIdStr),
+      );
+    }
+
+    if (keywordStr) {
+      filtered = filtered.filter((attribute) =>
+        attribute.variantName.toLowerCase().includes(keywordStr),
+      );
+    }
+
+    const perPage =
+      typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+        ? Number(itemsPerPage)
+        : 15;
+    
+        const page =
+      typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+        ? Number(currentPage)
+        : 1;
+
+    const totalItems = filtered.length;
+
+    if (totalItems === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Variants retrieved successfully",
+        data: [],
+        pagination: {
+          currentPage: 0,
+          itemsPerPage: perPage,
+          totalPages: 0,
+          totalItems: 0,
+        },
+      });
+    }
+
+    if (getAll === "Y") {
+      return res.status(200).json({
+        success: true,
+        message: "Variants retrieved successfully",
+        data: filtered,
+        pagination: {
+          currentPage: 1,
+          itemsPerPage: totalItems,
+          totalPages: 1,
+          totalItems,
+        },
+      });
+    }
+
+    const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+    const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+    const startIndex = (currentPageNumber - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const pagedData = filtered.slice(startIndex, endIndex);
+
+    return res.status(200).json({
       success: true,
-      message: "Variant attribute values retrieved successfully",
-      data: variantAttributeValues,
+      message: "Variants retrieved successfully",
+      data: pagedData,
+      pagination: {
+        currentPage: currentPageNumber,
+        itemsPerPage: perPage,
+        totalPages,
+        totalItems,
+      },
     });
+  },
+);
+
+router.get(
+  "/attribute-values/:id",
+  verifyAccessToken,
+  (req: Request, res: Response) => {
+    const { id } = req.params;
+    const attribute = variantAttributeValues.find(
+      (attr) => attr.variantOptionId === Number(id),
+    );
+
+    if (!attribute) {
+      return res.status(404).json({
+        success: false,
+        message: "Variant attribute not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Variant attribute retrieved successfully",
+        data: attribute,
+      });
+    }
+  },
+);
+
+router.get(
+  "/category-configurations",
+  verifyAccessToken,
+  (req: Request, res: Response) => {
+    const { keyword, productVariantId, variantTempleteId, itemsPerPage, currentPage, getAll } = req.query;
+
+    const keywordStr =
+      typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+    const productVariantIdStr =
+      typeof productVariantId === "string" ? productVariantId : undefined;
+    const variantTempleteIdStr =
+      typeof variantTempleteId === "string" ? variantTempleteId : undefined;
+
+    let filtered = [...variantCategoryCombinations];
+
+    if (productVariantIdStr) {
+      filtered = filtered.filter(
+        (attribute) =>
+          attribute.productVariantId === Number(productVariantIdStr),
+      );
+    }
+
+    if (variantTempleteIdStr) {
+      filtered = filtered.filter(
+        (attribute) =>
+          attribute.variantTempleteId === Number(variantTempleteIdStr),
+      );
+    }
+
+    if (keywordStr) {
+      filtered = filtered.filter((attribute) =>
+        attribute.variantName.toLowerCase().includes(keywordStr),
+      );
+    }
+
+    const perPage =
+      typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+        ? Number(itemsPerPage)
+        : 15;
+    
+        const page =
+      typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+        ? Number(currentPage)
+        : 1;
+
+    const totalItems = filtered.length;
+
+    if (totalItems === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Variants retrieved successfully",
+        data: [],
+        pagination: {
+          currentPage: 0,
+          itemsPerPage: perPage,
+          totalPages: 0,
+          totalItems: 0,
+        },
+      });
+    }
+
+    if (getAll === "Y") {
+      return res.status(200).json({
+        success: true,
+        message: "Variants retrieved successfully",
+        data: filtered,
+        pagination: {
+          currentPage: 1,
+          itemsPerPage: totalItems,
+          totalPages: 1,
+          totalItems,
+        },
+      });
+    }
+
+    const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+    const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+    const startIndex = (currentPageNumber - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const pagedData = filtered.slice(startIndex, endIndex);
+
+    return res.status(200).json({
+      success: true,
+      message: "Variants retrieved successfully",
+      data: pagedData,
+      pagination: {
+        currentPage: currentPageNumber,
+        itemsPerPage: perPage,
+        totalPages,
+        totalItems,
+      },
+    });
+  },
+);
+
+router.get( "/category-configurations/:id",
+  verifyAccessToken,
+  (req: Request, res: Response) => {
+    const { id } = req.params;
+    const attribute = variantCategoryCombinations.find(
+      (attr) => attr.variantOptionId === Number(id),
+    );
+
+    if (!attribute) {
+      return res.status(404).json({
+        success: false,
+        message: "Variant attribute not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Variant attribute retrieved successfully",
+        data: attribute,
+      });
+    }
   },
 );
 

@@ -100,7 +100,12 @@ export const users: UserT[] = [
       "settings.variants.attributes.edit",
       
       "settings.variants.attribute-values",
+      "settings.variants.attribute-values.create",
+      "settings.variants.attribute-values.edit",
+
       "settings.variants.category-configurations",
+      "settings.variants.category-configurations.create",
+      "settings.variants.category-configurations.edit",
 
 
       "access-control.employees",
