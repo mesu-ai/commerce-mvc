@@ -2,17 +2,17 @@ import { UserT } from "@/types/user";
 
 export const users: UserT[] = [
   {
-    employeeId: '556699',
+    employeeId: "556699",
     name: "mesu",
     username: "mesu12",
     email: "mesu@example.com",
     role: "admin",
     status: "Y",
     gender: "male",
-    mobileNo: '01521316455',
-    department: '2',
-    nid: '2154784541',
-    photo: '/images/user44.jpg',
+    mobileNo: "01521316455",
+    department: "2",
+    nid: "2154784541",
+    photo: "/images/user44.jpg",
     permissions: [
       "dashboard.index",
       "dashboard.index.delete.action",
@@ -28,17 +28,17 @@ export const users: UserT[] = [
     ],
   },
   {
-    employeeId: '556610',
+    employeeId: "556610",
     username: "sumin12",
     name: "sumin",
     email: "sumin@example.com",
     role: "admin",
     status: "Y",
     gender: "male",
-    mobileNo: '01912345678',
-    department: '2',
-    nid: '2154784541',
-    photo: '/images/user54.png',
+    mobileNo: "01912345678",
+    department: "2",
+    nid: "2154784541",
+    photo: "/images/user54.png",
     permissions: [
       "dashboard.index",
       "dashboard.index.view.action",
@@ -54,28 +54,28 @@ export const users: UserT[] = [
     ],
   },
   {
-    employeeId: '558899',
+    employeeId: "558899",
     name: "jomin",
     username: "jomin12",
     email: "jomin@example.com",
     role: "super admin",
     status: "Y",
     gender: "male",
-    mobileNo: '01812547896',
-    department: '4',
-    nid: '2154784541',
-    photo: '/images/user66.jpg',
+    mobileNo: "01812547896",
+    department: "4",
+    nid: "2154784541",
+    photo: "/images/user66.jpg",
     permissions: [
       "dashboard.index",
       "dashboard.index.delete.action",
-      
+
       "dashboard.index",
       "dashboard.index.delete.action",
 
       "products.create",
       "products.edit",
       "products.duplicate",
-      
+
       "products.manage",
       "products.manage.edit.action",
       "products.manage.view.action",
@@ -94,19 +94,14 @@ export const users: UserT[] = [
       "settings.categories.index",
       "settings.categories.create",
       "settings.categories.edit",
-
       "settings.variants.attributes",
-      "settings.variants.attributes.create",
-      "settings.variants.attributes.edit",
-      
       "settings.variants.attribute-values",
-      "settings.variants.attribute-values.create",
-      "settings.variants.attribute-values.edit",
-
       "settings.variants.category-configurations",
+      "settings.variants.category-configurations.edit.action",
       "settings.variants.category-configurations.create",
-      "settings.variants.category-configurations.edit",
-
+      "settings.warranty.types",
+      "settings.warranty.periods",
+    
 
       "access-control.employees",
       "access-control.employees.view.action",
@@ -115,7 +110,6 @@ export const users: UserT[] = [
       "access-control.roles",
       "access-control.roles.create",
       "access-control.roles.edit",
-      
     ],
   },
 ];

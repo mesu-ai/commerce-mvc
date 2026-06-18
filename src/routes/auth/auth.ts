@@ -28,7 +28,7 @@ router.post("/login", (req: Request, res: Response) => {
   const user: UserT | undefined = users.find(
     (item) => item?.username === username
   );
-  console.log({user})
+  // console.log({user})
 
   if (user && username === user?.username && password === "1234") {
     
@@ -52,8 +52,6 @@ router.post("/login", (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-   
-
     res.status(200).json({
       success: true,
       message: "Login successful",
@@ -71,6 +69,7 @@ router.post("/login", (req: Request, res: Response) => {
         accessToken,
       },
     });
+
   } else {
     res.status(401).json({
       success: false,
@@ -116,6 +115,19 @@ router.post("/refresh", (req: Request, res: Response) => {
       message: "Invalid or expired refresh token",
     });
   }
+});
+
+router.post("/logout", (req: Request, res: Response) => {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: false, // Set to true in production with HTTPS
+    sameSite: "lax",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
 });
 
 export default router;

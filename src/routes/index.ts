@@ -10,6 +10,7 @@ import columnsRoutes from "./columns/columns";
 import sellersRoutes from "./sellers/sellers";
 import brandsRoutes from "./brands/brands";
 import variantsRoutes from "./variants/variants";
+import warrantyRoutes from "./warranty/warranty";
 
 const router = Router();
 
@@ -25,6 +26,7 @@ router.use("/columns", columnsRoutes);
 router.use("/sellers", sellersRoutes);
 router.use("/brands", brandsRoutes);
 router.use("/variants", variantsRoutes);
+router.use("/warranty", warrantyRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -43,7 +45,8 @@ router.get("/", (req: Request, res: Response) => {
       columns: "/api/v1/columns",
       sellers: "/api/v1/sellers",
       brands: "/api/v1/brands",
-      variants: "/api/v1/variants"
+      variants: "/api/v1/variants",
+      warranty: "/api/v1/warranty"
     },
   });
 });
