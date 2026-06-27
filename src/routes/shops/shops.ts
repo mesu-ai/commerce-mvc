@@ -1,23 +1,34 @@
-import { shops } from "../../data/shop";
+import { Router, Request, Response, NextFunction } from "express";
+import { prisma } from "../../config/prisma";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
-import { Router, Request, Response } from "express";
 
 const router = Router();
 
-router.get("/", verifyAccessToken, (req: Request, res: Response) => {
-  const { keyword } = req.query;
-  const searchKeyword = keyword && keyword?.toString().trim().toLowerCase();
+router.get(
+  "/",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword } = req.query;
+      const searchKeyword =
+        typeof keyword === "string" ? keyword.trim().toLowerCase() : undefined;
 
-  const matchShops = searchKeyword
-    ? shops?.filter((s) => s.shopName.toLowerCase().includes(searchKeyword))
-    : shops;
+      const data = await prisma.shop.findMany({
+        where: searchKeyword
+          ? { shopName: { contains: searchKeyword, mode: "insensitive" } }
+          : undefined,
+        orderBy: { shopId: "asc" },
+      });
 
-  res.status(200).json({
-    success: true,
-    message: "Shop retrieved successfully",
-    data: matchShops,
-  });
-});
+      return res.status(200).json({
+        success: true,
+        message: "Shop retrieved successfully",
+        data,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 export default router;
-

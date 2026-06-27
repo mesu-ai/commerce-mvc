@@ -1,36 +1,50 @@
-import { users } from "../../data/user";
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
+import { prisma } from "../../config/prisma";
 
 const router = Router();
 
-// type NewUsersT= Pick<UserT,  'name' | 'employeeId' | 'email' | 'role' | 'status'>
+router.get(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data = await prisma.user.findMany();
+      return res.status(200).json({
+        success: true,
+        message: "Users retrieved successfully",
+        data,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
-router.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "Users retrieved successfully",
-    data: users,
-  });
-});
+router.get(
+  "/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const userData = await prisma.user.findUnique({
+        where: { employeeId: id },
+      });
 
-router.get("/:id", (req: Request, res: Response) => {
-  const { id } = req.params;
-  const userData = users.find((user) => user.employeeId === id);
+      if (!userData) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+          data: {},
+        });
+      }
 
-  if (!userData) {
-    return res.status(404).json({
-      success: false,
-      message: "User not found",
-      data: {},
-    });
-  }
-
-  return res.status(200).json({
-    success: true,
-    message: "User retrieved successfully",
-    data: userData,
-  });
-
-});
+      return res.status(200).json({
+        success: true,
+        message: "User retrieved successfully",
+        data: userData,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 export default router;

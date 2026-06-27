@@ -1,100 +1,107 @@
-import { categories, categoriesTree, categoriesWithLayer } from "../../data/category";
+import { Router, Request, Response, NextFunction } from "express";
+import { prisma } from "../../config/prisma";
+import { categoriesTree, categoriesWithLayer } from "../../data/category";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
-import { Router, Request, Response } from "express";
 
 const router = Router();
 
-router.get("/", verifyAccessToken, (req: Request, res: Response) => {
-  const { keyword, itemsPerPage, currentPage, getAll } = req.query;
-  const keywordStr =
-    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+// GET /  — paginated, keyword-searchable list (reads from PostgreSQL via Prisma)
+router.get(
+  "/",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword, itemsPerPage, currentPage, getAll } = req.query;
 
-  let filtered = [...categories];
+      const keywordStr =
+        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
 
-  if (keywordStr) {
-    filtered = filtered.filter((c) =>
-      c.categoryName.toLowerCase().includes(keywordStr),
-    );
-  }
+      // Build the WHERE clause: case-insensitive name search when a keyword is given.
+      const where = keywordStr
+        ? {
+            categoryName: {
+              contains: keywordStr,
+              mode: "insensitive" as const,
+            },
+          }
+        : {};
 
-  const perPage =
-    typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-      ? Number(itemsPerPage)
-      : 15;
+      const perPage =
+        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+          ? Number(itemsPerPage)
+          : 15;
 
-  const page =
-    typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-      ? Number(currentPage)
-      : 1;
+      const page =
+        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+          ? Number(currentPage)
+          : 1;
 
-  const totalItems = filtered.length;
+      const totalItems = await prisma.category.count({ where });
 
-  if (totalItems === 0) {
-    return res.status(200).json({
-      success: true,
-      message: "Variants retrieved successfully",
-      data: [],
-      pagination: {
-        currentPage: 0,
-        itemsPerPage: perPage,
-        totalPages: 0,
-        totalItems: 0,
-      },
-    });
-  }
+      if (totalItems === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "Category retrieved successfully",
+          data: [],
+          pagination: {
+            currentPage: 0,
+            itemsPerPage: perPage,
+            totalPages: 0,
+            totalItems: 0,
+          },
+        });
+      }
 
-  if (getAll === "Y") {
-    return res.status(200).json({
-      success: true,
-      message: "Variants retrieved successfully",
-      data: filtered,
-      pagination: {
-        currentPage: 1,
-        itemsPerPage: totalItems,
-        totalPages: 1,
-        totalItems,
-      },
-    });
-  }
+      // getAll=Y returns every matching row (no pagination).
+      if (getAll === "Y") {
+        const data = await prisma.category.findMany({
+          where,
+          orderBy: { categoryId: "asc" },
+        });
 
-  const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-  const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-  const startIndex = (currentPageNumber - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const pagedData = filtered.slice(startIndex, endIndex);
+        return res.status(200).json({
+          success: true,
+          message: "Category retrieved successfully",
+          data,
+          pagination: {
+            currentPage: 1,
+            itemsPerPage: totalItems,
+            totalPages: 1,
+            totalItems,
+          },
+        });
+      }
 
-  return res.status(200).json({
-    success: true,
-    message: "Category retrieved successfully",
-    data: pagedData,
-    pagination: {
-      currentPage: currentPageNumber,
-      itemsPerPage: perPage,
-      totalPages,
-      totalItems,
-    },
-  });
-});
+      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+      const skip = (currentPageNumber - 1) * perPage;
 
-router.get("/:id", (req: Request, res: Response) => {
-  const { id } = req.params;
-  const categoryData = categories.find((c) => c.categoryId === Number(id));
+      const data = await prisma.category.findMany({
+        where,
+        orderBy: { categoryId: "asc" },
+        skip,
+        take: perPage,
+      });
 
-  if (!categoryData) {
-    return res.status(404).json({
-      success: false,
-      message: "Category not found",
-      data: {},
-    });
-  }
+      return res.status(200).json({
+        success: true,
+        message: "Category retrieved successfully",
+        data,
+        pagination: {
+          currentPage: currentPageNumber,
+          itemsPerPage: perPage,
+          totalPages,
+          totalItems,
+        },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
-  return res.status(200).json({
-    success: true,
-    message: "Category retrieved successfully",
-    data: categoryData,
-  });
-});
-
+// NOTE: static paths (/tree, /suggestions) MUST be declared BEFORE the dynamic
+// "/:id" route, otherwise Express matches them as an id and they're unreachable.
 router.get("/tree", verifyAccessToken, (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -103,7 +110,8 @@ router.get("/tree", verifyAccessToken, (req: Request, res: Response) => {
   });
 });
 
-router.get("/suggessions", verifyAccessToken, (req: Request, res: Response) => {
+
+router.get("/suggestions", verifyAccessToken, (req: Request, res: Response) => {
   const { keyword } = req.query;
 
   if (!keyword) {
@@ -115,7 +123,7 @@ router.get("/suggessions", verifyAccessToken, (req: Request, res: Response) => {
   }
 
   const suggestCategories = categoriesWithLayer.filter((c) =>
-    c.name.toLowerCase().includes(keyword.toString().toLowerCase().trim()),
+    c.categoryName.toLowerCase().includes(keyword.toString().toLowerCase().trim()),
   );
 
   return res.status(200).json({
@@ -125,6 +133,35 @@ router.get("/suggessions", verifyAccessToken, (req: Request, res: Response) => {
   });
 });
 
+// GET /:id  — single category by id (reads from PostgreSQL via Prisma)
+router.get(
+  "/:id",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
 
+      const categoryData = await prisma.category.findUnique({
+        where: { categoryId: Number(id) },
+      });
+
+      if (!categoryData) {
+        return res.status(404).json({
+          success: false,
+          message: "Category not found",
+          data: {},
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Category retrieved successfully",
+        data: categoryData,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 export default router;

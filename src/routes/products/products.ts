@@ -1,6 +1,6 @@
-import { products } from "../../data/product";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
+import { prisma } from "../../config/prisma";
 
 const router = Router();
 
@@ -181,24 +181,39 @@ router.get("/", verifyAccessToken, (req: Request, res: Response) => {
   });
 });
 
-router.get("/:id", verifyAccessToken, (req: Request, res: Response) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.productId === Number(id));
-  
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Role not found",
-      data: {},
-    });
-  }
-  
-  return res.status(200).json({
-    success: true,
-    message: "Product retrived successfully",
-    data: product,
-  });
-});
+router.get(
+  "/:id",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      const product = await prisma.product.findUnique({
+        where: { productId: Number(id) },
+      });
+
+      console.log("Fetched product:", product);
+
+
+
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Product not found",
+          data: {},
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Product retrieved successfully",
+        data: product,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 
 

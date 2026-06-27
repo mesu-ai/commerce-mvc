@@ -1,0 +1,371 @@
+// Prisma schema — defines your database tables and generates a type-safe client.
+// Docs: https://pris.ly/d/prisma-schema
+//
+// After editing this file run:  npx prisma migrate dev --name <change-name>
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Mirrors the objects in src/data/category.ts.
+// "Y"/"N" flags are kept as String to match the existing API responses.
+model Category {
+  categoryId          Int     @id
+  categoryName        String
+  metaKeywords        String?
+  metaTitle           String?
+  description         String?
+  metaDescription     String?
+  parentCategoryId    Int?
+  pictureId           Int?
+  pageSize            Int?
+  showOnHomepage      String?
+  includeInTopMenu    String?
+  isDeleted           String?
+  displayOrder        Int?
+  isActive            String?
+  categoryUrl         String?
+  imagePath           String?
+  breadcrumbCategory  String?
+  levelNo             String?
+  isProduct           String?
+  isReturnable        String?
+  localCmsnPercentage Float?
+  localCmsnFlatAmt    Float?
+  globalCmsnPercentage Float?
+  globalCmsnFlatAmt   Float?
+  isPopular           String?
+  isNewArrival        String?
+  isTopCategory       String?
+  repalceCategoryUrl  String?
+  brandId             Int?
+  brandName           String?
+  metaLongDescription String?
+  ogType              String?
+  ogTitle             String?
+  ogDescription       String?
+  ogUrl               String?
+  ogImgUrl            String?
+  totalItems          Int?
+  createdBy           String?
+  createDate          String?
+  updateBy            String?
+  updateDate          String?
+
+  @@map("categories")
+}
+
+// Mirrors the objects in src/data/product.ts.
+// Nested arrays/objects (images, variant dimensions/combinations) are stored as
+// JSON columns so the API response shape stays identical to the mock data.
+model Product {
+  productId           Int     @id
+  productName         String
+  categoryId          Int
+  unit                String?
+  shopId              Int?
+  displayOrder        String?
+  thumbnailImages     Json?
+  brandId             Int?
+  strapMeterial       String?
+  fitType             String?
+  gender              String?
+  variantDimensions   Json?
+  variantImages       Json?
+  variantCombinations Json?
+  sku                 String?
+  subStyle            String?
+  stock               Int?
+  dpPrice             Float?
+  mrp                 Float?
+  sellingPrice        Float?
+  startDate           String?
+  endDate             String?
+  description         String?
+  specification       String?
+  hasEmi              String?
+  isReturnable        String?
+  returnDuration      Int?
+  returnPolicy        String?
+  sizeChartId         Int?
+  warrantyTypeId      Int?
+  warrantyPeriodId    Int?
+  warrantyPolicy      String?
+  packageWeight       Float?
+  packageLength       Float?
+  packageWidth        Float?
+  packageHeight       Float?
+  productUrl          String?
+  videoUrl            String?
+  metaTitle           String?
+  metaKeywords        String?
+  metaDescription     String?
+  ogType              String?
+  ogTitle             String?
+  ogUrl               String?
+  ogDescription       String?
+  ogImage             String?
+  createdBy           String?
+  createdAt           String?
+  updatedBy           String?
+  updatedAt           String?
+
+  @@map("products")
+}
+
+// Mirrors src/data/brand.ts. productCategories array -> JSON column.
+model Brand {
+  brandId           Int     @id
+  brandName         String
+  brandDetails      String?
+  isActive          String?
+  brandLogo         String?
+  categoryId        Int?
+  brandUrl          String?
+  displayOrder      Int?
+  shownHomePage     String?
+  productCategories Json?
+
+  @@map("brands")
+}
+
+// Mirrors src/data/seller.ts. Nested objects/arrays -> JSON columns.
+model Seller {
+  sellerId               Int     @id
+  sellerName             String
+  sellerContactNo        String?
+  sellerEmail            String?
+  sellerPassword         String?
+  shopId                 Int?
+  roleId                 Int?
+  sellerPwdSalt          String?
+  sellerImageUrl         String?
+  sellerPresentAddress   String?
+  sellerPermanentAddress String?
+  isActive               String?
+  sellerAcNo             String?
+  isDelete               String?
+  shopName               String?
+  sellerTypeId           Int?
+  shopLogoUrl            String?
+  shopDescription        String?
+  binNo                  String?
+  shopCity               String?
+  shopState              String?
+  shopZipCode            String?
+  shopAddress            String?
+  ownerName              String?
+  ownerNidUrl            String?
+  bussinessDocUrl        String?
+  shopBannerUrl          String?
+  shopUrl                String?
+  isVerified             String?
+  isSellerDelivered      String?
+  sellerCurrency         String?
+  countryId              Int?
+  currency               String?
+  sellerAddresses        Json?
+  sellerBankAccount      Json?
+  sellerReturnPolicie    Json?
+  bussinessType          Json?
+  nidBackDoc             String?
+  tradeLicenseDoc        String?
+  tinNoDoc               String?
+  binNoDoc               String?
+  dbIdDoc               String?
+  actApprovedBy          String?
+  actApprovedStatus      String?
+  actApprovedDate        String?
+  metaTitle              String?
+  metaKeywords           String?
+  metaDescription        String?
+  ogType                 String?
+  ogTitle                String?
+  ogDescription          String?
+  ogUrl                  String?
+  ogImgUrl               String?
+  assignVendor           Int?
+  assignVendorName       String?
+  additionalDocuments    Json?
+
+  @@map("sellers")
+}
+
+// Mirrors src/data/shop.ts.
+model Shop {
+  shopId   Int    @id
+  shopName String
+
+  @@map("shops")
+}
+
+// Mirrors src/data/role.ts. permissions string[] -> Postgres text[].
+model Role {
+  id          Int      @id
+  role        String
+  status      String?
+  permissions String[]
+
+  @@map("roles")
+}
+
+// Mirrors src/data/user.ts. employeeId is the natural id.
+model User {
+  employeeId  String   @id
+  name        String
+  username    String   @unique
+  email       String?
+  role        String?
+  status      String?
+  gender      String?
+  mobileNo    String?
+  department  String?
+  nid         String?
+  photo       String?
+  permissions String[]
+
+  @@map("users")
+}
+
+// Mirrors src/data/column.ts (column visibility settings). value is unique.
+model ColumnSetting {
+  value     String  @id
+  label     String
+  disabled  Boolean?
+  isVisible Boolean?
+
+  @@map("column_settings")
+}
+
+// Mirrors warrantyTypes in src/data/warranty.ts.
+model WarrantyType {
+  warrantyTypeId      Int     @id
+  warrantyTypeName    String
+  warrantyTypeDetails String?
+  isActive            String?
+  status              String?
+  isApprove           String?
+  createBy            String?
+  createDate          String?
+  updateBy            String?
+  updateDate          String?
+
+  @@map("warranty_types")
+}
+
+// Mirrors warrantyPeriods in src/data/warranty.ts.
+model WarrantyPeriod {
+  warrantyPeriodId      Int     @id
+  warrantyPeriodName    String
+  warrantyPeriodDetails String?
+  isActive              String?
+  isApprove             String?
+  status                String?
+  createBy              String?
+  createDate            String?
+  updateBy              String?
+  updateDate            String?
+
+  @@map("warranty_periods")
+}
+
+// Mirrors src/data/sizeAttribute.ts.
+model SizeAttribute {
+  attributeId   Int     @id
+  attributeName String
+  displayOrder  Int?
+  isActive      String?
+  createdBy     String?
+  createDate    String?
+  updateBy      String?
+  updateDate    String?
+
+  @@map("size_attributes")
+}
+
+// Mirrors src/data/sizeChart.ts. sizeChartMeasurements array -> JSON column.
+model SizeChart {
+  sizeChartId           Int     @id
+  chartName             String
+  chartCode             String?
+  sizeTemplateId        Int?
+  variantId             Int?
+  variantName           String?
+  isIntSize             String?
+  modelImageTitle       String?
+  modelImagePath        String?
+  modelImageDesc        String?
+  sizeMesurementTitle   String?
+  sizeMesurementDesc    String?
+  mesurementImagePath   String?
+  categoryId            Int?
+  isActive              String?
+  isAutoConvert         String?
+  isIntAutoConvert      String?
+  ip                    String?
+  sizeChartMeasurements Json?
+
+  @@map("size_charts")
+}
+
+// Mirrors src/data/variantAttribute.ts.
+model VariantAttribute {
+  productVariantId        Int     @id
+  variantName             String
+  variantDescription      String?
+  variantSetupTempleteId  Int?
+  variantDisplayTempleteId Int?
+  isActive                String?
+  isDelete                String?
+  imgChgVariant           String?
+  displayOrder            Int?
+  createdBy               String?
+  createDate              String?
+  updateBy                String?
+  updateDate              String?
+
+  @@map("variant_attributes")
+}
+
+// Mirrors src/data/variantAttributeValue.ts. Surrogate id; variantOptionId is
+// not guaranteed unique so it stays a plain indexed column.
+model VariantAttributeValue {
+  id                 Int     @id @default(autoincrement())
+  variantOptionId    Int
+  variantOptionName  String?
+  variantOptionValue String?
+  productVariantId   Int?
+  variantName        String?
+  displayOrder       Int?
+
+  @@index([variantOptionId])
+  @@index([productVariantId])
+  @@map("variant_attribute_values")
+}
+
+// Mirrors src/data/variantCategoryCombination.ts. Surrogate id.
+model VariantCategoryCombination {
+  id                  Int     @id @default(autoincrement())
+  variantOptionId     Int?
+  productCategoryId   Int?
+  productVariantId    Int?
+  variantOptionText   String?
+  variantRemark       String?
+  variantTempleteId   Int?
+  variantOptionValue  String?
+  isDelete            String?
+  isCommon            String?
+  categoryName        String?
+  variantName         String?
+  displayOrder        Int?
+  variantOptionValueId Int?
+
+  @@index([productCategoryId])
+  @@index([productVariantId])
+  @@index([variantOptionId])
+  @@map("variant_category_combinations")
+}

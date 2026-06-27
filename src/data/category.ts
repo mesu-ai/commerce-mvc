@@ -21211,23 +21211,23 @@ export const categoriesTree = [
 
 export const categoriesWithLayer: CategoryWithLayerT[] = [
   {
-    id: 1,
-    name: "Clothing & Fashion",
+    categoryId: 1,
+    categoryName: "Clothing & Fashion",
     layer: {
       base: "Clothing & Fashion",
     },
   },
   {
-    id: 2,
-    name: "Clothing & Fashion > Mens",
+    categoryId: 2,
+    categoryName: "Clothing & Fashion > Mens",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
     },
   },
   {
-    id: 3,
-    name: "Clothing & Fashion > Mens > Mens Top Wear",
+    categoryId: 3,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21235,8 +21235,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 4,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Panjabi",
+    categoryId: 4,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Panjabi",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21245,8 +21245,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 6,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Casual Shirt",
+    categoryId: 6,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Casual Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21255,8 +21255,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 7,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Formal Shirt",
+    categoryId: 7,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Formal Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21265,8 +21265,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 9,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Katua & Fatua",
+    categoryId: 9,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Katua & Fatua",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21275,8 +21275,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 10,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens T-Shirt",
+    categoryId: 10,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21285,8 +21285,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 11,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Polo",
+    categoryId: 11,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Polo",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21295,8 +21295,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 167,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Coti",
+    categoryId: 167,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Coti",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21305,8 +21305,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 531,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Jacket",
+    categoryId: 531,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Jacket",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21315,8 +21315,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 532,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Hoodie",
+    categoryId: 532,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Hoodie",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21325,8 +21325,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 533,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Overcoat",
+    categoryId: 533,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Overcoat",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21335,8 +21335,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 534,
-    name: "Clothing & Fashion > Mens > Mens Top Wear > Mens Sweatshirt",
+    categoryId: 534,
+    categoryName: "Clothing & Fashion > Mens > Mens Top Wear > Mens Sweatshirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21345,8 +21345,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 12,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear",
+    categoryId: 12,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21354,8 +21354,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 13,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Formal Pant",
+    categoryId: 13,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Formal Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21364,8 +21364,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 14,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Chino Pant",
+    categoryId: 14,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Chino Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21374,8 +21374,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 15,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Jeans Pant",
+    categoryId: 15,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Jeans Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21384,8 +21384,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 16,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Cargo Pant",
+    categoryId: 16,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Cargo Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21394,8 +21394,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 17,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Joggers",
+    categoryId: 17,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Joggers",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21404,8 +21404,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 18,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Shorts",
+    categoryId: 18,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Shorts",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21414,8 +21414,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 99,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Payjama",
+    categoryId: 99,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Payjama",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21424,8 +21424,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 145,
-    name: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Lungi",
+    categoryId: 145,
+    categoryName: "Clothing & Fashion > Mens > Mens Bottom Wear > Mens Lungi",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21434,8 +21434,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 27,
-    name: "Clothing & Fashion > Mens > Mens Sports Wear",
+    categoryId: 27,
+    categoryName: "Clothing & Fashion > Mens > Mens Sports Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21443,8 +21443,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 28,
-    name: "Clothing & Fashion > Mens > Mens Sports Wear > Mens Sports Wear Set",
+    categoryId: 28,
+    categoryName: "Clothing & Fashion > Mens > Mens Sports Wear > Mens Sports Wear Set",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21453,8 +21453,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 29,
-    name: "Clothing & Fashion > Mens > Mens Sports Wear > Mens Jersey",
+    categoryId: 29,
+    categoryName: "Clothing & Fashion > Mens > Mens Sports Wear > Mens Jersey",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21463,8 +21463,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 30,
-    name: "Clothing & Fashion > Mens > Mens Innerwear",
+    categoryId: 30,
+    categoryName: "Clothing & Fashion > Mens > Mens Innerwear",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21472,8 +21472,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 31,
-    name: "Clothing & Fashion > Mens > Mens Innerwear > Mens Innerwear",
+    categoryId: 31,
+    categoryName: "Clothing & Fashion > Mens > Mens Innerwear > Mens Innerwear",
     layer: {
       base: "Clothing & Fashion",
       first: "Mens",
@@ -21482,16 +21482,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 5,
-    name: "Clothing & Fashion > Womens",
+    categoryId: 5,
+    categoryName: "Clothing & Fashion > Womens",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
     },
   },
   {
-    id: 41,
-    name: "Clothing & Fashion > Womens > Womens Top Wear",
+    categoryId: 41,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21499,8 +21499,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 33,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Single Ethnic",
+    categoryId: 33,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Single Ethnic",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21509,8 +21509,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 34,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Ethnic Set (2 & 3 Pcs)",
+    categoryId: 34,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Ethnic Set (2 & 3 Pcs)",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21519,8 +21519,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 35,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Fashion Tops",
+    categoryId: 35,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Fashion Tops",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21529,8 +21529,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 36,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Women Shirt",
+    categoryId: 36,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Women Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21539,8 +21539,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 37,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Tees and Tank",
+    categoryId: 37,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Tees and Tank",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21549,8 +21549,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 38,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Scarf",
+    categoryId: 38,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Scarf",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21559,8 +21559,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 39,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Saree",
+    categoryId: 39,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Saree",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21569,8 +21569,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 199,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Maternity Wear",
+    categoryId: 199,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Maternity Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21579,8 +21579,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 427,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Poncho",
+    categoryId: 427,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Poncho",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21589,8 +21589,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 535,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Jacket",
+    categoryId: 535,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Jacket",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21599,8 +21599,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 536,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Hoodie",
+    categoryId: 536,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Hoodie",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21609,8 +21609,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 537,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Sweatshirt",
+    categoryId: 537,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Sweatshirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21619,8 +21619,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 538,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Sweater",
+    categoryId: 538,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Sweater",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21629,8 +21629,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 539,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Blazer",
+    categoryId: 539,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Blazer",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21639,8 +21639,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 540,
-    name: "Clothing & Fashion > Womens > Womens Top Wear > Womens Overcoat",
+    categoryId: 540,
+    categoryName: "Clothing & Fashion > Womens > Womens Top Wear > Womens Overcoat",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21649,8 +21649,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 42,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear",
+    categoryId: 42,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21658,8 +21658,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 40,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Pant",
+    categoryId: 40,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21668,8 +21668,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 44,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Chino Pant",
+    categoryId: 44,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Chino Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21678,8 +21678,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 45,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Jeans Pant",
+    categoryId: 45,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Jeans Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21688,8 +21688,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 478,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Formal Pant",
+    categoryId: 478,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Formal Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21698,8 +21698,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 46,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Cargo Pant",
+    categoryId: 46,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Cargo Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21708,8 +21708,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 47,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Joggers",
+    categoryId: 47,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Joggers",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21718,8 +21718,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 49,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Skirt",
+    categoryId: 49,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Skirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21728,8 +21728,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 541,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Denim",
+    categoryId: 541,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens Denim",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21738,8 +21738,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 530,
-    name: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens TROUSER",
+    categoryId: 530,
+    categoryName: "Clothing & Fashion > Womens > Womens Bottom Wear > Womens TROUSER",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21748,8 +21748,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 318,
-    name: "Clothing & Fashion > Womens > Womens Modest Wear",
+    categoryId: 318,
+    categoryName: "Clothing & Fashion > Womens > Womens Modest Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21757,8 +21757,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 144,
-    name: "Clothing & Fashion > Womens > Womens Western Set",
+    categoryId: 144,
+    categoryName: "Clothing & Fashion > Womens > Womens Western Set",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21766,8 +21766,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 469,
-    name: "Clothing & Fashion > Womens > Womens Western Set > CO-ORD",
+    categoryId: 469,
+    categoryName: "Clothing & Fashion > Womens > Womens Western Set > CO-ORD",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21776,8 +21776,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 57,
-    name: "Clothing & Fashion > Womens > Womens Sleepwear",
+    categoryId: 57,
+    categoryName: "Clothing & Fashion > Womens > Womens Sleepwear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21785,8 +21785,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 468,
-    name: "Clothing & Fashion > Womens > Womens Jumpsuit",
+    categoryId: 468,
+    categoryName: "Clothing & Fashion > Womens > Womens Jumpsuit",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21794,8 +21794,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 446,
-    name: "Clothing & Fashion > Womens > Western",
+    categoryId: 446,
+    categoryName: "Clothing & Fashion > Womens > Western",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21803,8 +21803,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 447,
-    name: "Clothing & Fashion > Womens > Western > Midi Dress",
+    categoryId: 447,
+    categoryName: "Clothing & Fashion > Womens > Western > Midi Dress",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21813,8 +21813,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 470,
-    name: "Clothing & Fashion > Womens > Western > Western Gown",
+    categoryId: 470,
+    categoryName: "Clothing & Fashion > Womens > Western > Western Gown",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21823,8 +21823,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 471,
-    name: "Clothing & Fashion > Womens > Western > Womens Shrug",
+    categoryId: 471,
+    categoryName: "Clothing & Fashion > Womens > Western > Womens Shrug",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21833,8 +21833,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 472,
-    name: "Clothing & Fashion > Womens > Western > Womens Party Wear",
+    categoryId: 472,
+    categoryName: "Clothing & Fashion > Womens > Western > Womens Party Wear",
     layer: {
       base: "Clothing & Fashion",
       first: "Womens",
@@ -21843,16 +21843,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 60,
-    name: "Clothing & Fashion > Kids",
+    categoryId: 60,
+    categoryName: "Clothing & Fashion > Kids",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
     },
   },
   {
-    id: 61,
-    name: "Clothing & Fashion > Kids > New Born",
+    categoryId: 61,
+    categoryName: "Clothing & Fashion > Kids > New Born",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21860,8 +21860,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 62,
-    name: "Clothing & Fashion > Kids > 3 to 18 (Month)",
+    categoryId: 62,
+    categoryName: "Clothing & Fashion > Kids > 3 to 18 (Month)",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21869,8 +21869,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 63,
-    name: "Clothing & Fashion > Kids > 3 to 18 (Month) > Boys",
+    categoryId: 63,
+    categoryName: "Clothing & Fashion > Kids > 3 to 18 (Month) > Boys",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21879,8 +21879,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 64,
-    name: "Clothing & Fashion > Kids > 3 to 18 (Month) > Girls",
+    categoryId: 64,
+    categoryName: "Clothing & Fashion > Kids > 3 to 18 (Month) > Girls",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21889,8 +21889,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 65,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y)",
+    categoryId: 65,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y)",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21898,8 +21898,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 67,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Polo & T-Shirt",
+    categoryId: 67,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Polo & T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21908,8 +21908,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 68,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Panjabi & Kabli",
+    categoryId: 68,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Panjabi & Kabli",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21918,8 +21918,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 69,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Pant & Payjama",
+    categoryId: 69,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Pant & Payjama",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21928,8 +21928,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 70,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Shirt & Katua",
+    categoryId: 70,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Shirt & Katua",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21938,8 +21938,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 71,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Boys Set",
+    categoryId: 71,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Boys Set",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21948,8 +21948,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 448,
-    name: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Boys Sleepwear",
+    categoryId: 448,
+    categoryName: "Clothing & Fashion > Kids > Baby boys (2-7Y) > Boys Sleepwear",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21958,8 +21958,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 66,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y)",
+    categoryId: 66,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y)",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21967,8 +21967,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 72,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Kurti",
+    categoryId: 72,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Kurti",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21977,8 +21977,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 73,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Frock & Dungaree",
+    categoryId: 73,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Frock & Dungaree",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21987,8 +21987,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 74,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Tops & Skirt",
+    categoryId: 74,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Tops & Skirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -21997,8 +21997,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 75,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls 3 Pcs",
+    categoryId: 75,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls 3 Pcs",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22007,8 +22007,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 76,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Pant",
+    categoryId: 76,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22017,8 +22017,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 77,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Polo & T-Shirt",
+    categoryId: 77,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Polo & T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22027,8 +22027,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 79,
-    name: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Set & Jumpsuit",
+    categoryId: 79,
+    categoryName: "Clothing & Fashion > Kids > Baby Girls (2-7Y) > Girls Set & Jumpsuit",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22037,8 +22037,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 80,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y)",
+    categoryId: 80,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y)",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22046,8 +22046,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 81,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Shirt & Katua",
+    categoryId: 81,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Shirt & Katua",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22056,8 +22056,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 82,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Panjabi & Kabli",
+    categoryId: 82,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Panjabi & Kabli",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22066,8 +22066,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 83,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Polo & T-Shirt",
+    categoryId: 83,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Polo & T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22076,8 +22076,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 84,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Pant & Payjama",
+    categoryId: 84,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Pant & Payjama",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22086,8 +22086,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 146,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Boys Set",
+    categoryId: 146,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Boys Set",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22096,8 +22096,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 449,
-    name: "Clothing & Fashion > Kids > Boys (8-15Y) > Boys Sleepwear",
+    categoryId: 449,
+    categoryName: "Clothing & Fashion > Kids > Boys (8-15Y) > Boys Sleepwear",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22106,8 +22106,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 85,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y)",
+    categoryId: 85,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y)",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22115,8 +22115,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 86,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls Pant",
+    categoryId: 86,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22125,8 +22125,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 87,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Tops & Ethnic",
+    categoryId: 87,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Tops & Ethnic",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22135,8 +22135,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 88,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls 3 Pcs",
+    categoryId: 88,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls 3 Pcs",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22145,8 +22145,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 138,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Frock & Dungaree",
+    categoryId: 138,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Frock & Dungaree",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22155,8 +22155,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 139,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Polo & T-Shirt",
+    categoryId: 139,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Polo & T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22165,8 +22165,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 140,
-    name: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls Set & Jumpsuit",
+    categoryId: 140,
+    categoryName: "Clothing & Fashion > Kids > Girls (8-15Y) > Girls Set & Jumpsuit",
     layer: {
       base: "Clothing & Fashion",
       first: "Kids",
@@ -22175,16 +22175,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 19,
-    name: "Clothing & Fashion > Winter Collection",
+    categoryId: 19,
+    categoryName: "Clothing & Fashion > Winter Collection",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
     },
   },
   {
-    id: 91,
-    name: "Clothing & Fashion > Winter Collection > Mens",
+    categoryId: 91,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22192,8 +22192,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 97,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Jacket",
+    categoryId: 97,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Jacket",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22202,8 +22202,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 404,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Biker Jacket",
+    categoryId: 404,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Biker Jacket",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22212,8 +22212,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 520,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Cargo Pant",
+    categoryId: 520,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Cargo Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22222,8 +22222,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 21,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Hoodie",
+    categoryId: 21,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Hoodie",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22232,8 +22232,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 523,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Casual Shirt",
+    categoryId: 523,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Casual Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22242,8 +22242,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 132,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Denim",
+    categoryId: 132,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Denim",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22252,8 +22252,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 397,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Vest",
+    categoryId: 397,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Vest",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22262,8 +22262,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 521,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Joggers",
+    categoryId: 521,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Joggers",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22272,8 +22272,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 288,
-    name: "Clothing & Fashion > Winter Collection > Mens > Full sleeve T-shirt",
+    categoryId: 288,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Full sleeve T-shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22282,8 +22282,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 522,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Overcoat",
+    categoryId: 522,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Overcoat",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22292,8 +22292,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 137,
-    name: "Clothing & Fashion > Winter Collection > Mens > Windbreaker",
+    categoryId: 137,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Windbreaker",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22302,8 +22302,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 526,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Polo Shirt",
+    categoryId: 526,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Polo Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22312,8 +22312,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 527,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens T-Shirt",
+    categoryId: 527,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens T-Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22322,8 +22322,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 369,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Blazer",
+    categoryId: 369,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Blazer",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22332,8 +22332,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 516,
-    name: "Clothing & Fashion > Winter Collection > Mens > Mens Sweatshirt",
+    categoryId: 516,
+    categoryName: "Clothing & Fashion > Winter Collection > Mens > Mens Sweatshirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22342,8 +22342,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 92,
-    name: "Clothing & Fashion > Winter Collection > Womens",
+    categoryId: 92,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22351,8 +22351,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 51,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Jacket",
+    categoryId: 51,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Jacket",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22361,8 +22361,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 52,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Hoodie",
+    categoryId: 52,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Hoodie",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22371,8 +22371,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 517,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Casual Shirt",
+    categoryId: 517,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Casual Shirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22381,8 +22381,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 518,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Fashion Tops",
+    categoryId: 518,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Fashion Tops",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22391,8 +22391,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 519,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Sweatshirt",
+    categoryId: 519,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Sweatshirt",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22401,8 +22401,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 525,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Cargo Pant",
+    categoryId: 525,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Cargo Pant",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22411,8 +22411,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 136,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Sweater",
+    categoryId: 136,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Sweater",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22421,8 +22421,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 133,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Denim",
+    categoryId: 133,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Denim",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22431,8 +22431,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 390,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Blazer",
+    categoryId: 390,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Blazer",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22441,8 +22441,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 439,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Suit Set ",
+    categoryId: 439,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Suit Set ",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22451,8 +22451,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 524,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Trouser",
+    categoryId: 524,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Trouser",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22461,8 +22461,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 528,
-    name: "Clothing & Fashion > Winter Collection > Womens > Womens Overcoat",
+    categoryId: 528,
+    categoryName: "Clothing & Fashion > Winter Collection > Womens > Womens Overcoat",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22471,8 +22471,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 93,
-    name: "Clothing & Fashion > Winter Collection > Kids",
+    categoryId: 93,
+    categoryName: "Clothing & Fashion > Winter Collection > Kids",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22480,8 +22480,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 90,
-    name: "Clothing & Fashion > Winter Collection > Kids > Boys",
+    categoryId: 90,
+    categoryName: "Clothing & Fashion > Winter Collection > Kids > Boys",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22490,8 +22490,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 98,
-    name: "Clothing & Fashion > Winter Collection > Kids > Girls",
+    categoryId: 98,
+    categoryName: "Clothing & Fashion > Winter Collection > Kids > Girls",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22500,8 +22500,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 134,
-    name: "Clothing & Fashion > Winter Collection > Unisex",
+    categoryId: 134,
+    categoryName: "Clothing & Fashion > Winter Collection > Unisex",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22509,8 +22509,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 428,
-    name: "Clothing & Fashion > Winter Collection > Unisex > Muffler",
+    categoryId: 428,
+    categoryName: "Clothing & Fashion > Winter Collection > Unisex > Muffler",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22519,8 +22519,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 135,
-    name: "Clothing & Fashion > Winter Collection > Unisex > Shawl",
+    categoryId: 135,
+    categoryName: "Clothing & Fashion > Winter Collection > Unisex > Shawl",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22529,8 +22529,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 402,
-    name: "Clothing & Fashion > Winter Collection > Unisex > Track Suit",
+    categoryId: 402,
+    categoryName: "Clothing & Fashion > Winter Collection > Unisex > Track Suit",
     layer: {
       base: "Clothing & Fashion",
       first: "Winter Collection",
@@ -22539,23 +22539,23 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 147,
-    name: "Footwear",
+    categoryId: 147,
+    categoryName: "Footwear",
     layer: {
       base: "Footwear",
     },
   },
   {
-    id: 148,
-    name: "Footwear > Mens",
+    categoryId: 148,
+    categoryName: "Footwear > Mens",
     layer: {
       base: "Footwear",
       first: "Mens",
     },
   },
   {
-    id: 153,
-    name: "Footwear > Mens > Shoe",
+    categoryId: 153,
+    categoryName: "Footwear > Mens > Shoe",
     layer: {
       base: "Footwear",
       first: "Mens",
@@ -22563,8 +22563,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 154,
-    name: "Footwear > Mens > Sneaker",
+    categoryId: 154,
+    categoryName: "Footwear > Mens > Sneaker",
     layer: {
       base: "Footwear",
       first: "Mens",
@@ -22572,8 +22572,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 155,
-    name: "Footwear > Mens > Sandal",
+    categoryId: 155,
+    categoryName: "Footwear > Mens > Sandal",
     layer: {
       base: "Footwear",
       first: "Mens",
@@ -22581,16 +22581,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 149,
-    name: "Footwear > Womens",
+    categoryId: 149,
+    categoryName: "Footwear > Womens",
     layer: {
       base: "Footwear",
       first: "Womens",
     },
   },
   {
-    id: 156,
-    name: "Footwear > Womens > Shoe",
+    categoryId: 156,
+    categoryName: "Footwear > Womens > Shoe",
     layer: {
       base: "Footwear",
       first: "Womens",
@@ -22598,8 +22598,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 157,
-    name: "Footwear > Womens > Sneaker",
+    categoryId: 157,
+    categoryName: "Footwear > Womens > Sneaker",
     layer: {
       base: "Footwear",
       first: "Womens",
@@ -22607,8 +22607,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 158,
-    name: "Footwear > Womens > Sandal",
+    categoryId: 158,
+    categoryName: "Footwear > Womens > Sandal",
     layer: {
       base: "Footwear",
       first: "Womens",
@@ -22616,31 +22616,31 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 484,
-    name: "Footwear > Accessories",
+    categoryId: 484,
+    categoryName: "Footwear > Accessories",
     layer: {
       base: "Footwear",
       first: "Accessories",
     },
   },
   {
-    id: 100,
-    name: "Fashion Accessories",
+    categoryId: 100,
+    categoryName: "Fashion Accessories",
     layer: {
       base: "Fashion Accessories",
     },
   },
   {
-    id: 101,
-    name: "Fashion Accessories > Mens Accessories",
+    categoryId: 101,
+    categoryName: "Fashion Accessories > Mens Accessories",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
     },
   },
   {
-    id: 102,
-    name: "Fashion Accessories > Mens Accessories > Mens Bag",
+    categoryId: 102,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Bag",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22648,8 +22648,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 103,
-    name: "Fashion Accessories > Mens Accessories > Mens Socks",
+    categoryId: 103,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Socks",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22657,8 +22657,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 104,
-    name: "Fashion Accessories > Mens Accessories > Mens Belt",
+    categoryId: 104,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Belt",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22666,8 +22666,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 105,
-    name: "Fashion Accessories > Mens Accessories > Mens Wallet",
+    categoryId: 105,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Wallet",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22675,8 +22675,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 400,
-    name: "Fashion Accessories > Mens Accessories > Mens Card Holder",
+    categoryId: 400,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Card Holder",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22684,8 +22684,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 286,
-    name: "Fashion Accessories > Mens Accessories > Gift Box",
+    categoryId: 286,
+    categoryName: "Fashion Accessories > Mens Accessories > Gift Box",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22693,8 +22693,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 107,
-    name: "Fashion Accessories > Mens Accessories > Mens Face Mask",
+    categoryId: 107,
+    categoryName: "Fashion Accessories > Mens Accessories > Mens Face Mask",
     layer: {
       base: "Fashion Accessories",
       first: "Mens Accessories",
@@ -22702,16 +22702,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 109,
-    name: "Fashion Accessories > Womens Accessories",
+    categoryId: 109,
+    categoryName: "Fashion Accessories > Womens Accessories",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
     },
   },
   {
-    id: 110,
-    name: "Fashion Accessories > Womens Accessories > Womens Bag & Purse",
+    categoryId: 110,
+    categoryName: "Fashion Accessories > Womens Accessories > Womens Bag & Purse",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
@@ -22719,8 +22719,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 111,
-    name: "Fashion Accessories > Womens Accessories > Womens Socks",
+    categoryId: 111,
+    categoryName: "Fashion Accessories > Womens Accessories > Womens Socks",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
@@ -22728,8 +22728,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 381,
-    name: "Fashion Accessories > Womens Accessories > Tote Bag",
+    categoryId: 381,
+    categoryName: "Fashion Accessories > Womens Accessories > Tote Bag",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
@@ -22737,8 +22737,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 503,
-    name: "Fashion Accessories > Womens Accessories > Womens Wallet",
+    categoryId: 503,
+    categoryName: "Fashion Accessories > Womens Accessories > Womens Wallet",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
@@ -22746,8 +22746,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 115,
-    name: "Fashion Accessories > Womens Accessories > Womens Face Mask",
+    categoryId: 115,
+    categoryName: "Fashion Accessories > Womens Accessories > Womens Face Mask",
     layer: {
       base: "Fashion Accessories",
       first: "Womens Accessories",
@@ -22755,16 +22755,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 117,
-    name: "Fashion Accessories > Kids Accessories",
+    categoryId: 117,
+    categoryName: "Fashion Accessories > Kids Accessories",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
     },
   },
   {
-    id: 121,
-    name: "Fashion Accessories > Kids Accessories > Kids Toys",
+    categoryId: 121,
+    categoryName: "Fashion Accessories > Kids Accessories > Kids Toys",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
@@ -22772,8 +22772,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 119,
-    name: "Fashion Accessories > Kids Accessories > Kids Socks",
+    categoryId: 119,
+    categoryName: "Fashion Accessories > Kids Accessories > Kids Socks",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
@@ -22781,8 +22781,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 413,
-    name: "Fashion Accessories > Kids Accessories > Baby Diaper",
+    categoryId: 413,
+    categoryName: "Fashion Accessories > Kids Accessories > Baby Diaper",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
@@ -22790,8 +22790,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 122,
-    name: "Fashion Accessories > Kids Accessories > Kids Face Mask",
+    categoryId: 122,
+    categoryName: "Fashion Accessories > Kids Accessories > Kids Face Mask",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
@@ -22799,8 +22799,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 502,
-    name: "Fashion Accessories > Kids Accessories > Feeding Essentials",
+    categoryId: 502,
+    categoryName: "Fashion Accessories > Kids Accessories > Feeding Essentials",
     layer: {
       base: "Fashion Accessories",
       first: "Kids Accessories",
@@ -22808,16 +22808,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 142,
-    name: "Fashion Accessories > Unisex Accessories",
+    categoryId: 142,
+    categoryName: "Fashion Accessories > Unisex Accessories",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
     },
   },
   {
-    id: 143,
-    name: "Fashion Accessories > Unisex Accessories > Bags",
+    categoryId: 143,
+    categoryName: "Fashion Accessories > Unisex Accessories > Bags",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22825,8 +22825,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 487,
-    name: "Fashion Accessories > Unisex Accessories > Bags > Backpack",
+    categoryId: 487,
+    categoryName: "Fashion Accessories > Unisex Accessories > Bags > Backpack",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22835,8 +22835,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 488,
-    name: "Fashion Accessories > Unisex Accessories > Bags > Travel Bag",
+    categoryId: 488,
+    categoryName: "Fashion Accessories > Unisex Accessories > Bags > Travel Bag",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22845,8 +22845,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 486,
-    name: "Fashion Accessories > Unisex Accessories > Bags > School Bag",
+    categoryId: 486,
+    categoryName: "Fashion Accessories > Unisex Accessories > Bags > School Bag",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22855,8 +22855,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 276,
-    name: "Fashion Accessories > Unisex Accessories > Caps & Hats",
+    categoryId: 276,
+    categoryName: "Fashion Accessories > Unisex Accessories > Caps & Hats",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22864,8 +22864,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 485,
-    name: "Fashion Accessories > Unisex Accessories > Luggage",
+    categoryId: 485,
+    categoryName: "Fashion Accessories > Unisex Accessories > Luggage",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22873,8 +22873,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 460,
-    name: "Fashion Accessories > Unisex Accessories > Rain Coats",
+    categoryId: 460,
+    categoryName: "Fashion Accessories > Unisex Accessories > Rain Coats",
     layer: {
       base: "Fashion Accessories",
       first: "Unisex Accessories",
@@ -22882,23 +22882,23 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 170,
-    name: "Lifestyle Accessories",
+    categoryId: 170,
+    categoryName: "Lifestyle Accessories",
     layer: {
       base: "Lifestyle Accessories",
     },
   },
   {
-    id: 171,
-    name: "Lifestyle Accessories > Watch & Accessories",
+    categoryId: 171,
+    categoryName: "Lifestyle Accessories > Watch & Accessories",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
     },
   },
   {
-    id: 174,
-    name: "Lifestyle Accessories > Watch & Accessories > Smart Watches",
+    categoryId: 174,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Smart Watches",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22906,8 +22906,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 207,
-    name: "Lifestyle Accessories > Watch & Accessories > Analog Watches",
+    categoryId: 207,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Analog Watches",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22915,8 +22915,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 208,
-    name: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Men",
+    categoryId: 208,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Men",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22925,8 +22925,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 209,
-    name: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Women",
+    categoryId: 209,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Women",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22935,8 +22935,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 210,
-    name: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Unisex",
+    categoryId: 210,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Unisex",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22945,8 +22945,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 319,
-    name: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Couple Watches",
+    categoryId: 319,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Analog Watches > Couple Watches",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22955,8 +22955,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 232,
-    name: "Lifestyle Accessories > Watch & Accessories > Sports Watch",
+    categoryId: 232,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Sports Watch",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22964,8 +22964,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 233,
-    name: "Lifestyle Accessories > Watch & Accessories > Sports Watch > Men",
+    categoryId: 233,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Sports Watch > Men",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22974,8 +22974,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 234,
-    name: "Lifestyle Accessories > Watch & Accessories > Sports Watch > Women",
+    categoryId: 234,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Sports Watch > Women",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22984,8 +22984,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 325,
-    name: "Lifestyle Accessories > Watch & Accessories > Watch Accessories",
+    categoryId: 325,
+    categoryName: "Lifestyle Accessories > Watch & Accessories > Watch Accessories",
     layer: {
       base: "Lifestyle Accessories",
       first: "Watch & Accessories",
@@ -22993,16 +22993,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 173,
-    name: "Lifestyle Accessories > Headphones",
+    categoryId: 173,
+    categoryName: "Lifestyle Accessories > Headphones",
     layer: {
       base: "Lifestyle Accessories",
       first: "Headphones",
     },
   },
   {
-    id: 175,
-    name: "Lifestyle Accessories > Headphones > In-Ear/Earbuds",
+    categoryId: 175,
+    categoryName: "Lifestyle Accessories > Headphones > In-Ear/Earbuds",
     layer: {
       base: "Lifestyle Accessories",
       first: "Headphones",
@@ -23010,8 +23010,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 177,
-    name: "Lifestyle Accessories > Headphones > Neckband",
+    categoryId: 177,
+    categoryName: "Lifestyle Accessories > Headphones > Neckband",
     layer: {
       base: "Lifestyle Accessories",
       first: "Headphones",
@@ -23019,8 +23019,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 178,
-    name: "Lifestyle Accessories > Headphones > Over Ear",
+    categoryId: 178,
+    categoryName: "Lifestyle Accessories > Headphones > Over Ear",
     layer: {
       base: "Lifestyle Accessories",
       first: "Headphones",
@@ -23028,71 +23028,71 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 327,
-    name: "Lifestyle Accessories > Umbrella",
+    categoryId: 327,
+    categoryName: "Lifestyle Accessories > Umbrella",
     layer: {
       base: "Lifestyle Accessories",
       first: "Umbrella",
     },
   },
   {
-    id: 179,
-    name: "Lifestyle Accessories > Power Bank",
+    categoryId: 179,
+    categoryName: "Lifestyle Accessories > Power Bank",
     layer: {
       base: "Lifestyle Accessories",
       first: "Power Bank",
     },
   },
   {
-    id: 198,
-    name: "Lifestyle Accessories > Bluetooth Speaker",
+    categoryId: 198,
+    categoryName: "Lifestyle Accessories > Bluetooth Speaker",
     layer: {
       base: "Lifestyle Accessories",
       first: "Bluetooth Speaker",
     },
   },
   {
-    id: 320,
-    name: "Lifestyle Accessories > Religious Accessories",
+    categoryId: 320,
+    categoryName: "Lifestyle Accessories > Religious Accessories",
     layer: {
       base: "Lifestyle Accessories",
       first: "Religious Accessories",
     },
   },
   {
-    id: 379,
-    name: "Lifestyle Accessories > Smart Gadgets",
+    categoryId: 379,
+    categoryName: "Lifestyle Accessories > Smart Gadgets",
     layer: {
       base: "Lifestyle Accessories",
       first: "Smart Gadgets",
     },
   },
   {
-    id: 510,
-    name: "Lifestyle Accessories > Machine & Tools",
+    categoryId: 510,
+    categoryName: "Lifestyle Accessories > Machine & Tools",
     layer: {
       base: "Lifestyle Accessories",
       first: "Machine & Tools",
     },
   },
   {
-    id: 241,
-    name: "Personal Care",
+    categoryId: 241,
+    categoryName: "Personal Care",
     layer: {
       base: "Personal Care",
     },
   },
   {
-    id: 242,
-    name: "Personal Care > Shaving and Trimming",
+    categoryId: 242,
+    categoryName: "Personal Care > Shaving and Trimming",
     layer: {
       base: "Personal Care",
       first: "Shaving and Trimming",
     },
   },
   {
-    id: 243,
-    name: "Personal Care > Shaving and Trimming > Men",
+    categoryId: 243,
+    categoryName: "Personal Care > Shaving and Trimming > Men",
     layer: {
       base: "Personal Care",
       first: "Shaving and Trimming",
@@ -23100,8 +23100,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 244,
-    name: "Personal Care > Shaving and Trimming > Women",
+    categoryId: 244,
+    categoryName: "Personal Care > Shaving and Trimming > Women",
     layer: {
       base: "Personal Care",
       first: "Shaving and Trimming",
@@ -23109,16 +23109,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 425,
-    name: "Personal Care > Feminine Care",
+    categoryId: 425,
+    categoryName: "Personal Care > Feminine Care",
     layer: {
       base: "Personal Care",
       first: "Feminine Care",
     },
   },
   {
-    id: 426,
-    name: "Personal Care > Feminine Care > Sanitary Pads",
+    categoryId: 426,
+    categoryName: "Personal Care > Feminine Care > Sanitary Pads",
     layer: {
       base: "Personal Care",
       first: "Feminine Care",
@@ -23126,31 +23126,31 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 422,
-    name: "Health & Beauty",
+    categoryId: 422,
+    categoryName: "Health & Beauty",
     layer: {
       base: "Health & Beauty",
     },
   },
   {
-    id: 423,
-    name: "Health & Beauty > Skin Care",
+    categoryId: 423,
+    categoryName: "Health & Beauty > Skin Care",
     layer: {
       base: "Health & Beauty",
       first: "Skin Care",
     },
   },
   {
-    id: 424,
-    name: "Health & Beauty > Hair Care",
+    categoryId: 424,
+    categoryName: "Health & Beauty > Hair Care",
     layer: {
       base: "Health & Beauty",
       first: "Hair Care",
     },
   },
   {
-    id: 457,
-    name: "Health & Beauty > Hair Care > Hair Oil",
+    categoryId: 457,
+    categoryName: "Health & Beauty > Hair Care > Hair Oil",
     layer: {
       base: "Health & Beauty",
       first: "Hair Care",
@@ -23158,8 +23158,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 458,
-    name: "Health & Beauty > Hair Care > Shampoo & Conditioner",
+    categoryId: 458,
+    categoryName: "Health & Beauty > Hair Care > Shampoo & Conditioner",
     layer: {
       base: "Health & Beauty",
       first: "Hair Care",
@@ -23167,16 +23167,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 493,
-    name: "Health & Beauty > Fragrance",
+    categoryId: 493,
+    categoryName: "Health & Beauty > Fragrance",
     layer: {
       base: "Health & Beauty",
       first: "Fragrance",
     },
   },
   {
-    id: 494,
-    name: "Health & Beauty > Fragrance > Perfume",
+    categoryId: 494,
+    categoryName: "Health & Beauty > Fragrance > Perfume",
     layer: {
       base: "Health & Beauty",
       first: "Fragrance",
@@ -23184,39 +23184,39 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 499,
-    name: "Health & Beauty > Medical Equipment",
+    categoryId: 499,
+    categoryName: "Health & Beauty > Medical Equipment",
     layer: {
       base: "Health & Beauty",
       first: "Medical Equipment",
     },
   },
   {
-    id: 124,
-    name: "Home Decor",
+    categoryId: 124,
+    categoryName: "Home Decor",
     layer: {
       base: "Home Decor",
     },
   },
   {
-    id: 459,
-    name: "Home Decor > Air Freshener",
+    categoryId: 459,
+    categoryName: "Home Decor > Air Freshener",
     layer: {
       base: "Home Decor",
       first: "Air Freshener",
     },
   },
   {
-    id: 126,
-    name: "Home Decor > Bedding & Bath",
+    categoryId: 126,
+    categoryName: "Home Decor > Bedding & Bath",
     layer: {
       base: "Home Decor",
       first: "Bedding & Bath",
     },
   },
   {
-    id: 141,
-    name: "Home Decor > Bedding & Bath > Comforter",
+    categoryId: 141,
+    categoryName: "Home Decor > Bedding & Bath > Comforter",
     layer: {
       base: "Home Decor",
       first: "Bedding & Bath",
@@ -23224,8 +23224,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 231,
-    name: "Home Decor > Bedding & Bath > Bedsheet",
+    categoryId: 231,
+    categoryName: "Home Decor > Bedding & Bath > Bedsheet",
     layer: {
       base: "Home Decor",
       first: "Bedding & Bath",
@@ -23233,8 +23233,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 466,
-    name: "Home Decor > Bedding & Bath > Cushion Covers",
+    categoryId: 466,
+    categoryName: "Home Decor > Bedding & Bath > Cushion Covers",
     layer: {
       base: "Home Decor",
       first: "Bedding & Bath",
@@ -23242,16 +23242,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 125,
-    name: "Home Decor > Furniture",
+    categoryId: 125,
+    categoryName: "Home Decor > Furniture",
     layer: {
       base: "Home Decor",
       first: "Furniture",
     },
   },
   {
-    id: 128,
-    name: "Home Decor > Furniture > Living Room Furniture",
+    categoryId: 128,
+    categoryName: "Home Decor > Furniture > Living Room Furniture",
     layer: {
       base: "Home Decor",
       first: "Furniture",
@@ -23259,8 +23259,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 450,
-    name: "Home Decor > Furniture > Living Room Furniture > Bean Bag",
+    categoryId: 450,
+    categoryName: "Home Decor > Furniture > Living Room Furniture > Bean Bag",
     layer: {
       base: "Home Decor",
       first: "Furniture",
@@ -23269,16 +23269,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 127,
-    name: "Home Decor > Kitchen & Dining",
+    categoryId: 127,
+    categoryName: "Home Decor > Kitchen & Dining",
     layer: {
       base: "Home Decor",
       first: "Kitchen & Dining",
     },
   },
   {
-    id: 465,
-    name: "Home Decor > Kitchen & Dining > Tablecloths",
+    categoryId: 465,
+    categoryName: "Home Decor > Kitchen & Dining > Tablecloths",
     layer: {
       base: "Home Decor",
       first: "Kitchen & Dining",
@@ -23286,8 +23286,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 467,
-    name: "Home Decor > Kitchen & Dining > Table Runners",
+    categoryId: 467,
+    categoryName: "Home Decor > Kitchen & Dining > Table Runners",
     layer: {
       base: "Home Decor",
       first: "Kitchen & Dining",
@@ -23295,8 +23295,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 505,
-    name: "Home Decor > Kitchen & Dining > Scissors",
+    categoryId: 505,
+    categoryName: "Home Decor > Kitchen & Dining > Scissors",
     layer: {
       base: "Home Decor",
       first: "Kitchen & Dining",
@@ -23304,16 +23304,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 212,
-    name: "Home Decor > Home Accessories",
+    categoryId: 212,
+    categoryName: "Home Decor > Home Accessories",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
     },
   },
   {
-    id: 213,
-    name: "Home Decor > Home Accessories > Decorative Pillows",
+    categoryId: 213,
+    categoryName: "Home Decor > Home Accessories > Decorative Pillows",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23321,8 +23321,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 236,
-    name: "Home Decor > Home Accessories > Lighting",
+    categoryId: 236,
+    categoryName: "Home Decor > Home Accessories > Lighting",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23330,8 +23330,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 240,
-    name: "Home Decor > Home Accessories > Clocks",
+    categoryId: 240,
+    categoryName: "Home Decor > Home Accessories > Clocks",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23339,8 +23339,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 409,
-    name: "Home Decor > Home Accessories > Tools, DIY & Outdoor",
+    categoryId: 409,
+    categoryName: "Home Decor > Home Accessories > Tools, DIY & Outdoor",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23348,8 +23348,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 239,
-    name: "Home Decor > Home Accessories > Indoor Gardening",
+    categoryId: 239,
+    categoryName: "Home Decor > Home Accessories > Indoor Gardening",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23357,8 +23357,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 324,
-    name: "Home Decor > Home Accessories > Placemats",
+    categoryId: 324,
+    categoryName: "Home Decor > Home Accessories > Placemats",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23366,8 +23366,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 387,
-    name: "Home Decor > Home Accessories > Area Rug",
+    categoryId: 387,
+    categoryName: "Home Decor > Home Accessories > Area Rug",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23375,8 +23375,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 403,
-    name: "Home Decor > Home Accessories > Shitol Pati",
+    categoryId: 403,
+    categoryName: "Home Decor > Home Accessories > Shitol Pati",
     layer: {
       base: "Home Decor",
       first: "Home Accessories",
@@ -23384,47 +23384,47 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 214,
-    name: "Handicrafts",
+    categoryId: 214,
+    categoryName: "Handicrafts",
     layer: {
       base: "Handicrafts",
     },
   },
   {
-    id: 216,
-    name: "Handicrafts > Dining",
+    categoryId: 216,
+    categoryName: "Handicrafts > Dining",
     layer: {
       base: "Handicrafts",
       first: "Dining",
     },
   },
   {
-    id: 217,
-    name: "Handicrafts > Decoration",
+    categoryId: 217,
+    categoryName: "Handicrafts > Decoration",
     layer: {
       base: "Handicrafts",
       first: "Decoration",
     },
   },
   {
-    id: 218,
-    name: "Handicrafts > Gardening",
+    categoryId: 218,
+    categoryName: "Handicrafts > Gardening",
     layer: {
       base: "Handicrafts",
       first: "Gardening",
     },
   },
   {
-    id: 222,
-    name: "Handicrafts > Accessories",
+    categoryId: 222,
+    categoryName: "Handicrafts > Accessories",
     layer: {
       base: "Handicrafts",
       first: "Accessories",
     },
   },
   {
-    id: 223,
-    name: "Handicrafts > Accessories > Bags",
+    categoryId: 223,
+    categoryName: "Handicrafts > Accessories > Bags",
     layer: {
       base: "Handicrafts",
       first: "Accessories",
@@ -23432,23 +23432,23 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 180,
-    name: "Appliance",
+    categoryId: 180,
+    categoryName: "Appliance",
     layer: {
       base: "Appliance",
     },
   },
   {
-    id: 203,
-    name: "Appliance > TV",
+    categoryId: 203,
+    categoryName: "Appliance > TV",
     layer: {
       base: "Appliance",
       first: "TV",
     },
   },
   {
-    id: 204,
-    name: "Appliance > TV > LED TV",
+    categoryId: 204,
+    categoryName: "Appliance > TV > LED TV",
     layer: {
       base: "Appliance",
       first: "TV",
@@ -23456,8 +23456,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 205,
-    name: "Appliance > TV > Smart TV",
+    categoryId: 205,
+    categoryName: "Appliance > TV > Smart TV",
     layer: {
       base: "Appliance",
       first: "TV",
@@ -23465,16 +23465,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 255,
-    name: "Appliance > Sound Devices",
+    categoryId: 255,
+    categoryName: "Appliance > Sound Devices",
     layer: {
       base: "Appliance",
       first: "Sound Devices",
     },
   },
   {
-    id: 256,
-    name: "Appliance > Sound Devices > Speaker",
+    categoryId: 256,
+    categoryName: "Appliance > Sound Devices > Speaker",
     layer: {
       base: "Appliance",
       first: "Sound Devices",
@@ -23482,8 +23482,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 259,
-    name: "Appliance > Sound Devices > Speaker > Home Theater System",
+    categoryId: 259,
+    categoryName: "Appliance > Sound Devices > Speaker > Home Theater System",
     layer: {
       base: "Appliance",
       first: "Sound Devices",
@@ -23492,16 +23492,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 226,
-    name: "Appliance > Phone & Tablets",
+    categoryId: 226,
+    categoryName: "Appliance > Phone & Tablets",
     layer: {
       base: "Appliance",
       first: "Phone & Tablets",
     },
   },
   {
-    id: 230,
-    name: "Appliance > Phone & Tablets > Accessories",
+    categoryId: 230,
+    categoryName: "Appliance > Phone & Tablets > Accessories",
     layer: {
       base: "Appliance",
       first: "Phone & Tablets",
@@ -23509,8 +23509,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 248,
-    name: "Appliance > Phone & Tablets > Accessories > Charger & Cables",
+    categoryId: 248,
+    categoryName: "Appliance > Phone & Tablets > Accessories > Charger & Cables",
     layer: {
       base: "Appliance",
       first: "Phone & Tablets",
@@ -23519,8 +23519,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 542,
-    name: "Appliance > Phone & Tablets > Accessories > Cover & Glass",
+    categoryId: 542,
+    categoryName: "Appliance > Phone & Tablets > Accessories > Cover & Glass",
     layer: {
       base: "Appliance",
       first: "Phone & Tablets",
@@ -23529,16 +23529,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 181,
-    name: "Appliance > Home Appliances",
+    categoryId: 181,
+    categoryName: "Appliance > Home Appliances",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
     },
   },
   {
-    id: 182,
-    name: "Appliance > Home Appliances > Fan",
+    categoryId: 182,
+    categoryName: "Appliance > Home Appliances > Fan",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23546,8 +23546,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 187,
-    name: "Appliance > Home Appliances > Fan > Table Fan",
+    categoryId: 187,
+    categoryName: "Appliance > Home Appliances > Fan > Table Fan",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23556,8 +23556,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 188,
-    name: "Appliance > Home Appliances > Fan > Rechargeable Fan",
+    categoryId: 188,
+    categoryName: "Appliance > Home Appliances > Fan > Rechargeable Fan",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23566,8 +23566,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 206,
-    name: "Appliance > Home Appliances > Fan > Ceiling Fan",
+    categoryId: 206,
+    categoryName: "Appliance > Home Appliances > Fan > Ceiling Fan",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23576,8 +23576,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 473,
-    name: "Appliance > Home Appliances > Aquarium",
+    categoryId: 473,
+    categoryName: "Appliance > Home Appliances > Aquarium",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23585,8 +23585,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 197,
-    name: "Appliance > Home Appliances > Iron",
+    categoryId: 197,
+    categoryName: "Appliance > Home Appliances > Iron",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23594,8 +23594,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 296,
-    name: "Appliance > Home Appliances > Geyser",
+    categoryId: 296,
+    categoryName: "Appliance > Home Appliances > Geyser",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23603,8 +23603,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 326,
-    name: "Appliance > Home Appliances > Air Cooler",
+    categoryId: 326,
+    categoryName: "Appliance > Home Appliances > Air Cooler",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23612,8 +23612,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 200,
-    name: "Appliance > Home Appliances > Air Conditioner",
+    categoryId: 200,
+    categoryName: "Appliance > Home Appliances > Air Conditioner",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23621,8 +23621,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 201,
-    name: "Appliance > Home Appliances > Air Conditioner > Residential Air Conditioner",
+    categoryId: 201,
+    categoryName: "Appliance > Home Appliances > Air Conditioner > Residential Air Conditioner",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23631,8 +23631,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 202,
-    name: "Appliance > Home Appliances > Air Conditioner > Industrial Air Conditioner",
+    categoryId: 202,
+    categoryName: "Appliance > Home Appliances > Air Conditioner > Industrial Air Conditioner",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23641,8 +23641,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 249,
-    name: "Appliance > Home Appliances > Washing Machine",
+    categoryId: 249,
+    categoryName: "Appliance > Home Appliances > Washing Machine",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23650,8 +23650,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 377,
-    name: "Appliance > Home Appliances > Room Heater",
+    categoryId: 377,
+    categoryName: "Appliance > Home Appliances > Room Heater",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23659,8 +23659,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 389,
-    name: "Appliance > Home Appliances > Mosquito Killers",
+    categoryId: 389,
+    categoryName: "Appliance > Home Appliances > Mosquito Killers",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23668,8 +23668,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 511,
-    name: "Appliance > Home Appliances > Power Strip",
+    categoryId: 511,
+    categoryName: "Appliance > Home Appliances > Power Strip",
     layer: {
       base: "Appliance",
       first: "Home Appliances",
@@ -23677,16 +23677,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 184,
-    name: "Appliance > Kitchen Appliances",
+    categoryId: 184,
+    categoryName: "Appliance > Kitchen Appliances",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
     },
   },
   {
-    id: 185,
-    name: "Appliance > Kitchen Appliances > Blender & Mixer Grinder",
+    categoryId: 185,
+    categoryName: "Appliance > Kitchen Appliances > Blender & Mixer Grinder",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23694,8 +23694,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 191,
-    name: "Appliance > Kitchen Appliances > Blender & Mixer Grinder > Mixer Grinder",
+    categoryId: 191,
+    categoryName: "Appliance > Kitchen Appliances > Blender & Mixer Grinder > Mixer Grinder",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23704,8 +23704,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 193,
-    name: "Appliance > Kitchen Appliances > Kettle & Flask",
+    categoryId: 193,
+    categoryName: "Appliance > Kitchen Appliances > Kettle & Flask",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23713,8 +23713,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 297,
-    name: "Appliance > Kitchen Appliances > Gas stoves",
+    categoryId: 297,
+    categoryName: "Appliance > Kitchen Appliances > Gas stoves",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23722,8 +23722,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 192,
-    name: "Appliance > Kitchen Appliances > Induction & Infrared Cookers",
+    categoryId: 192,
+    categoryName: "Appliance > Kitchen Appliances > Induction & Infrared Cookers",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23731,8 +23731,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 265,
-    name: "Appliance > Kitchen Appliances > Microwave Oven",
+    categoryId: 265,
+    categoryName: "Appliance > Kitchen Appliances > Microwave Oven",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23740,8 +23740,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 194,
-    name: "Appliance > Kitchen Appliances > Refrigerators & Freezers",
+    categoryId: 194,
+    categoryName: "Appliance > Kitchen Appliances > Refrigerators & Freezers",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23749,8 +23749,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 195,
-    name: "Appliance > Kitchen Appliances > Refrigerators & Freezers > Refrigerators",
+    categoryId: 195,
+    categoryName: "Appliance > Kitchen Appliances > Refrigerators & Freezers > Refrigerators",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23759,8 +23759,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 196,
-    name: "Appliance > Kitchen Appliances > Refrigerators & Freezers > Freezers",
+    categoryId: 196,
+    categoryName: "Appliance > Kitchen Appliances > Refrigerators & Freezers > Freezers",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23769,8 +23769,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 282,
-    name: "Appliance > Kitchen Appliances > Water Dispensers & Purifiers",
+    categoryId: 282,
+    categoryName: "Appliance > Kitchen Appliances > Water Dispensers & Purifiers",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23778,8 +23778,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 497,
-    name: "Appliance > Kitchen Appliances > Kitchen Sink",
+    categoryId: 497,
+    categoryName: "Appliance > Kitchen Appliances > Kitchen Sink",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23787,8 +23787,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 514,
-    name: "Appliance > Kitchen Appliances > Small Appliances",
+    categoryId: 514,
+    categoryName: "Appliance > Kitchen Appliances > Small Appliances",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23796,8 +23796,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 382,
-    name: "Appliance > Kitchen Appliances > Cookware",
+    categoryId: 382,
+    categoryName: "Appliance > Kitchen Appliances > Cookware",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23805,8 +23805,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 421,
-    name: "Appliance > Kitchen Appliances > Cookware > Air Fryer",
+    categoryId: 421,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Air Fryer",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23815,8 +23815,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 383,
-    name: "Appliance > Kitchen Appliances > Cookware > Frying Pan",
+    categoryId: 383,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Frying Pan",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23825,8 +23825,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 384,
-    name: "Appliance > Kitchen Appliances > Cookware > Sauce Pot/Pan",
+    categoryId: 384,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Sauce Pot/Pan",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23835,8 +23835,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 513,
-    name: "Appliance > Kitchen Appliances > Cookware > Electric Grill",
+    categoryId: 513,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Electric Grill",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23845,8 +23845,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 385,
-    name: "Appliance > Kitchen Appliances > Cookware > Woks",
+    categoryId: 385,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Woks",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23855,8 +23855,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 186,
-    name: "Appliance > Kitchen Appliances > Cookware > Rice Cooker",
+    categoryId: 186,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Rice Cooker",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23865,8 +23865,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 386,
-    name: "Appliance > Kitchen Appliances > Cookware > Pressure Cooker",
+    categoryId: 386,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Pressure Cooker",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23875,8 +23875,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 529,
-    name: "Appliance > Kitchen Appliances > Cookware > Sandwich Maker",
+    categoryId: 529,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Sandwich Maker",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23885,8 +23885,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 479,
-    name: "Appliance > Kitchen Appliances > Cookware > Toaster",
+    categoryId: 479,
+    categoryName: "Appliance > Kitchen Appliances > Cookware > Toaster",
     layer: {
       base: "Appliance",
       first: "Kitchen Appliances",
@@ -23895,16 +23895,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 245,
-    name: "Appliance > Home security",
+    categoryId: 245,
+    categoryName: "Appliance > Home security",
     layer: {
       base: "Appliance",
       first: "Home security",
     },
   },
   {
-    id: 246,
-    name: "Appliance > Home security > Security Camera",
+    categoryId: 246,
+    categoryName: "Appliance > Home security > Security Camera",
     layer: {
       base: "Appliance",
       first: "Home security",
@@ -23912,8 +23912,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 247,
-    name: "Appliance > Home security > Security Camera > WiFi-Connected Cameras",
+    categoryId: 247,
+    categoryName: "Appliance > Home security > Security Camera > WiFi-Connected Cameras",
     layer: {
       base: "Appliance",
       first: "Home security",
@@ -23922,16 +23922,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 250,
-    name: "Appliance > Computers & Accessories",
+    categoryId: 250,
+    categoryName: "Appliance > Computers & Accessories",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
     },
   },
   {
-    id: 483,
-    name: "Appliance > Computers & Accessories > Laptop & Desktop",
+    categoryId: 483,
+    categoryName: "Appliance > Computers & Accessories > Laptop & Desktop",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23939,8 +23939,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 251,
-    name: "Appliance > Computers & Accessories > Networking Devices",
+    categoryId: 251,
+    categoryName: "Appliance > Computers & Accessories > Networking Devices",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23948,8 +23948,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 252,
-    name: "Appliance > Computers & Accessories > Networking Devices > Router",
+    categoryId: 252,
+    categoryName: "Appliance > Computers & Accessories > Networking Devices > Router",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23958,8 +23958,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 267,
-    name: "Appliance > Computers & Accessories > Accessories",
+    categoryId: 267,
+    categoryName: "Appliance > Computers & Accessories > Accessories",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23967,8 +23967,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 268,
-    name: "Appliance > Computers & Accessories > Accessories > Mouse",
+    categoryId: 268,
+    categoryName: "Appliance > Computers & Accessories > Accessories > Mouse",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23977,8 +23977,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 269,
-    name: "Appliance > Computers & Accessories > Accessories > Keyboard",
+    categoryId: 269,
+    categoryName: "Appliance > Computers & Accessories > Accessories > Keyboard",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23987,8 +23987,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 273,
-    name: "Appliance > Computers & Accessories > Accessories > Hubs & docs",
+    categoryId: 273,
+    categoryName: "Appliance > Computers & Accessories > Accessories > Hubs & docs",
     layer: {
       base: "Appliance",
       first: "Computers & Accessories",
@@ -23997,24 +23997,24 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 492,
-    name: "Appliance > Projector",
+    categoryId: 492,
+    categoryName: "Appliance > Projector",
     layer: {
       base: "Appliance",
       first: "Projector",
     },
   },
   {
-    id: 507,
-    name: "Appliance > Audio & Video Live Sound & Stage Equipment",
+    categoryId: 507,
+    categoryName: "Appliance > Audio & Video Live Sound & Stage Equipment",
     layer: {
       base: "Appliance",
       first: "Audio & Video Live Sound & Stage Equipment",
     },
   },
   {
-    id: 508,
-    name: "Appliance > Audio & Video Live Sound & Stage Equipment > Microphone",
+    categoryId: 508,
+    categoryName: "Appliance > Audio & Video Live Sound & Stage Equipment > Microphone",
     layer: {
       base: "Appliance",
       first: "Audio & Video Live Sound & Stage Equipment",
@@ -24022,46 +24022,46 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 130,
-    name: "Gift Cards",
+    categoryId: 130,
+    categoryName: "Gift Cards",
     layer: {
       base: "Gift Cards",
     },
   },
   {
-    id: 315,
-    name: "Gift Cards > Bata Gift Cards",
+    categoryId: 315,
+    categoryName: "Gift Cards > Bata Gift Cards",
     layer: {
       base: "Gift Cards",
       first: "Bata Gift Cards",
     },
   },
   {
-    id: 316,
-    name: "Gift Cards > Apex Gift Voucher",
+    categoryId: 316,
+    categoryName: "Gift Cards > Apex Gift Voucher",
     layer: {
       base: "Gift Cards",
       first: "Apex Gift Voucher",
     },
   },
   {
-    id: 474,
-    name: "Automotives & Motorbikes",
+    categoryId: 474,
+    categoryName: "Automotives & Motorbikes",
     layer: {
       base: "Automotives & Motorbikes",
     },
   },
   {
-    id: 475,
-    name: "Automotives & Motorbikes > Motorcycle",
+    categoryId: 475,
+    categoryName: "Automotives & Motorbikes > Motorcycle",
     layer: {
       base: "Automotives & Motorbikes",
       first: "Motorcycle",
     },
   },
   {
-    id: 476,
-    name: "Automotives & Motorbikes > Motorcycle > Commuter Segment",
+    categoryId: 476,
+    categoryName: "Automotives & Motorbikes > Motorcycle > Commuter Segment",
     layer: {
       base: "Automotives & Motorbikes",
       first: "Motorcycle",
@@ -24069,8 +24069,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 477,
-    name: "Automotives & Motorbikes > Motorcycle > Sports Segment",
+    categoryId: 477,
+    categoryName: "Automotives & Motorbikes > Motorcycle > Sports Segment",
     layer: {
       base: "Automotives & Motorbikes",
       first: "Motorcycle",
@@ -24078,23 +24078,23 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 370,
-    name: "Riding, Sports & Fitness",
+    categoryId: 370,
+    categoryName: "Riding, Sports & Fitness",
     layer: {
       base: "Riding, Sports & Fitness",
     },
   },
   {
-    id: 406,
-    name: "Riding, Sports & Fitness > Biking & Accessories",
+    categoryId: 406,
+    categoryName: "Riding, Sports & Fitness > Biking & Accessories",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Biking & Accessories",
     },
   },
   {
-    id: 410,
-    name: "Riding, Sports & Fitness > Biking & Accessories > Helmet",
+    categoryId: 410,
+    categoryName: "Riding, Sports & Fitness > Biking & Accessories > Helmet",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Biking & Accessories",
@@ -24102,8 +24102,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 412,
-    name: "Riding, Sports & Fitness > Biking & Accessories > Lubricants Oil",
+    categoryId: 412,
+    categoryName: "Riding, Sports & Fitness > Biking & Accessories > Lubricants Oil",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Biking & Accessories",
@@ -24111,8 +24111,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 411,
-    name: "Riding, Sports & Fitness > Biking & Accessories > Bike Accessories",
+    categoryId: 411,
+    categoryName: "Riding, Sports & Fitness > Biking & Accessories > Bike Accessories",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Biking & Accessories",
@@ -24120,16 +24120,16 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 489,
-    name: "Riding, Sports & Fitness > Car & Accessories",
+    categoryId: 489,
+    categoryName: "Riding, Sports & Fitness > Car & Accessories",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Car & Accessories",
     },
   },
   {
-    id: 490,
-    name: "Riding, Sports & Fitness > Car & Accessories > Car Accessories",
+    categoryId: 490,
+    categoryName: "Riding, Sports & Fitness > Car & Accessories > Car Accessories",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Car & Accessories",
@@ -24137,24 +24137,24 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 408,
-    name: "Riding, Sports & Fitness > Exercise & Fitness",
+    categoryId: 408,
+    categoryName: "Riding, Sports & Fitness > Exercise & Fitness",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Exercise & Fitness",
     },
   },
   {
-    id: 415,
-    name: "Riding, Sports & Fitness > Sports",
+    categoryId: 415,
+    categoryName: "Riding, Sports & Fitness > Sports",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Sports",
     },
   },
   {
-    id: 416,
-    name: "Riding, Sports & Fitness > Sports > Basketball",
+    categoryId: 416,
+    categoryName: "Riding, Sports & Fitness > Sports > Basketball",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Sports",
@@ -24162,8 +24162,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 418,
-    name: "Riding, Sports & Fitness > Sports > Tennis",
+    categoryId: 418,
+    categoryName: "Riding, Sports & Fitness > Sports > Tennis",
     layer: {
       base: "Riding, Sports & Fitness",
       first: "Sports",
@@ -24171,181 +24171,181 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 429,
-    name: "Phones & Tablets",
+    categoryId: 429,
+    categoryName: "Phones & Tablets",
     layer: {
       base: "Phones & Tablets",
     },
   },
   {
-    id: 430,
-    name: "Phones & Tablets > OPPO",
+    categoryId: 430,
+    categoryName: "Phones & Tablets > OPPO",
     layer: {
       base: "Phones & Tablets",
       first: "OPPO",
     },
   },
   {
-    id: 495,
-    name: "Phones & Tablets > iPhone",
+    categoryId: 495,
+    categoryName: "Phones & Tablets > iPhone",
     layer: {
       base: "Phones & Tablets",
       first: "iPhone",
     },
   },
   {
-    id: 512,
-    name: "Phones & Tablets > Symphony",
+    categoryId: 512,
+    categoryName: "Phones & Tablets > Symphony",
     layer: {
       base: "Phones & Tablets",
       first: "Symphony",
     },
   },
   {
-    id: 432,
-    name: "Phones & Tablets > OnePlus",
+    categoryId: 432,
+    categoryName: "Phones & Tablets > OnePlus",
     layer: {
       base: "Phones & Tablets",
       first: "OnePlus",
     },
   },
   {
-    id: 515,
-    name: "Phones & Tablets > Black Shark",
+    categoryId: 515,
+    categoryName: "Phones & Tablets > Black Shark",
     layer: {
       base: "Phones & Tablets",
       first: "Black Shark",
     },
   },
   {
-    id: 431,
-    name: "Phones & Tablets > vivo",
+    categoryId: 431,
+    categoryName: "Phones & Tablets > vivo",
     layer: {
       base: "Phones & Tablets",
       first: "vivo",
     },
   },
   {
-    id: 433,
-    name: "Phones & Tablets > Realme",
+    categoryId: 433,
+    categoryName: "Phones & Tablets > Realme",
     layer: {
       base: "Phones & Tablets",
       first: "Realme",
     },
   },
   {
-    id: 434,
-    name: "Phones & Tablets > HONOR",
+    categoryId: 434,
+    categoryName: "Phones & Tablets > HONOR",
     layer: {
       base: "Phones & Tablets",
       first: "HONOR",
     },
   },
   {
-    id: 461,
-    name: "Phones & Tablets > Redmi",
+    categoryId: 461,
+    categoryName: "Phones & Tablets > Redmi",
     layer: {
       base: "Phones & Tablets",
       first: "Redmi",
     },
   },
   {
-    id: 435,
-    name: "Phones & Tablets > Nokia",
+    categoryId: 435,
+    categoryName: "Phones & Tablets > Nokia",
     layer: {
       base: "Phones & Tablets",
       first: "Nokia",
     },
   },
   {
-    id: 436,
-    name: "Phones & Tablets > Xiaomi",
+    categoryId: 436,
+    categoryName: "Phones & Tablets > Xiaomi",
     layer: {
       base: "Phones & Tablets",
       first: "Xiaomi",
     },
   },
   {
-    id: 464,
-    name: "Phones & Tablets > Samsung",
+    categoryId: 464,
+    categoryName: "Phones & Tablets > Samsung",
     layer: {
       base: "Phones & Tablets",
       first: "Samsung",
     },
   },
   {
-    id: 482,
-    name: "Phones & Tablets > TECNO",
+    categoryId: 482,
+    categoryName: "Phones & Tablets > TECNO",
     layer: {
       base: "Phones & Tablets",
       first: "TECNO",
     },
   },
   {
-    id: 504,
-    name: "Phones & Tablets > Infinix",
+    categoryId: 504,
+    categoryName: "Phones & Tablets > Infinix",
     layer: {
       base: "Phones & Tablets",
       first: "Infinix",
     },
   },
   {
-    id: 491,
-    name: "Phones & Tablets > XTRA",
+    categoryId: 491,
+    categoryName: "Phones & Tablets > XTRA",
     layer: {
       base: "Phones & Tablets",
       first: "XTRA",
     },
   },
   {
-    id: 496,
-    name: "Phones & Tablets > Google",
+    categoryId: 496,
+    categoryName: "Phones & Tablets > Google",
     layer: {
       base: "Phones & Tablets",
       first: "Google",
     },
   },
   {
-    id: 437,
-    name: "Food & Snacks",
+    categoryId: 437,
+    categoryName: "Food & Snacks",
     layer: {
       base: "Food & Snacks",
     },
   },
   {
-    id: 438,
-    name: "Food & Snacks > Tea",
+    categoryId: 438,
+    categoryName: "Food & Snacks > Tea",
     layer: {
       base: "Food & Snacks",
       first: "Tea",
     },
   },
   {
-    id: 509,
-    name: "Food & Snacks > coffee",
+    categoryId: 509,
+    categoryName: "Food & Snacks > coffee",
     layer: {
       base: "Food & Snacks",
       first: "coffee",
     },
   },
   {
-    id: 462,
-    name: "Books & Stationery Items",
+    categoryId: 462,
+    categoryName: "Books & Stationery Items",
     layer: {
       base: "Books & Stationery Items",
     },
   },
   {
-    id: 500,
-    name: "Books & Stationery Items > Pen",
+    categoryId: 500,
+    categoryName: "Books & Stationery Items > Pen",
     layer: {
       base: "Books & Stationery Items",
       first: "Pen",
     },
   },
   {
-    id: 501,
-    name: "Books & Stationery Items > Pen > Gel Pen",
+    categoryId: 501,
+    categoryName: "Books & Stationery Items > Pen > Gel Pen",
     layer: {
       base: "Books & Stationery Items",
       first: "Pen",
@@ -24353,8 +24353,8 @@ export const categoriesWithLayer: CategoryWithLayerT[] = [
     },
   },
   {
-    id: 506,
-    name: "Books & Stationery Items > Pen > Ball pen",
+    categoryId: 506,
+    categoryName: "Books & Stationery Items > Pen > Ball pen",
     layer: {
       base: "Books & Stationery Items",
       first: "Pen",

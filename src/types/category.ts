@@ -6,7 +6,7 @@ interface CategotyLayerT {
 }
 
 export interface CategoryWithLayerT {
-  id: number | null;
-  name: string;
+  categoryId: number | null;
+  categoryName: string;
   layer: CategotyLayerT;
 }

@@ -11,6 +11,7 @@ import sellersRoutes from "./sellers/sellers";
 import brandsRoutes from "./brands/brands";
 import variantsRoutes from "./variants/variants";
 import warrantyRoutes from "./warranty/warranty";
+import SizeRoutes from "./sizes/sizes";
 
 const router = Router();
 
@@ -21,13 +22,13 @@ router.use("/auth", authRouters);
 router.use("/roles", roleRouters);
 router.use("/categories", categoryRouters);
 router.use("/shops", shopRouters);
-router.use("/inventory", inventoryRouters );
+router.use("/inventory", inventoryRouters);
 router.use("/columns", columnsRoutes);
 router.use("/sellers", sellersRoutes);
 router.use("/brands", brandsRoutes);
 router.use("/variants", variantsRoutes);
 router.use("/warranty", warrantyRoutes);
-
+router.use("/sizes", SizeRoutes);
 // Root API route
 router.get("/", (req: Request, res: Response) => {
   res.json({
@@ -41,12 +42,13 @@ router.get("/", (req: Request, res: Response) => {
       roles: "/api/v1/roles",
       categories: "/api/v1/categories",
       shops: "/api/v1/shops",
-      inventory:"/api/v1/inventory",
+      inventory: "/api/v1/inventory",
       columns: "/api/v1/columns",
       sellers: "/api/v1/sellers",
       brands: "/api/v1/brands",
       variants: "/api/v1/variants",
-      warranty: "/api/v1/warranty"
+      warranty: "/api/v1/warranty",
+      sizes: "/api/v1/sizes",
     },
   });
 });

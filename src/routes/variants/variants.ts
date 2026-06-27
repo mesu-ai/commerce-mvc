@@ -1,334 +1,410 @@
-import { variantCategoryCombinations } from "../../data/variantCategoryCombination";
-import { variantAttributeValues } from "../../data/variantAttributeValue";
-import { variantAttributes } from "../../data/variantAttribute";
+import { Router, Request, Response, NextFunction } from "express";
+import { prisma } from "../../config/prisma";
 import { verifyAccessToken } from "../../middleware/auth.middleware";
-import { Router, Request, Response } from "express";
 
 const router = Router();
 
-router.get("/attributes", verifyAccessToken, (req: Request, res: Response) => {
-  const { keyword, status, variantSetupTempleteId, itemsPerPage, currentPage } =
-    req.query;
-
-  const keywordStr =
-    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-  const statusStr = typeof status === "string" ? status : undefined;
-  const variantSetupTempleteIdStr =
-    typeof variantSetupTempleteId === "string"
-      ? variantSetupTempleteId
-      : undefined;
-
-  let filtered = [...variantAttributes];
-
-  if (keywordStr) {
-    filtered = filtered.filter((attribute) =>
-      attribute.variantName.toLowerCase().includes(keywordStr),
-    );
-  }
-
-  if (statusStr) {
-    filtered = filtered.filter((attribute) => attribute.isActive === statusStr);
-  }
-
-  if (variantSetupTempleteIdStr) {
-    filtered = filtered.filter(
-      (attribute) =>
-        attribute.variantSetupTempleteId === Number(variantSetupTempleteIdStr),
-    );
-  }
-
-  const perPage =
-    typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-      ? Number(itemsPerPage)
-      : 15;
-  const page =
-    typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-      ? Number(currentPage)
-      : 1;
-
-  const totalItems = filtered.length;
-
-  if (totalItems === 0) {
-    return res.status(200).json({
-      success: true,
-      message: "Variants retrieved successfully",
-      data: [],
-      pagination: {
-        currentPage: 0,
-        itemsPerPage: perPage,
-        totalPages: 0,
-        totalItems: 0,
-      },
-    });
-  }
-
-  const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-  const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-  const startIndex = (currentPageNumber - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const pagedData = filtered.slice(startIndex, endIndex);
-
-  return res.status(200).json({
-    success: true,
-    message: "Variants retrieved successfully",
-    data: pagedData,
-    pagination: {
-      currentPage: currentPageNumber,
-      itemsPerPage: perPage,
-      totalPages,
-      totalItems,
-    },
-  });
-});
-
+// ---- Variant attributes ----
 router.get(
-  "/attributes/:id",
+  "/attributes",
   verifyAccessToken,
-  (req: Request, res: Response) => {
-    const { id } = req.params;
-    const attribute = variantAttributes.find(
-      (attr) => attr.productVariantId === Number(id),
-    );
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword, status, variantSetupTempleteId, itemsPerPage, currentPage } =
+        req.query;
 
-    if (!attribute) {
-      return res.status(404).json({
-        success: false,
-        message: "Variant attribute not found",
+      const keywordStr =
+        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+      const statusStr = typeof status === "string" ? status : undefined;
+      const variantSetupTempleteIdStr =
+        typeof variantSetupTempleteId === "string"
+          ? variantSetupTempleteId
+          : undefined;
+
+      const where: any = {};
+      if (keywordStr) {
+        where.variantName = { contains: keywordStr, mode: "insensitive" };
+      }
+      if (statusStr) {
+        where.isActive = statusStr;
+      }
+      if (variantSetupTempleteIdStr) {
+        where.variantSetupTempleteId = Number(variantSetupTempleteIdStr);
+      }
+
+      const perPage =
+        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+          ? Number(itemsPerPage)
+          : 15;
+      const page =
+        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+          ? Number(currentPage)
+          : 1;
+
+      const totalItems = await prisma.variantAttribute.count({ where });
+
+      if (totalItems === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "Variants retrieved successfully",
+          data: [],
+          pagination: {
+            currentPage: 0,
+            itemsPerPage: perPage,
+            totalPages: 0,
+            totalItems: 0,
+          },
+        });
+      }
+
+      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+      const skip = (currentPageNumber - 1) * perPage;
+
+      const data = await prisma.variantAttribute.findMany({
+        where,
+        orderBy: { productVariantId: "asc" },
+        skip,
+        take: perPage,
       });
-    } else {
+
       return res.status(200).json({
         success: true,
-        message: "Variant attribute retrieved successfully",
-        data: attribute,
+        message: "Variants retrieved successfully",
+        data,
+        pagination: {
+          currentPage: currentPageNumber,
+          itemsPerPage: perPage,
+          totalPages,
+          totalItems,
+        },
       });
+    } catch (err) {
+      return next(err);
     }
   },
 );
 
 router.get(
+  "/attributes/:id",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const attribute = await prisma.variantAttribute.findUnique({
+        where: { productVariantId: Number(id) },
+      });
+
+      if (!attribute) {
+        return res.status(404).json({
+          success: false,
+          message: "Variant attribute not found",
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "Variant attribute retrieved successfully",
+        data: attribute,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// ---- Variant attribute values ----
+router.get(
   "/attribute-values",
   verifyAccessToken,
-  (req: Request, res: Response) => {
-    const { keyword, productVariantId, itemsPerPage, currentPage, getAll } = req.query;
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword, productVariantId, itemsPerPage, currentPage, getAll } =
+        req.query;
 
-    const keywordStr =
-      typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-    const productVariantIdStr = typeof productVariantId === "string" ? productVariantId : undefined;
-    // const variantSetupTempleteIdStr = typeof variantSetupTempleteId === "string" ? variantSetupTempleteId : undefined;
+      const keywordStr =
+        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+      const productVariantIdStr =
+        typeof productVariantId === "string" ? productVariantId : undefined;
 
-    let filtered = [...variantAttributeValues];
+      const where: any = {};
+      if (productVariantIdStr) {
+        where.productVariantId = Number(productVariantIdStr);
+      }
+      if (keywordStr) {
+        where.variantName = { contains: keywordStr, mode: "insensitive" };
+      }
 
-    if (productVariantIdStr) {
-      filtered = filtered.filter(
-        (attribute) =>
-          attribute.productVariantId === Number(productVariantIdStr),
-      );
-    }
+      const perPage =
+        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+          ? Number(itemsPerPage)
+          : 15;
+      const page =
+        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+          ? Number(currentPage)
+          : 1;
 
-    if (keywordStr) {
-      filtered = filtered.filter((attribute) =>
-        attribute.variantName.toLowerCase().includes(keywordStr),
-      );
-    }
+      const totalItems = await prisma.variantAttributeValue.count({ where });
 
-    const perPage =
-      typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-        ? Number(itemsPerPage)
-        : 15;
-    
-        const page =
-      typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-        ? Number(currentPage)
-        : 1;
+      if (totalItems === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "Variants retrieved successfully",
+          data: [],
+          pagination: {
+            currentPage: 0,
+            itemsPerPage: perPage,
+            totalPages: 0,
+            totalItems: 0,
+          },
+        });
+      }
 
-    const totalItems = filtered.length;
+      if (getAll === "Y") {
+        const data = await prisma.variantAttributeValue.findMany({
+          where,
+          orderBy: { id: "asc" },
+        });
+        return res.status(200).json({
+          success: true,
+          message: "Variants retrieved successfully",
+          data,
+          pagination: {
+            currentPage: 1,
+            itemsPerPage: totalItems,
+            totalPages: 1,
+            totalItems,
+          },
+        });
+      }
 
-    if (totalItems === 0) {
-      return res.status(200).json({
-        success: true,
-        message: "Variants retrieved successfully",
-        data: [],
-        pagination: {
-          currentPage: 0,
-          itemsPerPage: perPage,
-          totalPages: 0,
-          totalItems: 0,
-        },
+      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+      const skip = (currentPageNumber - 1) * perPage;
+
+      const data = await prisma.variantAttributeValue.findMany({
+        where,
+        orderBy: { id: "asc" },
+        skip,
+        take: perPage,
       });
-    }
 
-    if (getAll === "Y") {
       return res.status(200).json({
         success: true,
         message: "Variants retrieved successfully",
-        data: filtered,
+        data,
         pagination: {
-          currentPage: 1,
-          itemsPerPage: totalItems,
-          totalPages: 1,
+          currentPage: currentPageNumber,
+          itemsPerPage: perPage,
+          totalPages,
           totalItems,
         },
       });
+    } catch (err) {
+      return next(err);
     }
-
-    const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-    const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-    const startIndex = (currentPageNumber - 1) * perPage;
-    const endIndex = startIndex + perPage;
-    const pagedData = filtered.slice(startIndex, endIndex);
-
-    return res.status(200).json({
-      success: true,
-      message: "Variants retrieved successfully",
-      data: pagedData,
-      pagination: {
-        currentPage: currentPageNumber,
-        itemsPerPage: perPage,
-        totalPages,
-        totalItems,
-      },
-    });
   },
 );
 
 router.get(
   "/attribute-values/:id",
   verifyAccessToken,
-  (req: Request, res: Response) => {
-    const { id } = req.params;
-    const attribute = variantAttributeValues.find(
-      (attr) => attr.variantOptionId === Number(id),
-    );
-
-    if (!attribute) {
-      return res.status(404).json({
-        success: false,
-        message: "Variant attribute not found",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const attribute = await prisma.variantAttributeValue.findFirst({
+        where: { variantOptionId: Number(id) },
       });
-    } else {
+
+      if (!attribute) {
+        return res.status(404).json({
+          success: false,
+          message: "Variant attribute not found",
+        });
+      }
       return res.status(200).json({
         success: true,
         message: "Variant attribute retrieved successfully",
         data: attribute,
       });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// ---- Variant category configurations ----
+router.get(
+  "/category-configurations",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword, productVariantId, variantTempleteId, itemsPerPage, currentPage, getAll } =
+        req.query;
+
+      const keywordStr =
+        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+      const productVariantIdStr =
+        typeof productVariantId === "string" ? productVariantId : undefined;
+      const variantTempleteIdStr =
+        typeof variantTempleteId === "string" ? variantTempleteId : undefined;
+
+      const where: any = {};
+      if (productVariantIdStr) {
+        where.productVariantId = Number(productVariantIdStr);
+      }
+      if (variantTempleteIdStr) {
+        where.variantTempleteId = Number(variantTempleteIdStr);
+      }
+      if (keywordStr) {
+        where.variantName = { contains: keywordStr, mode: "insensitive" };
+      }
+
+      const perPage =
+        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+          ? Number(itemsPerPage)
+          : 15;
+      const page =
+        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+          ? Number(currentPage)
+          : 1;
+
+      const totalItems = await prisma.variantCategoryCombination.count({ where });
+
+      if (totalItems === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "Variants retrieved successfully",
+          data: [],
+          pagination: {
+            currentPage: 0,
+            itemsPerPage: perPage,
+            totalPages: 0,
+            totalItems: 0,
+          },
+        });
+      }
+
+      if (getAll === "Y") {
+        const data = await prisma.variantCategoryCombination.findMany({
+          where,
+          orderBy: { id: "asc" },
+        });
+        return res.status(200).json({
+          success: true,
+          message: "Variants retrieved successfully",
+          data,
+          pagination: {
+            currentPage: 1,
+            itemsPerPage: totalItems,
+            totalPages: 1,
+            totalItems,
+          },
+        });
+      }
+
+      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+      const skip = (currentPageNumber - 1) * perPage;
+
+      const data = await prisma.variantCategoryCombination.findMany({
+        where,
+        orderBy: { id: "asc" },
+        skip,
+        take: perPage,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Variants retrieved successfully",
+        data,
+        pagination: {
+          currentPage: currentPageNumber,
+          itemsPerPage: perPage,
+          totalPages,
+          totalItems,
+        },
+      });
+    } catch (err) {
+      return next(err);
     }
   },
 );
 
 router.get(
-  "/category-configurations",
+  "/categorywise-variantoptions",
   verifyAccessToken,
-  (req: Request, res: Response) => {
-    const { keyword, productVariantId, variantTempleteId, itemsPerPage, currentPage, getAll } = req.query;
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { productCategoryId, variantTempleteId } = req.query;
 
-    const keywordStr =
-      typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-    const productVariantIdStr =
-      typeof productVariantId === "string" ? productVariantId : undefined;
-    const variantTempleteIdStr =
-      typeof variantTempleteId === "string" ? variantTempleteId : undefined;
+      if (!productCategoryId) {
+        return res.status(400).json({
+          success: false,
+          message: "CategoryId is required",
+        });
+      }
 
-    let filtered = [...variantCategoryCombinations];
+      const where: any = { productCategoryId: Number(productCategoryId) };
+      if (variantTempleteId) {
+        where.variantTempleteId = Number(variantTempleteId);
+      }
 
-    if (productVariantIdStr) {
-      filtered = filtered.filter(
-        (attribute) =>
-          attribute.productVariantId === Number(productVariantIdStr),
-      );
-    }
+      const filtered = await prisma.variantCategoryCombination.findMany({
+        where,
+      });
 
-    if (variantTempleteIdStr) {
-      filtered = filtered.filter(
-        (attribute) =>
-          attribute.variantTempleteId === Number(variantTempleteIdStr),
-      );
-    }
+      const variantWiseGrouped = filtered.reduce((acc: any, curr: any) => {
+        const variantId = curr.productVariantId;
+        if (!acc[variantId]) {
+          acc[variantId] = {
+            productVariantId: curr.productVariantId,
+            variantName: curr.variantName,
+            productVariantOptions: [],
+          };
+        }
 
-    if (keywordStr) {
-      filtered = filtered.filter((attribute) =>
-        attribute.variantName.toLowerCase().includes(keywordStr),
-      );
-    }
+        acc[variantId].productVariantOptions.push({
+          variantOptionId: curr.variantOptionId,
+          variantOptionText: curr.variantOptionText,
+          variantOptionValue: curr.variantOptionValue,
+        });
+        return acc;
+      }, {});
 
-    const perPage =
-      typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-        ? Number(itemsPerPage)
-        : 15;
-    
-        const page =
-      typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-        ? Number(currentPage)
-        : 1;
-
-    const totalItems = filtered.length;
-
-    if (totalItems === 0) {
       return res.status(200).json({
         success: true,
-        message: "Variants retrieved successfully",
-        data: [],
-        pagination: {
-          currentPage: 0,
-          itemsPerPage: perPage,
-          totalPages: 0,
-          totalItems: 0,
-        },
+        message: "Category-wise variant options retrieved successfully",
+        data: Object.values(variantWiseGrouped),
       });
+    } catch (err) {
+      return next(err);
     }
-
-    if (getAll === "Y") {
-      return res.status(200).json({
-        success: true,
-        message: "Variants retrieved successfully",
-        data: filtered,
-        pagination: {
-          currentPage: 1,
-          itemsPerPage: totalItems,
-          totalPages: 1,
-          totalItems,
-        },
-      });
-    }
-
-    const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-    const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-    const startIndex = (currentPageNumber - 1) * perPage;
-    const endIndex = startIndex + perPage;
-    const pagedData = filtered.slice(startIndex, endIndex);
-
-    return res.status(200).json({
-      success: true,
-      message: "Variants retrieved successfully",
-      data: pagedData,
-      pagination: {
-        currentPage: currentPageNumber,
-        itemsPerPage: perPage,
-        totalPages,
-        totalItems,
-      },
-    });
   },
 );
 
-router.get( "/category-configurations/:id",
+router.get(
+  "/category-configurations/:id",
   verifyAccessToken,
-  (req: Request, res: Response) => {
-    const { id } = req.params;
-    const attribute = variantCategoryCombinations.find(
-      (attr) => attr.variantOptionId === Number(id),
-    );
-
-    if (!attribute) {
-      return res.status(404).json({
-        success: false,
-        message: "Variant attribute not found",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const attribute = await prisma.variantCategoryCombination.findFirst({
+        where: { variantOptionId: Number(id) },
       });
-    } else {
+
+      if (!attribute) {
+        return res.status(404).json({
+          success: false,
+          message: "Variant attribute not found",
+        });
+      }
       return res.status(200).json({
         success: true,
         message: "Variant attribute retrieved successfully",
         data: attribute,
       });
+    } catch (err) {
+      return next(err);
     }
   },
 );

@@ -3,9 +3,9 @@ import { UserT } from "@/types/user";
 export const users: UserT[] = [
   {
     employeeId: "556699",
-    name: "mesu",
-    username: "mesu12",
-    email: "mesu@example.com",
+    name: "Md Emon",
+    username: "emon123",
+    email: "emon@example.com",
     role: "admin",
     status: "Y",
     gender: "male",
@@ -30,7 +30,7 @@ export const users: UserT[] = [
   {
     employeeId: "556610",
     username: "sumin12",
-    name: "sumin",
+    name: "Sumin Ahmed",
     email: "sumin@example.com",
     role: "admin",
     status: "Y",
@@ -55,9 +55,9 @@ export const users: UserT[] = [
   },
   {
     employeeId: "558899",
-    name: "jomin",
-    username: "jomin12",
-    email: "jomin@example.com",
+    name: "I A Mesu",
+    username: "mesu123",
+    email: "mesu@example.com",
     role: "super admin",
     status: "Y",
     gender: "male",

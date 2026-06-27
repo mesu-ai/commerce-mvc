@@ -1,0 +1,26 @@
+# Spins up a local PostgreSQL database in a container.
+# Start it with:  docker compose up -d
+# Stop it with:   docker compose down   (add -v to also delete the data)
+services:
+  postgres:
+    image: postgres:16
+    container_name: express_mvc_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: express_mvc_db
+    ports:
+      # host:container — your app connects to localhost:5432
+      - "5432:5432"
+    volumes:
+      # named volume keeps your data even after the container restarts
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d express_mvc_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

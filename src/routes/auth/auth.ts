@@ -1,8 +1,7 @@
-import { userInfo } from "os";
-import { users } from "../../data/user";
 import { UserT } from "../../types/user";
 import { Router, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { prisma } from "../../config/prisma";
 
 const router = Router();
 
@@ -22,16 +21,15 @@ type NewUserT = Pick<
   | "permissions"
 >;
 
-router.post("/login", (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
-  const user: UserT | undefined = users.find(
-    (item) => item?.username === username
-  );
-  // console.log({user})
+  const user = await prisma.user.findUnique({
+    where: { username },
+  });
 
-  if (user && username === user?.username && password === "1234") {
-    
+  if (user && username === user.username && password === "1234") {
+
     const accessToken = jwt.sign(
       { id: user.employeeId, username: user.username },
       ACCESS_TOKEN_SECRET,
