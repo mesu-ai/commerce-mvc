@@ -84,6 +84,11 @@ export const users: UserT[] = [
       "orders.manage",
       "orders.cancel",
 
+      "contents.categories",
+      "contents.pages",
+      "contents.pages.create",
+      "contents.pages.edit",
+
       "settings.sellers.index",
       "settings.sellers.create",
       "settings.sellers.edit",
@@ -101,6 +106,10 @@ export const users: UserT[] = [
       "settings.variants.category-configurations.create",
       "settings.warranty.types",
       "settings.warranty.periods",
+      "settings.sizes.attributes",
+      "settings.sizes.charts",
+      "settings.sizes.charts.create",
+      "settings.sizes.charts.edit",
     
 
       "access-control.employees",

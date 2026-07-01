@@ -12,6 +12,7 @@ import brandsRoutes from "./brands/brands";
 import variantsRoutes from "./variants/variants";
 import warrantyRoutes from "./warranty/warranty";
 import SizeRoutes from "./sizes/sizes";
+import contentsRoutes from "./contents/contents";
 
 const router = Router();
 
@@ -29,6 +30,9 @@ router.use("/brands", brandsRoutes);
 router.use("/variants", variantsRoutes);
 router.use("/warranty", warrantyRoutes);
 router.use("/sizes", SizeRoutes);
+router.use("/contents", contentsRoutes);
+
+
 // Root API route
 router.get("/", (req: Request, res: Response) => {
   res.json({
@@ -49,6 +53,7 @@ router.get("/", (req: Request, res: Response) => {
       variants: "/api/v1/variants",
       warranty: "/api/v1/warranty",
       sizes: "/api/v1/sizes",
+      contents: "/api/v1/contents",
     },
   });
 });

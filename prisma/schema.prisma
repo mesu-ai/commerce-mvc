@@ -117,6 +117,20 @@ model Product {
   @@map("products")
 }
 
+// Mirrors src/data/ContentCategory.ts
+model ContentCategory {
+    contentTypeId    Int @id
+    contentTypeName  String
+    isActive         String?
+    ip               String?
+    createdBy        String?
+    createDate       String?
+    updateBy         String?
+    updateDate       String?
+
+ @@map("content_category")
+}
+
 // Mirrors src/data/brand.ts. productCategories array -> JSON column.
 model Brand {
   brandId           Int     @id

@@ -16,6 +16,7 @@ import { sizeCharts } from "../src/data/sizeChart";
 import { variantAttributes } from "../src/data/variantAttribute";
 import { variantAttributeValues } from "../src/data/variantAttributeValue";
 import { variantCategoryCombinations } from "../src/data/variantCategoryCombination";
+import { contentCategories } from "../src/data/contentCategory";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
 // the number of bind parameters per query, so we batch large datasets).
@@ -54,6 +55,7 @@ async function main() {
     prisma.variantCategoryCombination,
     variantCategoryCombinations,
   );
+  await reseed("contentCategories", prisma.contentCategory, contentCategories);
 
   console.log("✅ Seeding complete.");
 }
