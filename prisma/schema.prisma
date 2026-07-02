@@ -131,6 +131,35 @@ model ContentCategory {
  @@map("content_category")
 }
 
+// Mirrors src/data/contentPost.ts.
+model ContentPost {
+  contentId           Int     @id
+  contentTypeId       Int
+  pageName            String
+  slug                String?
+  featuredImage       String?
+  pageDescription     String?
+  others              String?
+  iconPath            String?
+  ip                  String?
+  isActive            String?
+  displayOrder        Int?
+  isUrlStatus         String?
+  showInHomePage      String?
+  contentTypeName     String?
+  metaTitle           String?
+  metaKeywords        String?
+  metaDescription     String?
+  metaLongDescription String?
+  ogType              String?
+  ogTitle             String?
+  ogDescription       String?
+  ogUrl               String?
+  ogImgUrl            String?
+
+  @@map("content_post")
+}
+
 // Mirrors src/data/brand.ts. productCategories array -> JSON column.
 model Brand {
   brandId           Int     @id

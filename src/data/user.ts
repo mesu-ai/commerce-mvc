@@ -85,9 +85,9 @@ export const users: UserT[] = [
       "orders.cancel",
 
       "contents.categories",
-      "contents.pages",
-      "contents.pages.create",
-      "contents.pages.edit",
+      "contents.posts",
+      "contents.posts.create",
+      "contents.posts.edit",
 
       "settings.sellers.index",
       "settings.sellers.create",
