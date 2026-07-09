@@ -119,6 +119,11 @@ export const users: UserT[] = [
       "access-control.roles",
       "access-control.roles.create",
       "access-control.roles.edit",
+
+      "administrative.caching.isr",
+      "administrative.caching.backend",
+      "administrative.caching.cloudflare",
+      "administrative.app-release"
     ],
   },
 ];

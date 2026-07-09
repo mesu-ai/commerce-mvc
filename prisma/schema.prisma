@@ -412,3 +412,12 @@ model VariantCategoryCombination {
   @@index([variantOptionId])
   @@map("variant_category_combinations")
 }
+
+//Mirrors src/data/radisCache.ts 
+model RedisCache {
+  id                  Int       @id @default(autoincrement())
+  key                 String    @unique
+  expireTime          String?
+
+  @@map("redis_cache")
+}

@@ -13,6 +13,7 @@ import variantsRoutes from "./variants/variants";
 import warrantyRoutes from "./warranty/warranty";
 import SizeRoutes from "./sizes/sizes";
 import contentsRoutes from "./contents/contents";
+import cacheRoutes from './cache/cache';
 
 const router = Router();
 
@@ -31,6 +32,7 @@ router.use("/variants", variantsRoutes);
 router.use("/warranty", warrantyRoutes);
 router.use("/sizes", SizeRoutes);
 router.use("/contents", contentsRoutes);
+router.use("/cache", cacheRoutes);
 
 
 // Root API route
@@ -54,6 +56,7 @@ router.get("/", (req: Request, res: Response) => {
       warranty: "/api/v1/warranty",
       sizes: "/api/v1/sizes",
       contents: "/api/v1/contents",
+      cache: "/api/v1/cache",
     },
   });
 });
