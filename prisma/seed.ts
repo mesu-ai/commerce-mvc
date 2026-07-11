@@ -19,6 +19,9 @@ import { variantCategoryCombinations } from "../src/data/variantCategoryCombinat
 import { contentCategories } from "../src/data/contentCategory";
 import { contentPosts } from "../src/data/contentPost";
 import { redisCache } from "../src/data/redisCache";
+import { blogCategories } from "../src/data/blogCategory";
+import { blogPosts } from "../src/data/blogPost";
+import { outlets } from "../src/data/outlet";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
 // the number of bind parameters per query, so we batch large datasets).
@@ -60,6 +63,9 @@ async function main() {
   await reseed("contentCategories", prisma.contentCategory, contentCategories);
   await reseed("contentPosts", prisma.contentPost, contentPosts);
   await reseed("cache", prisma.redisCache, redisCache);
+  await reseed("blogCategories", prisma.blogCategory, blogCategories);
+  await reseed("blogPosts", prisma.blogPost, blogPosts);
+  await reseed("outlets", prisma.outlet, outlets);
   console.log("✅ Seeding complete.");
 }
 

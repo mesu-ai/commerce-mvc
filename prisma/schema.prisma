@@ -413,7 +413,66 @@ model VariantCategoryCombination {
   @@map("variant_category_combinations")
 }
 
-//Mirrors src/data/radisCache.ts 
+// Mirrors src/data/blogCategory.ts. Most fields are commented out in the
+// mock data, so only the active ones are modeled here.
+model BlogCategory {
+  blogCategoryId   Int     @id
+  blogCategoryName String
+  blogCatUrl       String?
+  isActive         String?
+  featureImagePath String?
+
+  @@map("blog_categories")
+}
+
+// Mirrors src/data/blogPost.ts.
+model BlogPost {
+  postId           Int     @id
+  postCategoryId   Int
+  postTitle        String
+  postDescription  String?
+  featureImagePath String?
+  publishDatetime  String?
+  metaTitle        String?
+  metaKeywords     String?
+  metaDescription  String?
+  metaAuthor       String?
+  ogType           String?
+  ogTitle          String?
+  ogDescription    String?
+  ogUrl            String?
+  ogImgUrl         String?
+  isApproved       Boolean?
+  isActive         String?
+  externalLink     String?
+  blogPostUrl      String?
+  ip               String?
+  blogCategoryName String?
+  createDate       String?
+  adminName        String?
+
+  @@map("blog_posts")
+}
+
+// Mirrors src/data/outlet.ts. contacts array -> JSON column.
+model Outlet {
+  outletId          Int     @id
+  outletName        String
+  address           String?
+  businessHours     String?
+  businessHoursNote String?
+  contactNumOne     String?
+  contactNumTwo     String?
+  contactNumThree   String?
+  outletImage       String?
+  outletDirection   String?
+  isActive          String?
+  contacts          Json?
+
+  @@map("outlets")
+}
+
+//Mirrors src/data/radisCache.ts
 model RedisCache {
   id                  Int       @id @default(autoincrement())
   key                 String    @unique

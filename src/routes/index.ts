@@ -14,6 +14,8 @@ import warrantyRoutes from "./warranty/warranty";
 import SizeRoutes from "./sizes/sizes";
 import contentsRoutes from "./contents/contents";
 import cacheRoutes from './cache/cache';
+import blogRoutes from './blogs/blogs';
+import outletRoutes from './outlets/outlets';
 
 const router = Router();
 
@@ -33,7 +35,8 @@ router.use("/warranty", warrantyRoutes);
 router.use("/sizes", SizeRoutes);
 router.use("/contents", contentsRoutes);
 router.use("/cache", cacheRoutes);
-
+router.use("/blogs", blogRoutes);
+router.use("/outlets", outletRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -57,6 +60,8 @@ router.get("/", (req: Request, res: Response) => {
       sizes: "/api/v1/sizes",
       contents: "/api/v1/contents",
       cache: "/api/v1/cache",
+      blogs: "/api/v1/blogs",
+      outlets: "/api/v1/outlets",
     },
   });
 });
