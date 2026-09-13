@@ -19,6 +19,7 @@ import outletRoutes from './outlets/outlets';
 import bannerRoutes from './banners/banners';
 import customerRoutes from './customers/customers';
 import addressRoutes from './address/address';
+import orderRoutes from './order/order';
 
 const router = Router();
 
@@ -43,6 +44,7 @@ router.use("/outlets", outletRoutes);
 router.use("/banners", bannerRoutes);
 router.use("/customers", customerRoutes);
 router.use("/address", addressRoutes);
+router.use("/orders", orderRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -71,6 +73,7 @@ router.get("/", (req: Request, res: Response) => {
       banners: "/api/v1/banners",
       customers: "/api/v1/customers",
       citywithareas: "/api/v1/citywithareas",
+      orders: "/api/v1/orders",
     },
   });
 });

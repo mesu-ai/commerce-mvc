@@ -27,6 +27,8 @@ import { bannerPlacements } from "../src/data/bannerPlacement";
 import { bannerContents } from "../src/data/bannerContent";
 import { customerAddresses } from "../src/data/customerAddress";
 import { citiesWithAreas } from "../src/data/cityWithArea";
+import { orders } from "../src/data/order";
+import { Prisma } from "@prisma/client";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
 // the number of bind parameters per query, so we batch large datasets).
@@ -85,6 +87,32 @@ async function reseedProducts() {
 //   console.log(`  bannerImages: ${bannerImageRows.length}`);
 // }
 
+// Orders own shopWiseOrders and paymentInfo as real relations, so createMany
+// can't nest them — create each order with its rows in one nested write.
+async function reseedOrders() {
+  await prisma.order.deleteMany({});
+  for (const { shopWiseOrders, paymentInfo, ...orderFields } of orders) {
+    await prisma.order.create({
+      data: {
+        ...orderFields,
+        shopWiseOrders: {
+          create: shopWiseOrders.map(
+            ({ orderProfileId, orderDetails, sellerProfile, orderTrackingDetails, paymentInfo: shopPaymentInfo, ...shopWiseOrder }) => ({
+              ...shopWiseOrder,
+              orderDetails: orderDetails ?? Prisma.JsonNull,
+              sellerProfile: sellerProfile ?? Prisma.JsonNull,
+              orderTrackingDetails: orderTrackingDetails ?? Prisma.JsonNull,
+              paymentInfo: shopPaymentInfo ?? Prisma.JsonNull,
+            }),
+          ),
+        },
+        paymentInfo: { create: paymentInfo },
+      },
+    });
+  }
+  console.log(`  orders: ${orders.length}`);
+}
+
 async function main() {
   console.log("Seeding database...");
 
@@ -127,6 +155,7 @@ async function main() {
   await reseed("bannerContents", prisma.bannerContent, bannerContents);
   await reseed("customerAddresses", prisma.customerAddress, customerAddresses);
   await reseed("cityWithAreas", prisma.cityWithArea, citiesWithAreas);
+  await reseedOrders();
   console.log("✅ Seeding complete.");
 }
 

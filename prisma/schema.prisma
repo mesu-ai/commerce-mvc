@@ -607,3 +607,155 @@ model CityWithArea {
 
   @@map("city_with_area")
 }
+
+// Mirrors src/data/order.ts. shopWiseOrders/paymentInfo become real relations
+// (each row already carries its own orderProfileId / orderPaymentId), while
+// nested one-off snapshots inside a shop-wise order (sellerProfile,
+// orderDetails, orderTrackingDetails, its own paymentInfo) stay JSON — they're
+// a point-in-time copy, not data queried on their own.
+model Order {
+  orderProfileId           Int     @id
+  invoiceNo                String
+  customerId               Int
+  shopId                   Int
+  customerName             String
+  couponAmt                Float   @default(0)
+  shippingAddressId        Int?
+  shippingAddress          String?
+  orderGuid                String?
+  customerCurrencyCode     String?
+  currencyRate             Float   @default(1)
+  orderSubtotalAmt         Float   @default(0)
+  orderSubtotalDiscountAmt Float   @default(0)
+  totalVatFlatAmt          Float   @default(0)
+  totalShippingCharge      Float   @default(0)
+  otherChargeTypeId        Int     @default(0)
+  otherChargeAmount        Float   @default(0)
+  totalPayableAmount       Float   @default(0)
+  paymentStatusId          Int
+  paymentStatus            String
+  paymentMethodId          Int     @default(0)
+  paymentMethodName        String?
+  payAccountNo             String?
+  cusContactNo             String?
+  isActive                 String  @default("Y")
+  statusId                 Int
+  statusName               String
+  voucherAmount            Float   @default(0)
+  voucherCode              String?
+  createdBy                String?
+  createDate               String?
+  packageWeight            Float?
+  cusEmail                 String?
+  taxAmount                Float   @default(0)
+  billingAddress           String?
+  isGuestOrder             String?
+  burnAmount               Float?
+  couponCode               String?
+  shippingVoucherAmt       Float   @default(0)
+  shippingVoucherCode      String?
+  applyVoucherOn           String?
+  totalItems               Int     @default(0)
+  paidAmount               Float   @default(0)
+  dueAmount                Float   @default(0)
+
+  shopWiseOrders ShopWiseOrder[]
+  paymentInfo    OrderPayment[]
+
+  @@index([shopId])
+  @@index([customerId])
+  @@map("orders")
+}
+
+model ShopWiseOrder {
+  shopWiseOrderId           Int     @id
+  orderProfileId            Int
+  shopId                    Int
+  shopName                  String
+  orderNo                   String
+  totalSalesAmt             Float   @default(0)
+  couponAmt                 Float   @default(0)
+  note                      String?
+  totalDiscountFlatAmt      Float   @default(0)
+  specialDiscountAmount     Float   @default(0)
+  totalVatFlatAmt           Float   @default(0)
+  taxAmount                 Float   @default(0)
+  taxPercentage             Float   @default(0)
+  shippingCharge            Float   @default(0)
+  otherChargeTypeId         Int     @default(0)
+  otherChargeAmount         Float   @default(0)
+  totalPayableAmt           Float   @default(0)
+  grossSubTotal             Float   @default(0)
+  netAmount                 Float   @default(0)
+  isActive                  String  @default("Y")
+  statusId                  Int
+  statusName                String
+  commissionPercentage      Float   @default(0)
+  commissionAmount          Float   @default(0)
+  contactNo                 String?
+  presentAddress            String?
+  permanentAddress          String?
+  createdBy                 String?
+  createDate                String?
+  updateBy                  String?
+  shippingAddress           String?
+  billingAddress            String?
+  invoiceNo                 String
+  customerId                Int     @default(0)
+  cusEmail                  String?
+  updateDate                String?
+  orderDetails               Json?
+  sellerProfile              Json?
+  orderTrackingDetails       Json?
+  packageNo                 String?
+  packageWeight             Float?
+  paymentStatusId            Int
+  paymentStatus              String
+  paymentMethodId            Int     @default(0)
+  paymentMethodName          String?
+  voucherCode                String?
+  orderSourch                String?
+  voucherPercentage          Float   @default(0)
+  voucherAmount              Float   @default(0)
+  shippingVoucherCode        String?
+  shippingVoucherAmt         Float   @default(0)
+  totalPackageWeight         Float?
+  payAccountNo               String?
+  tranNo                     String?
+  paymentDate                String?
+  customerOrderNote          String?
+  burnAmount                 Float?
+  applyVoucherOn             String?
+  totalDisBurnVoucherAmount  Float   @default(0)
+  totalItems                 Int     @default(0)
+  paymentInfo                Json?
+  paidAmount                 Float   @default(0)
+  dueAmount                  Float   @default(0)
+
+  order Order @relation(fields: [orderProfileId], references: [orderProfileId], onDelete: Cascade)
+
+  @@index([orderProfileId])
+  @@index([shopId])
+  @@map("shop_wise_orders")
+}
+
+model OrderPayment {
+  orderPaymentId    Int     @id
+  orderProfileId    Int
+  paymentStatusId   Int
+  paymentStatus     String
+  paymentMethodId   Int
+  paymentMethodName String
+  payAccountNo      String?
+  tranNo            String?
+  paymentDate       String?
+  emiBankName       String?
+  emiBankTenure     Int?
+  amount            Float
+  remarks           String?
+
+  order Order @relation(fields: [orderProfileId], references: [orderProfileId], onDelete: Cascade)
+
+  @@index([orderProfileId])
+  @@map("order_payments")
+}
