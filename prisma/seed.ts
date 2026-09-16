@@ -28,6 +28,7 @@ import { bannerContents } from "../src/data/bannerContent";
 import { customerAddresses } from "../src/data/customerAddress";
 import { citiesWithAreas } from "../src/data/cityWithArea";
 import { orders } from "../src/data/order";
+import { careers } from "../src/data/career";
 import { Prisma } from "@prisma/client";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
@@ -156,6 +157,7 @@ async function main() {
   await reseed("customerAddresses", prisma.customerAddress, customerAddresses);
   await reseed("cityWithAreas", prisma.cityWithArea, citiesWithAreas);
   await reseedOrders();
+  await reseed("careers", prisma.career, careers);
   console.log("✅ Seeding complete.");
 }
 

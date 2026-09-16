@@ -759,3 +759,36 @@ model OrderPayment {
   @@index([orderProfileId])
   @@map("order_payments")
 }
+
+// Mirrors src/data/career.ts.
+model Career {
+  jobId                Int     @id @default(autoincrement())
+  jobTitle             String
+  slug                 String?
+  position             String?
+  department           String?
+  departmentId         Int?
+  vacancy              Int?
+  experience           String?
+  salary               String?
+  deadline               String?
+  location               String?
+  email                  String?
+  context                String?
+  requirements           String?
+  additionalRequirements String?
+  skills                 String?
+  qualifications         String?
+  benefits               String?
+  shortListed            Int?    @default(0)
+  viewed                 Int?    @default(0)
+  notViewed              Int?    @default(0)
+  applicants             Int?    @default(0)
+  status                 String? @default("Y")
+  metaTag                Json?
+  ogTag                  Json?
+
+
+
+  @@map("careers")
+}
