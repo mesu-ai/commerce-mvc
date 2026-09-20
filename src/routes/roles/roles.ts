@@ -9,7 +9,7 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await prisma.role.findMany({ orderBy: { id: "asc" } });
+      const data = await prisma.role.findMany({ orderBy: { roleId: "asc" } });
       return res.status(200).json({
         success: true,
         message: "Roles retrieved successfully",
@@ -28,7 +28,7 @@ router.get(
     try {
       const { id } = req.params;
       const roleData = await prisma.role.findUnique({
-        where: { id: Number(id) },
+        where: { roleId: Number(id) },
       });
 
       if (!roleData) {

@@ -2,8 +2,8 @@ import { RoleT } from "@/types/role";
 
 export const roles: RoleT[] = [
   {
-    id: 1,
-    role: "super admin",
+    roleId: 1,
+    roleName: "super admin",
     status: "Y",
     permissions: [
       "dashboard.index",
@@ -33,8 +33,8 @@ export const roles: RoleT[] = [
     ],
   },
   {
-    id: 2,
-    role: "admin",
+    roleId: 2,
+    roleName: "admin",
     status: "N",
     permissions: [
       "dashboard.index",
@@ -51,8 +51,8 @@ export const roles: RoleT[] = [
     ],
   },
   {
-    id: 3,
-    role: "vendor",
+    roleId: 3,
+    roleName: "vendor",
     status: "Y",
     permissions: [
       "dashboard.index",
@@ -64,8 +64,8 @@ export const roles: RoleT[] = [
     ],
   },
   {
-    id: 4,
-    role: "logestic",
+    roleId: 4,
+    roleName: "logestic",
     status: "N",
     permissions: [
       "dashboard.index",
@@ -79,8 +79,8 @@ export const roles: RoleT[] = [
     ],
   },
   {
-    id: 5,
-    role: "accountant",
+    roleId: 5,
+    roleName: "accountant",
     status: "N",
     permissions: ["dashboard.index"],
   },

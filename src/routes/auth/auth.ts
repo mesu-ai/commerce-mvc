@@ -17,7 +17,7 @@ type NewUserT = Pick<
   | "mobileNo"
   | "email"
   | "photo"
-  | "role"
+  | "roleName"
   | "permissions"
 >;
 
@@ -61,7 +61,7 @@ router.post("/login", async (req: Request, res: Response) => {
           email: user.email,
           mobileNo: user.mobileNo,
           photo: user.photo,
-          role: user.role,
+          roleName: user.roleName,
           permissions: user.permissions,
         } as NewUserT,
         accessToken,

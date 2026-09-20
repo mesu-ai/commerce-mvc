@@ -7,7 +7,8 @@ export interface UserT {
   nid: string;
   photo: File | string;
   department: string;
-  role: string;
+  roleId: number;
+  roleName: string;
   gender: "female" | "male";
   status: "Y" | "N";
   permissions: string[];

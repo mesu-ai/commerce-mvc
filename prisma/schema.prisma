@@ -302,8 +302,8 @@ model Shop {
 
 // Mirrors src/data/role.ts. permissions string[] -> Postgres text[].
 model Role {
-  id          Int      @id
-  role        String
+  roleId          Int      @id
+  roleName        String
   status      String?
   permissions String[]
 
@@ -316,7 +316,8 @@ model User {
   name        String
   username    String   @unique
   email       String?
-  role        String?
+  roleId     Int?
+  roleName    String?
   status      String?
   gender      String?
   mobileNo    String?
