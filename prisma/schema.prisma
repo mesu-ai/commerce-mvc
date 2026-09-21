@@ -302,8 +302,8 @@ model Shop {
 
 // Mirrors src/data/role.ts. permissions string[] -> Postgres text[].
 model Role {
-  roleId          Int      @id
-  roleName        String
+  roleId      Int      @id
+  roleName    String
   status      String?
   permissions String[]
 
@@ -316,7 +316,7 @@ model User {
   name        String
   username    String   @unique
   email       String?
-  roleId     Int?
+  roleId      Int?
   roleName    String?
   status      String?
   gender      String?
@@ -331,13 +331,14 @@ model User {
 
 // Mirrors src/data/column.ts (column visibility settings). value is unique.
 model ColumnSetting {
-  value     String   @id
+  value     String
   label     String
   currency  Boolean?
   disabled  Boolean?
   isVisible Boolean?
   type      String
 
+  @@id([type, value])
   @@map("column_settings")
 }
 
@@ -705,33 +706,33 @@ model ShopWiseOrder {
   customerId                Int     @default(0)
   cusEmail                  String?
   updateDate                String?
-  orderDetails               Json?
-  sellerProfile              Json?
-  orderTrackingDetails       Json?
+  orderDetails              Json?
+  sellerProfile             Json?
+  orderTrackingDetails      Json?
   packageNo                 String?
   packageWeight             Float?
-  paymentStatusId            Int
-  paymentStatus              String
-  paymentMethodId            Int     @default(0)
-  paymentMethodName          String?
-  voucherCode                String?
-  orderSourch                String?
-  voucherPercentage          Float   @default(0)
-  voucherAmount              Float   @default(0)
-  shippingVoucherCode        String?
-  shippingVoucherAmt         Float   @default(0)
-  totalPackageWeight         Float?
-  payAccountNo               String?
-  tranNo                     String?
-  paymentDate                String?
-  customerOrderNote          String?
-  burnAmount                 Float?
-  applyVoucherOn             String?
-  totalDisBurnVoucherAmount  Float   @default(0)
-  totalItems                 Int     @default(0)
-  paymentInfo                Json?
-  paidAmount                 Float   @default(0)
-  dueAmount                  Float   @default(0)
+  paymentStatusId           Int
+  paymentStatus             String
+  paymentMethodId           Int     @default(0)
+  paymentMethodName         String?
+  voucherCode               String?
+  orderSourch               String?
+  voucherPercentage         Float   @default(0)
+  voucherAmount             Float   @default(0)
+  shippingVoucherCode       String?
+  shippingVoucherAmt        Float   @default(0)
+  totalPackageWeight        Float?
+  payAccountNo              String?
+  tranNo                    String?
+  paymentDate               String?
+  customerOrderNote         String?
+  burnAmount                Float?
+  applyVoucherOn            String?
+  totalDisBurnVoucherAmount Float   @default(0)
+  totalItems                Int     @default(0)
+  paymentInfo               Json?
+  paidAmount                Float   @default(0)
+  dueAmount                 Float   @default(0)
 
   order Order @relation(fields: [orderProfileId], references: [orderProfileId], onDelete: Cascade)
 
@@ -763,15 +764,15 @@ model OrderPayment {
 
 // Mirrors src/data/career.ts.
 model Career {
-  jobId                Int     @id @default(autoincrement())
-  jobTitle             String
-  slug                 String?
-  position             String?
-  department           String?
-  departmentId         Int?
-  vacancy              Int?
-  experience           String?
-  salary               String?
+  jobId                  Int     @id @default(autoincrement())
+  jobTitle               String
+  slug                   String?
+  position               String?
+  department             String?
+  departmentId           Int?
+  vacancy                Int?
+  experience             String?
+  salary                 String?
   deadline               String?
   location               String?
   email                  String?
@@ -781,15 +782,72 @@ model Career {
   skills                 String?
   qualifications         String?
   benefits               String?
-  shortListed            Int?    @default(0)
-  viewed                 Int?    @default(0)
-  notViewed              Int?    @default(0)
-  applicants             Int?    @default(0)
-  status                 String? @default("Y")
-  metaTag                Json?
-  ogTag                  Json?
 
+  shortListed Int?    @default(0)
+  viewed      Int?    @default(0)
+  notViewed   Int?    @default(0)
+  applicants  Int?    @default(0)
+  status      String? @default("Y")
+  metaTag     Json?
+  ogTag       Json?
 
+  applications JobApplication[]
 
   @@map("careers")
+}
+
+model Applicant {
+  applicantId       Int     @id @default(autoincrement())
+  name              String
+  phone             String
+  email             String
+  divisionId        Int
+  portfolioLink     String?
+  sscRegistrationNo String?
+  sscRollNo         String?
+  sscGpa            Float?
+  hscRegistrationNo String?
+  hscRollNo         String?
+  hscGpa            Float?
+  universityId      Int
+  bachelorSubject   String?
+  cgpa              Float?
+  currentSalary     Float?
+  expectedSalary    Float?
+  experience        Int?
+  resume            String?
+  coverLetter       String?
+  // appliedOn               String?
+
+  university   University?      @relation(fields: [universityId], references: [universityId])
+  applications JobApplication[]
+
+  @@index([universityId])
+  @@map("applicants")
+}
+
+model JobApplication {
+  applicationId Int      @id @default(autoincrement())
+  applicantId   Int
+  jobId         Int
+  stage         String
+  status        String?
+  appliedOn     DateTime @default(now())
+
+  career    Career    @relation(fields: [jobId], references: [jobId])
+  applicant Applicant @relation(fields: [applicantId], references: [applicantId])
+
+  @@unique([applicantId, jobId])
+  @@index([jobId, stage, status])
+  @@map("job_applications")
+}
+
+model University {
+  universityId   Int     @id
+  universityName String
+  isActive       String?
+
+  applicants Applicant[]
+
+  @@map("universities")
 }

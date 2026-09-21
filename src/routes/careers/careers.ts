@@ -9,12 +9,22 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { keyword, departmentId, status, startDate, endDate, itemsPerPage, currentPage } = req.query;
+      const {
+        keyword,
+        departmentId,
+        status,
+        startDate,
+        endDate,
+        itemsPerPage,
+        currentPage,
+      } = req.query;
 
       const keywordStr =
         typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-      const departmentIdNum = typeof departmentId === "string" ? Number(departmentId) : undefined;
-      const startDateStr = typeof startDate === "string" ? startDate : undefined;
+      const departmentIdNum =
+        typeof departmentId === "string" ? Number(departmentId) : undefined;
+      const startDateStr =
+        typeof startDate === "string" ? startDate : undefined;
       const endDateStr = typeof endDate === "string" ? endDate : undefined;
       const statusStr = typeof status === "string" ? status : undefined;
 
@@ -117,6 +127,136 @@ router.get(
         success: true,
         message: "Career retrieved successfully",
         data: career,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+router.get(
+  "/:id/applicants",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const careerIdNum = Number(id);
+      if (Number.isNaN(careerIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid Job ID",
+        });
+      }
+
+      const {
+        keyword,
+        status,
+        stage,
+        startDate,
+        endDate,
+        divisionId,
+        universityId,
+
+        itemsPerPage,
+        currentPage,
+      } = req.query;
+
+      const keywordStr =
+        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+      const stageStr = typeof stage === "string" ? stage : undefined;
+      const statusStr = typeof status === "string" ? status : undefined;
+      const startDateStr =
+        typeof startDate === "string" ? startDate : undefined;
+      const endDateStr = typeof endDate === "string" ? endDate : undefined;
+      
+      const divisionIdNum =
+        typeof divisionId === "string" ? Number(divisionId) : undefined;
+
+      const universityIdNum =
+        typeof universityId === "string" ? Number(universityId) : undefined;
+
+      const where: any = { jobId: careerIdNum };
+
+      if (stageStr) {
+        where.stage = stageStr;
+      }
+
+      if (statusStr) {
+        where.status = statusStr;
+      }
+
+      const applicantFilters: any = {};
+
+      if (keywordStr) {
+        applicantFilters.name = { contains: keywordStr, mode: "insensitive" };
+      }
+
+      if (universityIdNum) {
+        applicantFilters.universityId = universityIdNum;
+      }
+
+      if (divisionIdNum) {
+        applicantFilters.divisionId = divisionIdNum;
+      }
+
+      if (Object.keys(applicantFilters).length > 0) {
+        where.applicant = applicantFilters;
+      }
+
+      if (startDateStr || endDateStr) {
+        where.appliedOn = {
+          ...(startDateStr && { gte: new Date(startDateStr) }),
+          ...(endDateStr && { lte: new Date(endDateStr) }),
+        };
+      }
+
+      const perPage =
+        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
+          ? Number(itemsPerPage)
+          : 15;
+      const page =
+        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
+          ? Number(currentPage)
+          : 1;
+
+      const totalItems = await prisma.jobApplication.count({ where });
+
+      if (totalItems === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "Applicants retrieved successfully",
+          data: [],
+          pagination: {
+            currentPage: 0,
+            itemsPerPage: perPage,
+            totalPages: 0,
+            totalItems: 0,
+          },
+        });
+      }
+
+      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
+      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
+      const skip = (currentPageNumber - 1) * perPage;
+
+      const data = await prisma.jobApplication.findMany({
+        where,
+        include: {applicant: true},
+        orderBy: { applicationId: "asc" },
+        skip,
+        take: perPage,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Applicants retrieved successfully",
+        data,
+        pagination: {
+          currentPage: currentPageNumber,
+          itemsPerPage: perPage,
+          totalPages,
+          totalItems,
+        },
       });
     } catch (err) {
       return next(err);

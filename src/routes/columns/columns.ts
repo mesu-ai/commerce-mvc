@@ -11,6 +11,13 @@ router.get(
     try {
       const { type } = req.query;
       const typeStr = typeof type === "string" ? type : undefined;
+      if (!typeStr) {
+        return res.status(400).json({
+          success: false,
+          message: "Type query parameter is required",
+          data: [],
+        });
+      }
       let where: any = {};
       if (typeStr) where.type = typeStr;
 

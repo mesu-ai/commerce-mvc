@@ -1,4 +1,3 @@
-
 export interface ColumnSetting {
   label: string;
   value: string;
@@ -8,8 +7,8 @@ export interface ColumnSetting {
   type: string;
 }
 
-
 export const columns: ColumnSetting[] = [
+  //  type: product
   { label: "Product ID", value: "productId", type: "product" },
   {
     label: "Product Name",
@@ -87,6 +86,7 @@ export const columns: ColumnSetting[] = [
   { label: "Updated By", value: "updatedBy", type: "product" },
   { label: "Review Rating", value: "reviewRating", type: "product" },
 
+  // type: order
   {
     label: "Order No",
     value: "orderNo",
@@ -134,4 +134,169 @@ export const columns: ColumnSetting[] = [
   { label: "Quantity", value: "quantity", type: "order" },
   { label: "Transaction Date", value: "transactionDate", type: "order" },
   { label: "Courier Name", value: "courierName", type: "order" },
+
+  //type: applicant-cv
+  {
+    label: "ID No",
+    value: "idNo",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Applicant Name",
+    value: "applicantName",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Applied On",
+    value: "appliedOn",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Mobile No",
+    value: "mobileNo",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Email",
+    value: "email",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Experience",
+    value: "experience",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  {
+    label: "Expected Salary",
+    value: "expectedSalary",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-cv",
+  },
+  { label: "Division", value: "division", type: "applicant-cv" },
+  { label: "Portfolio Link", value: "portfolioLink", type: "applicant-cv" },
+  {
+    label: "SSC Registration No",
+    value: "sscRegistrationNo",
+    type: "applicant-cv",
+  },
+  { label: "SSC Roll No", value: "sscRollNo", type: "applicant-cv" },
+  { label: "SSC GPA", value: "sscGpa", type: "applicant-cv" },
+  {
+    label: "HSC Registration No",
+    value: "hscRegistrationNo",
+    type: "applicant-cv",
+  },
+  { label: "HSC Roll No", value: "hscRollNo", type: "applicant-cv" },
+  { label: "HSC GPA", value: "hscGpa", type: "applicant-cv" },
+  { label: "University Name", value: "universityName", type: "applicant-cv" },
+  { label: "Current Salary", value: "currentSalary", type: "applicant-cv" },
+  {
+    label: "Years of Experience",
+    value: "yearsOfExperience",
+    type: "applicant-cv",
+  },
+  { label: "CV/Resume", value: "cvResume", type: "applicant-cv" },
+  { label: "Remarks", value: "remarks", type: "applicant-cv" },
+
+  //type: applicant-test
+  {
+    label: "ID No",
+    value: "idNo",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Applicants Name",
+    value: "applicantsName",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Applied On",
+    value: "appliedOn",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Mobile No",
+    value: "mobileNo",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Written Score",
+    value: "writtenScore",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Experience",
+    value: "experience",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Expected Salary",
+    value: "expectedSalary",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  {
+    label: "Written Score Status",
+    value: "writtenScoreStatus",
+    disabled: true,
+    isVisible: true,
+    type: "applicant-test",
+  },
+  { label: "Portfolio Link", value: "portfolioLink", type: "applicant-test" },
+  {
+    label: "SSC Registration No",
+    value: "sscRegistrationNo",
+    type: "applicant-test",
+  },
+  { label: "SSC Roll No", value: "sscRollNo", type: "applicant-test" },
+  { label: "SSC GPA", value: "sscGpa", type: "applicant-test" },
+  {
+    label: "HSC Registration No",
+    value: "hscRegistrationNo",
+    type: "applicant-test",
+  },
+  { label: "HSC Roll No", value: "hscRollNo", type: "applicant-test" },
+  { label: "HSC GPA", value: "hscGpa", type: "applicant-test" },
+  { label: "University Name", value: "universityName", type: "applicant-test" },
+  { label: "Current Salary", value: "currentSalary", type: "applicant-test" },
+  {
+    label: "Years of Experience",
+    value: "yearsOfExperience",
+    type: "applicant-test",
+  },
+  { label: "CV/Resume", value: "cvResume", type: "applicant-test" },
+  { label: "Email", value: "email", type: "applicant-test" },
+  { label: "Division", value: "division", type: "applicant-test" },
+  {
+    label: "Written Test Date",
+    value: "writtenTestDate",
+    type: "applicant-test",
+  },
+  { label: "Remarks", value: "remarks", type: "applicant-test" },
 ];
