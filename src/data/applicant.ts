@@ -5,7 +5,7 @@ export const applicants = [
   {
     applicantId: 1,
     name: "John Doe",
-    phone: "01710000001",
+    mobileNo: "01710000001",
     email: "john.doe@example.com",
     divisionId: 1,
     portfolioLink: "https://portfolio.example.com/johndoe",
@@ -28,7 +28,7 @@ export const applicants = [
   {
     applicantId: 2,
     name: "Sarah Ahmed",
-    phone: "01710000002",
+    mobileNo: "01710000002",
     email: "sarah.ahmed@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/sarahahmed",
@@ -51,7 +51,7 @@ export const applicants = [
   {
     applicantId: 3,
     name: "Michael Chen",
-    phone: "01710000003",
+    mobileNo: "01710000003",
     email: "michael.chen@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100003",
@@ -73,7 +73,7 @@ export const applicants = [
   {
     applicantId: 4,
     name: "Fatima Rahman",
-    phone: "01710000004",
+    mobileNo: "01710000004",
     email: "fatima.rahman@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/fatimarahman",
@@ -96,7 +96,7 @@ export const applicants = [
   {
     applicantId: 5,
     name: "David Kim",
-    phone: "01710000005",
+    mobileNo: "01710000005",
     email: "david.kim@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100005",
@@ -118,7 +118,7 @@ export const applicants = [
   {
     applicantId: 6,
     name: "Nusrat Jahan",
-    phone: "01710000006",
+    mobileNo: "01710000006",
     email: "nusrat.jahan@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/nusratjahan",
@@ -141,7 +141,7 @@ export const applicants = [
   {
     applicantId: 7,
     name: "James Wilson",
-    phone: "01710000007",
+    mobileNo: "01710000007",
     email: "james.wilson@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100007",
@@ -163,7 +163,7 @@ export const applicants = [
   {
     applicantId: 8,
     name: "Tanvir Hasan",
-    phone: "01710000008",
+    mobileNo: "01710000008",
     email: "tanvir.hasan@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/tanvirhasan",
@@ -186,7 +186,7 @@ export const applicants = [
   {
     applicantId: 9,
     name: "Emily Davis",
-    phone: "01710000009",
+    mobileNo: "01710000009",
     email: "emily.davis@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100009",
@@ -208,7 +208,7 @@ export const applicants = [
   {
     applicantId: 10,
     name: "Farhana Akter",
-    phone: "01710000010",
+    mobileNo: "01710000010",
     email: "farhana.akter@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/farhanaakter",
@@ -231,7 +231,7 @@ export const applicants = [
   {
     applicantId: 11,
     name: "Robert Martinez",
-    phone: "01710000011",
+    mobileNo: "01710000011",
     email: "robert.martinez@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100011",
@@ -253,7 +253,7 @@ export const applicants = [
   {
     applicantId: 12,
     name: "Shahriar Kabir",
-    phone: "01710000012",
+    mobileNo: "01710000012",
     email: "shahriar.kabir@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/shahriarkabir",
@@ -276,7 +276,7 @@ export const applicants = [
   {
     applicantId: 13,
     name: "Jessica Lee",
-    phone: "01710000013",
+    mobileNo: "01710000013",
     email: "jessica.lee@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100013",
@@ -298,7 +298,7 @@ export const applicants = [
   {
     applicantId: 14,
     name: "Ayesha Siddika",
-    phone: "01710000014",
+    mobileNo: "01710000014",
     email: "ayesha.siddika@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/ayeshasiddika",
@@ -321,7 +321,7 @@ export const applicants = [
   {
     applicantId: 15,
     name: "Christopher Brown",
-    phone: "01710000015",
+    mobileNo: "01710000015",
     email: "christopher.brown@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100015",
@@ -343,7 +343,7 @@ export const applicants = [
   {
     applicantId: 16,
     name: "Rakib Hossain",
-    phone: "01710000016",
+    mobileNo: "01710000016",
     email: "rakib.hossain@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/rakibhossain",
@@ -366,7 +366,7 @@ export const applicants = [
   {
     applicantId: 17,
     name: "Amanda Taylor",
-    phone: "01710000017",
+    mobileNo: "01710000017",
     email: "amanda.taylor@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100017",
@@ -388,7 +388,7 @@ export const applicants = [
   {
     applicantId: 18,
     name: "Mehjabin Chowdhury",
-    phone: "01710000018",
+    mobileNo: "01710000018",
     email: "mehjabin.chowdhury@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/mehjabinchowdhury",
@@ -411,7 +411,7 @@ export const applicants = [
   {
     applicantId: 19,
     name: "Daniel Anderson",
-    phone: "01710000019",
+    mobileNo: "01710000019",
     email: "daniel.anderson@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100019",
@@ -433,7 +433,7 @@ export const applicants = [
   {
     applicantId: 20,
     name: "Sabbir Ahmed",
-    phone: "01710000020",
+    mobileNo: "01710000020",
     email: "sabbir.ahmed@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/sabbirahmed",
@@ -456,7 +456,7 @@ export const applicants = [
   {
     applicantId: 21,
     name: "Laura Thomas",
-    phone: "01710000021",
+    mobileNo: "01710000021",
     email: "laura.thomas@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100021",
@@ -478,7 +478,7 @@ export const applicants = [
   {
     applicantId: 22,
     name: "Nazia Islam",
-    phone: "01710000022",
+    mobileNo: "01710000022",
     email: "nazia.islam@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/naziaislam",
@@ -501,7 +501,7 @@ export const applicants = [
   {
     applicantId: 23,
     name: "Kevin White",
-    phone: "01710000023",
+    mobileNo: "01710000023",
     email: "kevin.white@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100023",
@@ -523,7 +523,7 @@ export const applicants = [
   {
     applicantId: 24,
     name: "Imran Khan",
-    phone: "01710000024",
+    mobileNo: "01710000024",
     email: "imran.khan@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/imrankhan",
@@ -546,7 +546,7 @@ export const applicants = [
   {
     applicantId: 25,
     name: "Michelle Garcia",
-    phone: "01710000025",
+    mobileNo: "01710000025",
     email: "michelle.garcia@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100025",
@@ -568,7 +568,7 @@ export const applicants = [
   {
     applicantId: 26,
     name: "Tasnim Rahman",
-    phone: "01710000026",
+    mobileNo: "01710000026",
     email: "tasnim.rahman@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/tasnimrahman",
@@ -591,7 +591,7 @@ export const applicants = [
   {
     applicantId: 27,
     name: "Brian Harris",
-    phone: "01710000027",
+    mobileNo: "01710000027",
     email: "brian.harris@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100027",
@@ -613,7 +613,7 @@ export const applicants = [
   {
     applicantId: 28,
     name: "Zubair Alam",
-    phone: "01710000028",
+    mobileNo: "01710000028",
     email: "zubair.alam@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/zubairalam",
@@ -636,7 +636,7 @@ export const applicants = [
   {
     applicantId: 29,
     name: "Rachel Clark",
-    phone: "01710000029",
+    mobileNo: "01710000029",
     email: "rachel.clark@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100029",
@@ -658,7 +658,7 @@ export const applicants = [
   {
     applicantId: 30,
     name: "Sumaiya Yasmin",
-    phone: "01710000030",
+    mobileNo: "01710000030",
     email: "sumaiya.yasmin@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/sumaiyayasmin",
@@ -681,7 +681,7 @@ export const applicants = [
   {
     applicantId: 31,
     name: "Andrew Lewis",
-    phone: "01710000031",
+    mobileNo: "01710000031",
     email: "andrew.lewis@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100031",
@@ -703,7 +703,7 @@ export const applicants = [
   {
     applicantId: 32,
     name: "Rafiqul Islam",
-    phone: "01710000032",
+    mobileNo: "01710000032",
     email: "rafiqul.islam@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/rafiqulislam",
@@ -726,7 +726,7 @@ export const applicants = [
   {
     applicantId: 33,
     name: "Stephanie Walker",
-    phone: "01710000033",
+    mobileNo: "01710000033",
     email: "stephanie.walker@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100033",
@@ -748,7 +748,7 @@ export const applicants = [
   {
     applicantId: 34,
     name: "Nadia Sultana",
-    phone: "01710000034",
+    mobileNo: "01710000034",
     email: "nadia.sultana@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/nadiasultana",
@@ -771,7 +771,7 @@ export const applicants = [
   {
     applicantId: 35,
     name: "Justin Hall",
-    phone: "01710000035",
+    mobileNo: "01710000035",
     email: "justin.hall@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100035",
@@ -793,7 +793,7 @@ export const applicants = [
   {
     applicantId: 36,
     name: "Arif Chowdhury",
-    phone: "01710000036",
+    mobileNo: "01710000036",
     email: "arif.chowdhury@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/arifchowdhury",
@@ -816,7 +816,7 @@ export const applicants = [
   {
     applicantId: 37,
     name: "Megan Young",
-    phone: "01710000037",
+    mobileNo: "01710000037",
     email: "megan.young@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100037",
@@ -838,7 +838,7 @@ export const applicants = [
   {
     applicantId: 38,
     name: "Farzana Begum",
-    phone: "01710000038",
+    mobileNo: "01710000038",
     email: "farzana.begum@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/farzanabegum",
@@ -861,7 +861,7 @@ export const applicants = [
   {
     applicantId: 39,
     name: "Ryan King",
-    phone: "01710000039",
+    mobileNo: "01710000039",
     email: "ryan.king@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100039",
@@ -883,7 +883,7 @@ export const applicants = [
   {
     applicantId: 40,
     name: "Kamal Uddin",
-    phone: "01710000040",
+    mobileNo: "01710000040",
     email: "kamal.uddin@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/kamaluddin",
@@ -906,7 +906,7 @@ export const applicants = [
   {
     applicantId: 41,
     name: "Nicole Wright",
-    phone: "01710000041",
+    mobileNo: "01710000041",
     email: "nicole.wright@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100041",
@@ -928,7 +928,7 @@ export const applicants = [
   {
     applicantId: 42,
     name: "Shirin Akter",
-    phone: "01710000042",
+    mobileNo: "01710000042",
     email: "shirin.akter@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/shirinakter",
@@ -951,7 +951,7 @@ export const applicants = [
   {
     applicantId: 43,
     name: "Brandon Scott",
-    phone: "01710000043",
+    mobileNo: "01710000043",
     email: "brandon.scott@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100043",
@@ -973,7 +973,7 @@ export const applicants = [
   {
     applicantId: 44,
     name: "Habibur Rahman",
-    phone: "01710000044",
+    mobileNo: "01710000044",
     email: "habibur.rahman@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/habiburrahman",
@@ -996,7 +996,7 @@ export const applicants = [
   {
     applicantId: 45,
     name: "Christina Green",
-    phone: "01710000045",
+    mobileNo: "01710000045",
     email: "christina.green@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100045",
@@ -1018,7 +1018,7 @@ export const applicants = [
   {
     applicantId: 46,
     name: "Mahfuza Khatun",
-    phone: "01710000046",
+    mobileNo: "01710000046",
     email: "mahfuza.khatun@example.com",
     divisionId: 4,
     portfolioLink: "https://portfolio.example.com/mahfuzakhatun",
@@ -1041,7 +1041,7 @@ export const applicants = [
   {
     applicantId: 47,
     name: "Tyler Adams",
-    phone: "01710000047",
+    mobileNo: "01710000047",
     email: "tyler.adams@example.com",
     divisionId: 5,
     sscRegistrationNo: "SSC100047",
@@ -1063,7 +1063,7 @@ export const applicants = [
   {
     applicantId: 48,
     name: "Rashed Karim",
-    phone: "01710000048",
+    mobileNo: "01710000048",
     email: "rashed.karim@example.com",
     divisionId: 6,
     portfolioLink: "https://portfolio.example.com/rashedkarim",
@@ -1086,7 +1086,7 @@ export const applicants = [
   {
     applicantId: 49,
     name: "Samantha Baker",
-    phone: "01710000049",
+    mobileNo: "01710000049",
     email: "samantha.baker@example.com",
     divisionId: 1,
     sscRegistrationNo: "SSC100049",
@@ -1108,7 +1108,7 @@ export const applicants = [
   {
     applicantId: 50,
     name: "Jannatul Ferdous",
-    phone: "01710000050",
+    mobileNo: "01710000050",
     email: "jannatul.ferdous@example.com",
     divisionId: 2,
     portfolioLink: "https://portfolio.example.com/jannatulferdous",
@@ -1131,7 +1131,7 @@ export const applicants = [
   {
     applicantId: 51,
     name: "Eric Nelson",
-    phone: "01710000051",
+    mobileNo: "01710000051",
     email: "eric.nelson@example.com",
     divisionId: 3,
     sscRegistrationNo: "SSC100051",

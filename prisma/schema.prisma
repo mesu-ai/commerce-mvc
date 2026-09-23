@@ -799,7 +799,7 @@ model Career {
 model Applicant {
   applicantId       Int     @id @default(autoincrement())
   name              String
-  phone             String
+  mobileNo          String
   email             String
   divisionId        Int
   portfolioLink     String?

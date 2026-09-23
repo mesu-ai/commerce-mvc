@@ -137,22 +137,8 @@ export const columns: ColumnSetting[] = [
 
   //type: applicant-cv
   {
-    label: "ID No",
-    value: "idNo",
-    disabled: true,
-    isVisible: true,
-    type: "applicant-cv",
-  },
-  {
     label: "Applicant Name",
     value: "applicantName",
-    disabled: true,
-    isVisible: true,
-    type: "applicant-cv",
-  },
-  {
-    label: "Applied On",
-    value: "appliedOn",
     disabled: true,
     isVisible: true,
     type: "applicant-cv",
@@ -211,24 +197,72 @@ export const columns: ColumnSetting[] = [
   { label: "CV/Resume", value: "cvResume", type: "applicant-cv" },
   { label: "Remarks", value: "remarks", type: "applicant-cv" },
 
+  // type: shortlisted
+  {
+    label: "Applicant Name",
+    value: "applicantName",
+    disabled: true,
+    isVisible: true,
+    type: "shortlisted",
+  },
+  {
+    label: "Mobile No",
+    value: "mobileNo",
+    disabled: true,
+    isVisible: true,
+    type: "shortlisted",
+  },
+  {
+    label: "Email",
+    value: "email",
+    disabled: true,
+    isVisible: true,
+    type: "shortlisted",
+  },
+  {
+    label: "Experience",
+    value: "experience",
+    disabled: true,
+    isVisible: true,
+    type: "shortlisted",
+  },
+  {
+    label: "Expected Salary",
+    value: "expectedSalary",
+    disabled: true,
+    isVisible: true,
+    type: "shortlisted",
+  },
+  { label: "Division", value: "division", type: "shortlisted" },
+  { label: "Portfolio Link", value: "portfolioLink", type: "shortlisted" },
+  {
+    label: "SSC Registration No",
+    value: "sscRegistrationNo",
+    type: "shortlisted",
+  },
+  { label: "SSC Roll No", value: "sscRollNo", type: "shortlisted" },
+  { label: "SSC GPA", value: "sscGpa", type: "shortlisted" },
+  {
+    label: "HSC Registration No",
+    value: "hscRegistrationNo",
+    type: "shortlisted",
+  },
+  { label: "HSC Roll No", value: "hscRollNo", type: "shortlisted" },
+  { label: "HSC GPA", value: "hscGpa", type: "shortlisted" },
+  { label: "University Name", value: "universityName", type: "shortlisted" },
+  { label: "Current Salary", value: "currentSalary", type: "shortlisted" },
+  {
+    label: "Years of Experience",
+    value: "yearsOfExperience",
+    type: "shortlisted",
+  },
+  { label: "CV/Resume", value: "cvResume", type: "shortlisted" },
+  { label: "Remarks", value: "remarks", type: "shortlisted" },
+
   //type: applicant-test
   {
-    label: "ID No",
-    value: "idNo",
-    disabled: true,
-    isVisible: true,
-    type: "applicant-test",
-  },
-  {
-    label: "Applicants Name",
-    value: "applicantsName",
-    disabled: true,
-    isVisible: true,
-    type: "applicant-test",
-  },
-  {
-    label: "Applied On",
-    value: "appliedOn",
+    label: "Applicant Name",
+    value: "applicantName",
     disabled: true,
     isVisible: true,
     type: "applicant-test",
