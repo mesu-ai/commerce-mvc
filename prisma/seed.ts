@@ -32,6 +32,7 @@ import { careers } from "../src/data/career";
 import { applicants } from "../src/data/applicant";
 import { universities } from "../src/data/university";
 import { jobApplications } from "../src/data/jobApplication";
+import { jobApplicationTests } from "../src/data/jobApplicationTest";
 import { Prisma } from "@prisma/client";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
@@ -167,6 +168,7 @@ async function main() {
   await reseed("universities", prisma.university, universities);
   await reseed("applicants", prisma.applicant, applicants);
   await reseed("jobApplications", prisma.jobApplication, jobApplications);
+  await reseed("jobApplicationTests", prisma.jobApplicationTest, jobApplicationTests);
   console.log("✅ Seeding complete.");
 }
 

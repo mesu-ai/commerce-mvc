@@ -194,7 +194,7 @@ export const columns: ColumnSetting[] = [
     value: "yearsOfExperience",
     type: "applicant-cv",
   },
-  { label: "CV/Resume", value: "cvResume", type: "applicant-cv" },
+  { label: "CV/Resume", value: "cvResume", type: "applicant-cv", isVisible: true },
   { label: "Remarks", value: "remarks", type: "applicant-cv" },
 
   // type: applicant-shortlisted
@@ -496,8 +496,6 @@ export const columns: ColumnSetting[] = [
   {
     label: "Mobile No",
     value: "mobileNo",
-    disabled: true,
-    isVisible: true,
     type: "applicant-test-overall",
   },
   {

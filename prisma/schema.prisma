@@ -834,12 +834,47 @@ model JobApplication {
   status        String?
   appliedOn     DateTime @default(now())
 
-  career    Career    @relation(fields: [jobId], references: [jobId])
-  applicant Applicant @relation(fields: [applicantId], references: [applicantId])
+  career    Career               @relation(fields: [jobId], references: [jobId])
+  applicant Applicant            @relation(fields: [applicantId], references: [applicantId])
+  tests     JobApplicationTest[]
 
   @@unique([applicantId, jobId])
   @@index([jobId, stage, status])
   @@map("job_applications")
+}
+
+// Values match the frontend TestTypeT and the /tests/:testType URL segment
+enum TestType {
+  written
+  technical
+  interview
+}
+
+enum TestResult {
+  pending
+  pass
+  fail
+  absent
+}
+
+model JobApplicationTest {
+  id            Int        @id @default(autoincrement())
+  applicationId Int
+  testType      TestType
+  testDate      DateTime?
+  subjects      Json? // [{ subjectName, subjectScore }]
+  score         Float? // percentage (0-100), the mean of the subject scores
+  status        TestResult @default(pending)
+  remarks       String?
+  evaluatedBy   String? // username from the access token of whoever last saved it
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  application JobApplication @relation(fields: [applicationId], references: [applicationId], onDelete: Cascade)
+
+  @@unique([applicationId, testType])
+  @@index([testType, status])
+  @@map("job_application_tests")
 }
 
 model University {

@@ -205,7 +205,7 @@ export const jobApplications = [
     applicantId: 26,
     jobId: 26,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-10T06:00:00.000Z"),
   },
   {
@@ -213,7 +213,7 @@ export const jobApplications = [
     applicantId: 27,
     jobId: 27,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-15T06:00:00.000Z"),
   },
   {
@@ -221,7 +221,7 @@ export const jobApplications = [
     applicantId: 28,
     jobId: 28,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-20T06:00:00.000Z"),
   },
   {
@@ -229,7 +229,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-25T06:00:00.000Z"),
   },
   {
@@ -237,7 +237,7 @@ export const jobApplications = [
     applicantId: 30,
     jobId: 30,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-30T06:00:00.000Z"),
   },
   {
@@ -245,7 +245,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 1,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-06-04T06:00:00.000Z"),
   },
   {
@@ -253,7 +253,7 @@ export const jobApplications = [
     applicantId: 32,
     jobId: 2,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-09T06:00:00.000Z"),
   },
   {
@@ -261,7 +261,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 3,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-14T06:00:00.000Z"),
   },
   {
@@ -269,7 +269,7 @@ export const jobApplications = [
     applicantId: 34,
     jobId: 4,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-06-19T06:00:00.000Z"),
   },
   {
@@ -277,7 +277,7 @@ export const jobApplications = [
     applicantId: 35,
     jobId: 5,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-06-24T06:00:00.000Z"),
   },
   {
@@ -429,7 +429,7 @@ export const jobApplications = [
     applicantId: 28,
     jobId: 14,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-19T05:10:59.639Z"),
   },
   {
@@ -461,7 +461,7 @@ export const jobApplications = [
     applicantId: 36,
     jobId: 8,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-04-06T10:19:08.583Z"),
   },
   {
@@ -557,7 +557,7 @@ export const jobApplications = [
     applicantId: 21,
     jobId: 23,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-24T12:07:03.469Z"),
   },
   {
@@ -613,7 +613,7 @@ export const jobApplications = [
     applicantId: 3,
     jobId: 24,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-04-21T20:15:47.735Z"),
   },
   {
@@ -661,7 +661,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 6,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-24T15:39:01.765Z"),
   },
   {
@@ -709,7 +709,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 11,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-02T04:37:54.750Z"),
   },
   {
@@ -717,7 +717,7 @@ export const jobApplications = [
     applicantId: 14,
     jobId: 19,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-15T19:56:00.313Z"),
   },
   {
@@ -741,7 +741,7 @@ export const jobApplications = [
     applicantId: 26,
     jobId: 25,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-22T18:30:30.427Z"),
   },
   {
@@ -885,7 +885,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 4,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-03-09T18:49:49.569Z"),
   },
   {
@@ -965,7 +965,7 @@ export const jobApplications = [
     applicantId: 5,
     jobId: 16,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-04-11T13:48:34.523Z"),
   },
   {
@@ -997,7 +997,7 @@ export const jobApplications = [
     applicantId: 14,
     jobId: 12,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-09-14T09:37:17.109Z"),
   },
   {
@@ -1013,7 +1013,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 29,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-18T21:00:17.279Z"),
   },
   {
@@ -1029,7 +1029,7 @@ export const jobApplications = [
     applicantId: 35,
     jobId: 16,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-18T14:07:06.685Z"),
   },
   {
@@ -1109,7 +1109,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 22,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-01-14T23:06:34.035Z"),
   },
   {
@@ -1205,7 +1205,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 27,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-08-03T09:19:14.505Z"),
   },
   {
@@ -1229,7 +1229,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 20,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-04T09:37:37.869Z"),
   },
   {
@@ -1269,7 +1269,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 20,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-09-18T05:58:55.466Z"),
   },
   {
@@ -1293,7 +1293,7 @@ export const jobApplications = [
     applicantId: 12,
     jobId: 2,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-18T10:00:16.587Z"),
   },
   {
@@ -1317,7 +1317,7 @@ export const jobApplications = [
     applicantId: 22,
     jobId: 20,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-13T08:49:21.203Z"),
   },
   {
@@ -1357,7 +1357,7 @@ export const jobApplications = [
     applicantId: 47,
     jobId: 12,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-05-22T10:14:21.533Z"),
   },
   {
@@ -1365,7 +1365,7 @@ export const jobApplications = [
     applicantId: 37,
     jobId: 1,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-03-29T09:25:20.156Z"),
   },
   {
@@ -1381,7 +1381,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 16,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-01-06T11:54:49.191Z"),
   },
   {
@@ -1389,7 +1389,7 @@ export const jobApplications = [
     applicantId: 49,
     jobId: 11,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-05T21:41:34.818Z"),
   },
   {
@@ -1429,7 +1429,7 @@ export const jobApplications = [
     applicantId: 12,
     jobId: 8,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-08-19T15:47:42.008Z"),
   },
   {
@@ -1461,7 +1461,7 @@ export const jobApplications = [
     applicantId: 37,
     jobId: 24,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-29T05:58:20.421Z"),
   },
   {
@@ -1485,7 +1485,7 @@ export const jobApplications = [
     applicantId: 7,
     jobId: 19,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-18T21:01:52.886Z"),
   },
   {
@@ -1573,7 +1573,7 @@ export const jobApplications = [
     applicantId: 14,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-04T09:29:44.942Z"),
   },
   {
@@ -1605,7 +1605,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-01-06T18:59:35.548Z"),
   },
   {
@@ -1621,7 +1621,7 @@ export const jobApplications = [
     applicantId: 15,
     jobId: 3,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-13T02:46:13.221Z"),
   },
   {
@@ -1693,7 +1693,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 9,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-06-01T17:51:34.958Z"),
   },
   {
@@ -1709,7 +1709,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 15,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-24T11:28:16.627Z"),
   },
   {
@@ -1733,7 +1733,7 @@ export const jobApplications = [
     applicantId: 41,
     jobId: 23,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-21T10:01:56.166Z"),
   },
   {
@@ -1773,7 +1773,7 @@ export const jobApplications = [
     applicantId: 44,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-24T08:28:35.226Z"),
   },
   {
@@ -1893,7 +1893,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 3,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-01-11T01:03:32.842Z"),
   },
   {
@@ -1957,7 +1957,7 @@ export const jobApplications = [
     applicantId: 13,
     jobId: 9,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-04-25T23:59:23.506Z"),
   },
   {
@@ -1973,7 +1973,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 21,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-26T02:08:23.323Z"),
   },
   {
@@ -1981,7 +1981,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 20,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-02-12T06:35:37.097Z"),
   },
   {
@@ -2069,7 +2069,7 @@ export const jobApplications = [
     applicantId: 20,
     jobId: 25,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-30T18:37:20.537Z"),
   },
   {
@@ -2093,7 +2093,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-26T08:24:47.852Z"),
   },
   {
@@ -2109,7 +2109,7 @@ export const jobApplications = [
     applicantId: 50,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-09-05T02:57:38.519Z"),
   },
   {
@@ -2117,7 +2117,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-11T02:58:24.609Z"),
   },
   {
@@ -2149,7 +2149,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 13,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-22T05:57:13.337Z"),
   },
   {
@@ -2157,7 +2157,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 12,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-04-04T01:23:49.684Z"),
   },
   {
@@ -2173,7 +2173,7 @@ export const jobApplications = [
     applicantId: 8,
     jobId: 25,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-11T12:28:12.297Z"),
   },
   {
@@ -2181,7 +2181,7 @@ export const jobApplications = [
     applicantId: 8,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-04T20:17:04.480Z"),
   },
   {
@@ -2189,7 +2189,7 @@ export const jobApplications = [
     applicantId: 43,
     jobId: 10,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-28T15:16:33.225Z"),
   },
   {
@@ -2205,7 +2205,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 10,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-23T08:41:24.380Z"),
   },
   {
@@ -2261,7 +2261,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 6,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-09-18T09:51:00.609Z"),
   },
   {
@@ -2285,7 +2285,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 4,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-02T05:21:22.779Z"),
   },
   {
@@ -2381,7 +2381,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-31T09:34:10.391Z"),
   },
   {
@@ -2429,7 +2429,7 @@ export const jobApplications = [
     applicantId: 43,
     jobId: 4,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-28T07:29:06.780Z"),
   },
   {
@@ -2437,7 +2437,7 @@ export const jobApplications = [
     applicantId: 13,
     jobId: 29,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-09-08T04:08:23.927Z"),
   },
   {
@@ -2485,7 +2485,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 3,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-28T14:34:14.007Z"),
   },
   {
@@ -2629,7 +2629,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 25,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-04-03T19:36:55.176Z"),
   },
   {
@@ -2637,7 +2637,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 22,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-09-14T20:26:00.247Z"),
   },
   {
@@ -2645,7 +2645,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 4,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-10T05:10:53.808Z"),
   },
   {
@@ -2733,7 +2733,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-08-01T10:47:42.425Z"),
   },
   {
@@ -2837,7 +2837,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 28,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-30T17:14:44.229Z"),
   },
   {
@@ -2893,7 +2893,7 @@ export const jobApplications = [
     applicantId: 6,
     jobId: 10,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-10T08:39:54.328Z"),
   },
   {
@@ -2941,7 +2941,7 @@ export const jobApplications = [
     applicantId: 16,
     jobId: 15,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-09T03:49:47.316Z"),
   },
   {
@@ -2981,7 +2981,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 23,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-21T20:11:45.624Z"),
   },
   {
@@ -2997,7 +2997,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 14,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-23T11:57:07.726Z"),
   },
   {
@@ -3045,7 +3045,7 @@ export const jobApplications = [
     applicantId: 2,
     jobId: 11,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-04-03T20:14:41.217Z"),
   },
   {
@@ -3085,7 +3085,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 28,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-11T06:38:39.402Z"),
   },
   {
@@ -3093,7 +3093,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 25,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-03-05T11:57:07.033Z"),
   },
   {
@@ -3117,7 +3117,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 11,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-03T13:42:31.057Z"),
   },
   {
@@ -3173,7 +3173,7 @@ export const jobApplications = [
     applicantId: 15,
     jobId: 30,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-05T01:45:20.687Z"),
   },
   {
@@ -3189,7 +3189,7 @@ export const jobApplications = [
     applicantId: 43,
     jobId: 15,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-03-30T01:08:07.879Z"),
   },
   {
@@ -3261,7 +3261,7 @@ export const jobApplications = [
     applicantId: 27,
     jobId: 21,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-15T17:13:53.661Z"),
   },
   {
@@ -3285,7 +3285,7 @@ export const jobApplications = [
     applicantId: 18,
     jobId: 13,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-08-11T22:58:50.707Z"),
   },
   {
@@ -3301,7 +3301,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 21,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-09T07:09:51.982Z"),
   },
   {
@@ -3365,7 +3365,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 18,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-30T10:14:31.048Z"),
   },
   {
@@ -3381,7 +3381,7 @@ export const jobApplications = [
     applicantId: 41,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-24T06:01:13.543Z"),
   },
   {
@@ -3421,7 +3421,7 @@ export const jobApplications = [
     applicantId: 30,
     jobId: 24,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-15T05:58:27.784Z"),
   },
   {
@@ -3477,7 +3477,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 24,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-18T15:27:24.694Z"),
   },
   {
@@ -3533,7 +3533,7 @@ export const jobApplications = [
     applicantId: 2,
     jobId: 23,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-11T00:43:13.373Z"),
   },
   {
@@ -3597,7 +3597,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 21,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-21T13:18:03.409Z"),
   },
   {
@@ -3621,7 +3621,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 15,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-21T09:26:09.638Z"),
   },
   {
@@ -3637,7 +3637,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 22,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-25T01:59:39.831Z"),
   },
   {
@@ -3669,7 +3669,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 11,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-23T18:19:22.912Z"),
   },
   {
@@ -3709,7 +3709,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 27,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-05T20:08:29.816Z"),
   },
   {
@@ -3717,7 +3717,7 @@ export const jobApplications = [
     applicantId: 8,
     jobId: 14,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-18T19:17:49.828Z"),
   },
   {
@@ -3741,7 +3741,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 23,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-04-30T12:52:41.454Z"),
   },
   {
@@ -3781,7 +3781,7 @@ export const jobApplications = [
     applicantId: 3,
     jobId: 27,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-10T22:02:18.148Z"),
   },
   {
@@ -3805,7 +3805,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 3,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-21T15:31:17.676Z"),
   },
   {
@@ -3837,7 +3837,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 2,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-18T18:56:49.049Z"),
   },
   {
@@ -3933,7 +3933,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 30,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-04-14T11:24:35.233Z"),
   },
   {
@@ -3957,7 +3957,7 @@ export const jobApplications = [
     applicantId: 4,
     jobId: 26,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-09T07:28:43.217Z"),
   },
   {
@@ -3981,7 +3981,7 @@ export const jobApplications = [
     applicantId: 14,
     jobId: 22,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-07-06T06:42:00.064Z"),
   },
   {
@@ -3997,7 +3997,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 18,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-19T17:05:50.259Z"),
   },
   {
@@ -4077,7 +4077,7 @@ export const jobApplications = [
     applicantId: 18,
     jobId: 10,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-05T16:28:22.155Z"),
   },
   {
@@ -4085,7 +4085,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 9,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-09T05:54:12.859Z"),
   },
   {
@@ -4093,7 +4093,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 13,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-09-06T22:53:12.695Z"),
   },
   {
@@ -4149,7 +4149,7 @@ export const jobApplications = [
     applicantId: 12,
     jobId: 1,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-09-10T10:39:19.584Z"),
   },
   {
@@ -4165,7 +4165,7 @@ export const jobApplications = [
     applicantId: 16,
     jobId: 12,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-03-04T23:42:59.115Z"),
   },
   {
@@ -4221,7 +4221,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 25,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-02T12:24:19.931Z"),
   },
   {
@@ -4245,7 +4245,7 @@ export const jobApplications = [
     applicantId: 49,
     jobId: 27,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-01T02:27:27.215Z"),
   },
   {
@@ -4325,7 +4325,7 @@ export const jobApplications = [
     applicantId: 32,
     jobId: 9,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-05-14T10:39:11.704Z"),
   },
   {
@@ -4429,7 +4429,7 @@ export const jobApplications = [
     applicantId: 34,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-31T05:40:37.637Z"),
   },
   {
@@ -4445,7 +4445,7 @@ export const jobApplications = [
     applicantId: 50,
     jobId: 26,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-22T01:58:44.011Z"),
   },
   {
@@ -4453,7 +4453,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 26,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-01-13T23:12:37.330Z"),
   },
   {
@@ -4509,7 +4509,7 @@ export const jobApplications = [
     applicantId: 7,
     jobId: 23,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-12T16:52:23.176Z"),
   },
   {
@@ -4517,7 +4517,7 @@ export const jobApplications = [
     applicantId: 34,
     jobId: 26,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-05T20:00:54.940Z"),
   },
   {
@@ -4541,7 +4541,7 @@ export const jobApplications = [
     applicantId: 45,
     jobId: 16,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-03-15T18:21:16.281Z"),
   },
   {
@@ -4565,7 +4565,7 @@ export const jobApplications = [
     applicantId: 7,
     jobId: 5,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-09-01T09:29:19.300Z"),
   },
   {
@@ -4605,7 +4605,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-11T18:48:36.662Z"),
   },
   {
@@ -4693,7 +4693,7 @@ export const jobApplications = [
     applicantId: 45,
     jobId: 4,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-25T21:17:56.241Z"),
   },
   {
@@ -4733,7 +4733,7 @@ export const jobApplications = [
     applicantId: 16,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-03-11T12:33:14.543Z"),
   },
   {
@@ -4773,7 +4773,7 @@ export const jobApplications = [
     applicantId: 8,
     jobId: 9,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-08-14T02:50:51.824Z"),
   },
   {
@@ -4797,7 +4797,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 24,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-11T15:02:46.052Z"),
   },
   {
@@ -4805,7 +4805,7 @@ export const jobApplications = [
     applicantId: 37,
     jobId: 28,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-18T13:57:13.182Z"),
   },
   {
@@ -4829,7 +4829,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 3,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-17T18:44:08.595Z"),
   },
   {
@@ -4893,7 +4893,7 @@ export const jobApplications = [
     applicantId: 44,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-05T02:26:35.115Z"),
   },
   {
@@ -4901,7 +4901,7 @@ export const jobApplications = [
     applicantId: 16,
     jobId: 9,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-18T06:48:08.415Z"),
   },
   {
@@ -5037,7 +5037,7 @@ export const jobApplications = [
     applicantId: 6,
     jobId: 25,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-21T22:55:54.787Z"),
   },
   {
@@ -5053,7 +5053,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 30,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-08-14T07:49:54.592Z"),
   },
   {
@@ -5109,7 +5109,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 25,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-14T10:31:59.722Z"),
   },
   {
@@ -5125,7 +5125,7 @@ export const jobApplications = [
     applicantId: 12,
     jobId: 11,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-28T18:23:54.499Z"),
   },
   {
@@ -5157,7 +5157,7 @@ export const jobApplications = [
     applicantId: 41,
     jobId: 19,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-21T16:30:08.290Z"),
   },
   {
@@ -5165,7 +5165,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 5,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-03-30T16:04:44.071Z"),
   },
   {
@@ -5197,7 +5197,7 @@ export const jobApplications = [
     applicantId: 16,
     jobId: 6,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-04-30T17:43:57.858Z"),
   },
   {
@@ -5221,7 +5221,7 @@ export const jobApplications = [
     applicantId: 3,
     jobId: 30,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-02-26T11:09:37.270Z"),
   },
   {
@@ -5229,7 +5229,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 16,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-11T04:33:50.989Z"),
   },
   {
@@ -5245,7 +5245,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 27,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-08-06T18:21:41.243Z"),
   },
   {
@@ -5285,7 +5285,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 14,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-24T06:11:25.214Z"),
   },
   {
@@ -5357,7 +5357,7 @@ export const jobApplications = [
     applicantId: 15,
     jobId: 18,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-13T06:23:54.278Z"),
   },
   {
@@ -5389,7 +5389,7 @@ export const jobApplications = [
     applicantId: 44,
     jobId: 22,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-15T21:07:31.907Z"),
   },
   {
@@ -5429,7 +5429,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 15,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-17T20:51:57.250Z"),
   },
   {
@@ -5549,7 +5549,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-26T01:00:15.041Z"),
   },
   {
@@ -5573,7 +5573,7 @@ export const jobApplications = [
     applicantId: 28,
     jobId: 15,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-04-06T10:41:38.394Z"),
   },
   {
@@ -5581,7 +5581,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 12,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-03T01:57:46.911Z"),
   },
   {
@@ -5773,7 +5773,7 @@ export const jobApplications = [
     applicantId: 14,
     jobId: 23,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-08-31T03:04:48.881Z"),
   },
   {
@@ -5853,7 +5853,7 @@ export const jobApplications = [
     applicantId: 7,
     jobId: 16,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-22T16:42:33.186Z"),
   },
   {
@@ -5941,7 +5941,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 6,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-16T18:40:34.747Z"),
   },
   {
@@ -5949,7 +5949,7 @@ export const jobApplications = [
     applicantId: 28,
     jobId: 7,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-23T08:26:51.277Z"),
   },
   {
@@ -5965,7 +5965,7 @@ export const jobApplications = [
     applicantId: 4,
     jobId: 8,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-04-12T21:41:40.283Z"),
   },
   {
@@ -6069,7 +6069,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 8,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-02-10T23:24:50.956Z"),
   },
   {
@@ -6077,7 +6077,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-17T03:59:25.936Z"),
   },
   {
@@ -6213,7 +6213,7 @@ export const jobApplications = [
     applicantId: 18,
     jobId: 25,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-08-16T14:24:14.133Z"),
   },
   {
@@ -6285,7 +6285,7 @@ export const jobApplications = [
     applicantId: 28,
     jobId: 4,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-19T10:40:32.904Z"),
   },
   {
@@ -6317,7 +6317,7 @@ export const jobApplications = [
     applicantId: 26,
     jobId: 1,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-09-02T19:51:47.040Z"),
   },
   {
@@ -6333,7 +6333,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 22,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-18T18:05:22.380Z"),
   },
   {
@@ -6341,7 +6341,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 14,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-15T04:56:26.712Z"),
   },
   {
@@ -6461,7 +6461,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 16,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-02-21T16:36:51.635Z"),
   },
   {
@@ -6469,7 +6469,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 22,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-02-20T22:40:12.642Z"),
   },
   {
@@ -6509,7 +6509,7 @@ export const jobApplications = [
     applicantId: 47,
     jobId: 5,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-07-10T00:02:04.158Z"),
   },
   {
@@ -6517,7 +6517,7 @@ export const jobApplications = [
     applicantId: 4,
     jobId: 20,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-02-12T08:37:27.063Z"),
   },
   {
@@ -6541,7 +6541,7 @@ export const jobApplications = [
     applicantId: 47,
     jobId: 29,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-04T10:13:47.794Z"),
   },
   {
@@ -6589,7 +6589,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 3,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-12T01:26:55.165Z"),
   },
   {
@@ -6621,7 +6621,7 @@ export const jobApplications = [
     applicantId: 26,
     jobId: 20,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-11T21:54:50.689Z"),
   },
   {
@@ -6629,7 +6629,7 @@ export const jobApplications = [
     applicantId: 18,
     jobId: 30,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-15T05:17:21.193Z"),
   },
   {
@@ -6677,7 +6677,7 @@ export const jobApplications = [
     applicantId: 47,
     jobId: 23,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-02-27T02:35:42.183Z"),
   },
   {
@@ -6741,7 +6741,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 28,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-05-17T13:51:56.676Z"),
   },
   {
@@ -6789,7 +6789,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 10,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-07-27T12:15:50.762Z"),
   },
   {
@@ -6821,7 +6821,7 @@ export const jobApplications = [
     applicantId: 1,
     jobId: 23,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-13T12:33:08.664Z"),
   },
   {
@@ -6869,7 +6869,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 13,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-24T10:29:39.463Z"),
   },
   {
@@ -6885,7 +6885,7 @@ export const jobApplications = [
     applicantId: 41,
     jobId: 17,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-03-11T09:59:24.445Z"),
   },
   {
@@ -6901,7 +6901,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 10,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-06-29T17:19:30.442Z"),
   },
   {
@@ -6925,7 +6925,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 1,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-04-12T20:45:15.713Z"),
   },
   {
@@ -6957,7 +6957,7 @@ export const jobApplications = [
     applicantId: 15,
     jobId: 16,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-21T16:21:45.220Z"),
   },
   {
@@ -6973,7 +6973,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 16,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-20T18:54:44.145Z"),
   },
   {
@@ -6981,7 +6981,7 @@ export const jobApplications = [
     applicantId: 20,
     jobId: 28,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-08-27T10:56:59.495Z"),
   },
   {
@@ -6989,7 +6989,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 3,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-05-28T08:50:47.964Z"),
   },
   {
@@ -7021,7 +7021,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 12,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-06-18T03:08:30.935Z"),
   },
   {
@@ -7037,7 +7037,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 12,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-29T19:28:55.827Z"),
   },
   {
@@ -7045,7 +7045,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 25,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-09-07T08:24:14.736Z"),
   },
   {
@@ -7069,7 +7069,7 @@ export const jobApplications = [
     applicantId: 6,
     jobId: 29,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-03-06T06:48:40.090Z"),
   },
   {
@@ -7125,7 +7125,7 @@ export const jobApplications = [
     applicantId: 22,
     jobId: 27,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-16T07:05:19.850Z"),
   },
   {
@@ -7221,7 +7221,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 9,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-13T13:28:00.579Z"),
   },
   {
@@ -7229,7 +7229,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 11,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-02-07T01:54:05.542Z"),
   },
   {
@@ -7253,7 +7253,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 27,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-03T21:23:20.056Z"),
   },
   {
@@ -7261,7 +7261,7 @@ export const jobApplications = [
     applicantId: 1,
     jobId: 30,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-06T09:42:20.700Z"),
   },
   {
@@ -7317,7 +7317,7 @@ export const jobApplications = [
     applicantId: 7,
     jobId: 22,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-08-31T14:40:20.764Z"),
   },
   {
@@ -7325,7 +7325,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 24,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-09-14T14:23:17.281Z"),
   },
   {
@@ -7333,7 +7333,7 @@ export const jobApplications = [
     applicantId: 1,
     jobId: 15,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-11T00:38:46.988Z"),
   },
   {
@@ -7373,7 +7373,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 26,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-06-08T21:49:16.665Z"),
   },
   {
@@ -7405,7 +7405,7 @@ export const jobApplications = [
     applicantId: 30,
     jobId: 15,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-05-14T03:34:31.574Z"),
   },
   {
@@ -7477,7 +7477,7 @@ export const jobApplications = [
     applicantId: 38,
     jobId: 15,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-04T04:48:34.744Z"),
   },
   {
@@ -7509,7 +7509,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 4,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-03-10T07:42:51.690Z"),
   },
   {
@@ -7525,7 +7525,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 25,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-06-19T03:04:33.041Z"),
   },
   {
@@ -7533,7 +7533,7 @@ export const jobApplications = [
     applicantId: 2,
     jobId: 15,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-05-26T12:06:09.477Z"),
   },
   {
@@ -7557,7 +7557,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 27,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-06-21T02:16:55.326Z"),
   },
   {
@@ -7605,7 +7605,7 @@ export const jobApplications = [
     applicantId: 49,
     jobId: 25,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-17T15:31:21.396Z"),
   },
   {
@@ -7637,7 +7637,7 @@ export const jobApplications = [
     applicantId: 37,
     jobId: 2,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-04-13T17:02:51.238Z"),
   },
   {
@@ -7725,7 +7725,7 @@ export const jobApplications = [
     applicantId: 21,
     jobId: 15,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-07-09T14:55:08.261Z"),
   },
   {
@@ -7789,7 +7789,7 @@ export const jobApplications = [
     applicantId: 32,
     jobId: 17,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-07-10T03:43:11.938Z"),
   },
   {
@@ -7821,7 +7821,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 26,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-30T07:58:13.623Z"),
   },
   {
@@ -7829,7 +7829,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 29,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-16T00:58:22.732Z"),
   },
   {
@@ -7861,7 +7861,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 11,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-03-02T19:12:54.661Z"),
   },
   {
@@ -7869,7 +7869,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 12,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-07-19T11:55:36.807Z"),
   },
   {
@@ -7909,7 +7909,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 7,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-02-15T15:39:34.667Z"),
   },
   {
@@ -7925,7 +7925,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 27,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-01-03T08:46:23.695Z"),
   },
   {
@@ -7981,7 +7981,7 @@ export const jobApplications = [
     applicantId: 2,
     jobId: 14,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-04-21T18:35:51.299Z"),
   },
   {
@@ -8173,7 +8173,7 @@ export const jobApplications = [
     applicantId: 15,
     jobId: 13,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-03-12T16:01:56.913Z"),
   },
   {
@@ -8229,7 +8229,7 @@ export const jobApplications = [
     applicantId: 44,
     jobId: 11,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-09-10T03:03:54.140Z"),
   },
   {
@@ -8245,7 +8245,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 23,
     stage: "test",
-    status: "technical",
+    status: null,
     appliedOn: new Date("2026-01-17T02:15:13.536Z"),
   },
   {
@@ -8261,7 +8261,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 17,
     stage: "test",
-    status: "written",
+    status: null,
     appliedOn: new Date("2026-07-25T07:06:54.669Z"),
   },
   {
@@ -8269,7 +8269,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 21,
     stage: "test",
-    status: "interview",
+    status: null,
     appliedOn: new Date("2026-05-04T13:36:35.667Z"),
   },
   {
@@ -8285,7 +8285,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 20,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-04-11T07:49:14.350Z"),
   },
   {
@@ -8341,7 +8341,7 @@ export const jobApplications = [
     applicantId: 17,
     jobId: 2,
     stage: "test",
-    status: "overall",
+    status: null,
     appliedOn: new Date("2026-01-09T18:07:32.815Z"),
   },
   {
@@ -8399,5 +8399,120 @@ export const jobApplications = [
     stage: "submittedCv",
     status: "newCv",
     appliedOn: new Date("2026-07-23T15:42:12.352Z"),
+  },
+
+  // Test-stage samples covering every test combination (single, any two, all
+  // three) for jobs 1 and 2; their tests are in jobApplicationTest.ts
+  {
+    applicationId: 1051,
+    applicantId: 10,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-01T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1052,
+    applicantId: 11,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-02T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1053,
+    applicantId: 16,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-03T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1054,
+    applicantId: 21,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-04T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1055,
+    applicantId: 22,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-05T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1056,
+    applicantId: 30,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-06T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1057,
+    applicantId: 32,
+    jobId: 1,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-07T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1058,
+    applicantId: 1,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-08T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1059,
+    applicantId: 8,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-09T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1060,
+    applicantId: 9,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-10T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1061,
+    applicantId: 11,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-11T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1062,
+    applicantId: 14,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-12T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1063,
+    applicantId: 16,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-13T06:00:00.000Z"),
+  },
+  {
+    applicationId: 1064,
+    applicantId: 19,
+    jobId: 2,
+    stage: "test",
+    status: null,
+    appliedOn: new Date("2026-09-14T06:00:00.000Z"),
   },
 ];
