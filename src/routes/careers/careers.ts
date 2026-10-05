@@ -62,7 +62,6 @@ const testSelect = {
   subjects: true,
   score: true,
   status: true,
-  remarks: true,
   evaluatedBy: true,
 } satisfies Prisma.JobApplicationTestSelect;
 
@@ -72,7 +71,7 @@ type TestsView = Record<TestType, TestView | null>;
 type OverallView = { score: number | null; status: TestResult | null };
 
 // Overall result across the assigned tests: any fail/absent fails it, all
-// passed passes it, anything else is still pending. No tests -> null.
+// passed passes it, anything else is not decided yet (null). No tests -> null.
 function getOverall(tests: TestRow[]): OverallView {
   if (tests.length === 0) return { score: null, status: null };
 
@@ -82,7 +81,7 @@ function getOverall(tests: TestRow[]): OverallView {
       .filter((score): score is number => isFiniteNumber(score)),
   );
 
-  let status: TestResult = TestResult.pending;
+  let status: TestResult | null = null;
   if (tests.some((t) => t.status === TestResult.fail || t.status === TestResult.absent)) {
     status = TestResult.fail;
   } else if (tests.every((t) => t.status === TestResult.pass)) {
@@ -90,12 +89,6 @@ function getOverall(tests: TestRow[]): OverallView {
   }
 
   return { score, status };
-}
-
-// Root status for a test-stage application when no tab is given: the test type
-// if only one test is assigned, otherwise "overall"
-function getTestStageStatus(tests: TestRow[]): string {
-  return tests.length === 1 ? tests[0].testType : OVERALL_STATUS;
 }
 
 // Array of test rows -> { written, technical, interview } (null = not assigned)
@@ -121,6 +114,29 @@ function isPositiveIntArray(value: unknown): value is number[] {
     value.length > 0 &&
     value.every((v) => Number.isInteger(v) && v > 0)
   );
+}
+
+// Remarks fields sent to the frontend alongside the application
+const remarksSelect = {
+  remarks: true,
+  remarksAt: true,
+  remarksBy: true,
+} satisfies Prisma.JobApplicationSelect;
+
+// Remarks with who changed them and when. Blank text clears all three, and
+// resending the current text leaves them untouched so remarksAt doesn't move.
+function buildRemarksData(
+  remarks: string | null,
+  current: string | null,
+  username?: string,
+) {
+  const value = remarks?.trim() || null;
+  if (value === current) return {};
+  return {
+    remarks: value,
+    remarksAt: value ? new Date() : null,
+    remarksBy: value ? (username ?? null) : null,
+  };
 }
 
 router.get(
@@ -159,8 +175,8 @@ router.get(
       }
       if (startDateStr || endDateStr) {
         where.deadline = {
-          ...(startDateStr && { gte: startDateStr }),
-          ...(endDateStr && { lte: endDateStr }),
+          ...(startDateStr && { gte: new Date(startDateStr) }),
+          ...(endDateStr && { lte: new Date(endDateStr) }),
         };
       }
 
@@ -444,13 +460,15 @@ router.get(
         });
       }
 
+      // Always the full applicant with every test; tab filtering is only done
+      // by the list endpoint
       const { tests, ...rest } = application;
       return res.status(200).json({
         success: true,
         message: "Applicant retrieved successfully",
         data: {
           ...rest,
-          ...(rest.stage === TEST_STAGE && { status: getTestStageStatus(tests) }),
+          ...(rest.stage === TEST_STAGE && { status: OVERALL_STATUS }),
           ...formatTests(tests),
         },
       });
@@ -478,6 +496,7 @@ router.get(
         where: { applicationId: applicationIdNum, jobId: careerIdNum },
         select: {
           applicationId: true,
+          ...remarksSelect,
           tests: { select: testSelect, orderBy: testOrder },
         },
       });
@@ -494,6 +513,9 @@ router.get(
         message: "Applicant test results retrieved successfully",
         data: {
           applicationId: application.applicationId,
+          remarks: application.remarks,
+          remarksAt: application.remarksAt,
+          remarksBy: application.remarksBy,
           ...formatTests(application.tests),
         },
       });
@@ -541,7 +563,7 @@ router.post(
         });
       }
 
-      if (status !== undefined && !isTestResult(status)) {
+      if (status !== undefined && status !== null && !isTestResult(status)) {
         return res.status(400).json({
           success: false,
           message: `Invalid status. Allowed: ${Object.values(TestResult).join(", ")}`,
@@ -557,7 +579,7 @@ router.post(
 
       const application = await prisma.jobApplication.findFirst({
         where: { applicationId: applicationIdNum, jobId: careerIdNum },
-        select: { applicationId: true },
+        select: { applicationId: true, remarks: true },
       });
 
       if (!application) {
@@ -579,22 +601,43 @@ router.post(
               : averageOf((subjects as TestSubject[]).map((s) => s.subjectScore)),
         }),
         ...(status !== undefined && { status }),
-        ...(remarks !== undefined && { remarks }),
         evaluatedBy: evaluatedBy?.username ?? null,
       };
 
-      const test = await prisma.jobApplicationTest.upsert({
-        where: {
-          applicationId_testType: { applicationId: applicationIdNum, testType },
-        },
-        create: { applicationId: applicationIdNum, testType, ...data },
-        update: data,
-      });
+      // Remarks belong to the application, so they are saved there alongside
+      // the test result
+      const [, updated] = await prisma.$transaction([
+        prisma.jobApplicationTest.upsert({
+          where: {
+            applicationId_testType: { applicationId: applicationIdNum, testType },
+          },
+          create: { applicationId: applicationIdNum, testType, ...data },
+          update: data,
+        }),
+        prisma.jobApplication.update({
+          where: { applicationId: applicationIdNum },
+          data:
+            remarks !== undefined
+              ? buildRemarksData(remarks, application.remarks, evaluatedBy?.username)
+              : {},
+          select: {
+            applicationId: true,
+            ...remarksSelect,
+            tests: { select: testSelect, orderBy: testOrder },
+          },
+        }),
+      ]);
 
       return res.status(200).json({
         success: true,
         message: `${testType} test results updated successfully`,
-        data: test,
+        data: {
+          applicationId: updated.applicationId,
+          remarks: updated.remarks,
+          remarksAt: updated.remarksAt,
+          remarksBy: updated.remarksBy,
+          ...formatTests(updated.tests),
+        },
       });
     } catch (err) {
       return next(err);
@@ -697,9 +740,7 @@ router.patch(
         message: `Applicants moved to ${stage} successfully`,
         data: moved.map(({ tests, ...application }) => ({
           ...application,
-          ...(application.stage === TEST_STAGE && {
-            status: getTestStageStatus(tests),
-          }),
+          ...(application.stage === TEST_STAGE && { status: OVERALL_STATUS }),
           ...formatTests(tests),
         })),
       });
@@ -709,5 +750,57 @@ router.patch(
   },
 );
 
+// Update an application's remarks on their own (any stage)
+router.patch(
+  "/:id/applicants/:applicationId/remarks",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      const applicationIdNum = Number(req.params.applicationId);
+      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID or applicant ID",
+        });
+      }
+
+      const { remarks } = req.body ?? {};
+      if (remarks !== null && typeof remarks !== "string") {
+        return res.status(400).json({
+          success: false,
+          message: "remarks must be a string or null",
+        });
+      }
+
+      const application = await prisma.jobApplication.findFirst({
+        where: { applicationId: applicationIdNum, jobId: careerIdNum },
+        select: { remarks: true },
+      });
+
+      if (!application) {
+        return res.status(404).json({
+          success: false,
+          message: "Applicant not found for this career",
+        });
+      }
+
+      const user = (req as any).user as JwtPayload | undefined;
+      const updated = await prisma.jobApplication.update({
+        where: { applicationId: applicationIdNum },
+        data: buildRemarksData(remarks, application.remarks, user?.username),
+        select: { applicationId: true, ...remarksSelect },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Remarks updated successfully",
+        data: updated,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 export default router;

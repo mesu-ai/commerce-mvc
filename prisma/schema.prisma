@@ -773,7 +773,7 @@ model Career {
   vacancy                Int?
   experience             String?
   salary                 String?
-  deadline               String?
+  deadline               DateTime?
   location               String?
   email                  String?
   context                String?
@@ -832,6 +832,9 @@ model JobApplication {
   jobId         Int
   stage         String
   status        String?
+  remarks       String?
+  remarksAt     DateTime? // last time remarks were changed
+  remarksBy     String? // username of whoever last changed them
   appliedOn     DateTime @default(now())
 
   career    Career               @relation(fields: [jobId], references: [jobId])
@@ -851,7 +854,6 @@ enum TestType {
 }
 
 enum TestResult {
-  pending
   pass
   fail
   absent
@@ -864,8 +866,7 @@ model JobApplicationTest {
   testDate      DateTime?
   subjects      Json? // [{ subjectName, subjectScore }]
   score         Float? // percentage (0-100), the mean of the subject scores
-  status        TestResult @default(pending)
-  remarks       String?
+  status        TestResult? // null until the test is evaluated
   evaluatedBy   String? // username from the access token of whoever last saved it
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt

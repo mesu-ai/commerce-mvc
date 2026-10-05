@@ -1,7 +1,7 @@
 import { TestType, TestResult } from "@prisma/client";
 
 // Mirrors the JobApplicationTest model in prisma/schema.prisma. Each row is a
-// test assigned to a test-stage application; results start as pending.
+// test assigned to a test-stage application; status stays null until evaluated.
 export const jobApplicationTests = [
   { applicationId: 26, testType: TestType.written },
   { applicationId: 27, testType: TestType.written },
@@ -296,7 +296,6 @@ export const jobApplicationTests = [
     ],
     score: 45,
     status: TestResult.fail,
-    remarks: "Needs stronger fundamentals",
     evaluatedBy: "mesu123",
   },
   // 1054: written + technical
@@ -356,7 +355,6 @@ export const jobApplicationTests = [
     testType: TestType.interview,
     testDate: new Date("2026-10-08T05:00:00.000Z"),
     status: TestResult.absent,
-    remarks: "Did not attend",
     evaluatedBy: "mesu123",
   },
   // 1057: written + technical + interview

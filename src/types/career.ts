@@ -8,7 +8,7 @@ export interface CareerT {
   vacancy: number;
   experience: string;
   salary: string;
-  deadline: string;
+  deadline: Date;
   location: string;
   email: string;
   context: string;

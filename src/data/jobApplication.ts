@@ -6,6 +6,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "submittedCv",
     status: "newCv",
+    remarks: "Strong academic background, review portfolio",
+    remarksAt: new Date("2026-01-07T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-01-05T06:00:00.000Z"),
   },
   {
@@ -54,6 +57,9 @@ export const jobApplications = [
     jobId: 7,
     stage: "submittedCv",
     status: "viewed",
+    remarks: "CV viewed, good communication skills",
+    remarksAt: new Date("2026-02-06T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-02-04T06:00:00.000Z"),
   },
   {
@@ -102,6 +108,9 @@ export const jobApplications = [
     jobId: 13,
     stage: "submittedCv",
     status: "notViewed",
+    remarks: "Missing cover letter",
+    remarksAt: new Date("2026-03-08T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-03-06T06:00:00.000Z"),
   },
   {
@@ -126,6 +135,9 @@ export const jobApplications = [
     jobId: 16,
     stage: "shortlisted",
     status: null,
+    remarks: "Shortlisted for relevant experience",
+    remarksAt: new Date("2026-03-23T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-03-21T06:00:00.000Z"),
   },
   {
@@ -158,6 +170,9 @@ export const jobApplications = [
     jobId: 20,
     stage: "shortlisted",
     status: null,
+    remarks: "Call to confirm availability",
+    remarksAt: new Date("2026-04-12T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-04-10T06:00:00.000Z"),
   },
   {
@@ -286,6 +301,9 @@ export const jobApplications = [
     jobId: 6,
     stage: "finalSelection",
     status: "onboarded",
+    remarks: "Offer letter sent",
+    remarksAt: new Date("2026-07-01T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-06-29T06:00:00.000Z"),
   },
   {
@@ -310,6 +328,9 @@ export const jobApplications = [
     jobId: 9,
     stage: "finalSelection",
     status: "rejected",
+    remarks: "Rejected after salary discussion",
+    remarksAt: new Date("2026-07-16T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-07-14T06:00:00.000Z"),
   },
   {
@@ -326,6 +347,9 @@ export const jobApplications = [
     jobId: 11,
     stage: "rejected",
     status: null,
+    remarks: "Did not meet minimum requirements",
+    remarksAt: new Date("2026-07-26T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-07-24T06:00:00.000Z"),
   },
   {
@@ -358,6 +382,9 @@ export const jobApplications = [
     jobId: 15,
     stage: "rejected",
     status: null,
+    remarks: "Position filled",
+    remarksAt: new Date("2026-08-15T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-08-13T06:00:00.000Z"),
   },
   {
@@ -8409,6 +8436,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Good written score, ready for next round",
+    remarksAt: new Date("2026-09-03T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-09-01T06:00:00.000Z"),
   },
   {
@@ -8417,6 +8447,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Technical test scheduled",
+    remarksAt: new Date("2026-09-04T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-09-02T06:00:00.000Z"),
   },
   {
@@ -8425,6 +8458,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Needs stronger fundamentals",
+    remarksAt: new Date("2026-09-05T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-09-03T06:00:00.000Z"),
   },
   {
@@ -8433,6 +8469,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Waiting for technical test result",
+    remarksAt: new Date("2026-09-06T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-09-04T06:00:00.000Z"),
   },
   {
@@ -8441,6 +8480,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Performed well in both rounds",
+    remarksAt: new Date("2026-09-07T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-09-05T06:00:00.000Z"),
   },
   {
@@ -8449,6 +8491,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Did not attend the interview",
+    remarksAt: new Date("2026-09-08T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-09-06T06:00:00.000Z"),
   },
   {
@@ -8457,6 +8502,9 @@ export const jobApplications = [
     jobId: 1,
     stage: "test",
     status: null,
+    remarks: "Interview pending, strong so far",
+    remarksAt: new Date("2026-09-09T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-09-07T06:00:00.000Z"),
   },
   {
@@ -8473,6 +8521,9 @@ export const jobApplications = [
     jobId: 2,
     stage: "test",
     status: null,
+    remarks: "Excellent problem solving",
+    remarksAt: new Date("2026-09-11T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-09-09T06:00:00.000Z"),
   },
   {
@@ -8497,6 +8548,9 @@ export const jobApplications = [
     jobId: 2,
     stage: "test",
     status: null,
+    remarks: "Weak in written test, interview to decide",
+    remarksAt: new Date("2026-09-14T06:00:00.000Z"),
+    remarksBy: "mesu123",
     appliedOn: new Date("2026-09-12T06:00:00.000Z"),
   },
   {
@@ -8505,6 +8559,9 @@ export const jobApplications = [
     jobId: 2,
     stage: "test",
     status: null,
+    remarks: "Recommended for final selection",
+    remarksAt: new Date("2026-09-15T06:00:00.000Z"),
+    remarksBy: "emon123",
     appliedOn: new Date("2026-09-13T06:00:00.000Z"),
   },
   {
@@ -8513,6 +8570,9 @@ export const jobApplications = [
     jobId: 2,
     stage: "test",
     status: null,
+    remarks: "Top candidate, passed all tests",
+    remarksAt: new Date("2026-09-16T06:00:00.000Z"),
+    remarksBy: "sumin12",
     appliedOn: new Date("2026-09-14T06:00:00.000Z"),
   },
 ];
