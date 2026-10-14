@@ -116,6 +116,97 @@ function isPositiveIntArray(value: unknown): value is number[] {
   );
 }
 
+type ApplicantFilters = {
+  keyword?: unknown;
+  status?: unknown;
+  stage?: unknown;
+  startDate?: unknown;
+  endDate?: unknown;
+  divisionId?: unknown;
+  universityId?: unknown;
+};
+
+// Query strings send numbers as strings, JSON bodies as numbers
+function toOptionalNumber(value: unknown): number | undefined {
+  return typeof value === "string" || typeof value === "number"
+    ? Number(value)
+    : undefined;
+}
+
+// Applicant list filters for one career, shared by the list endpoint (query
+// string) and bulk "select all" actions (body) so both match the same rows.
+// testTab is set when a single test type tab is selected in the test stage.
+function buildApplicantWhere(
+  careerId: number,
+  filters: ApplicantFilters,
+):
+  | { where: Prisma.JobApplicationWhereInput; testTab?: TestType }
+  | { error: string } {
+  const { keyword, status, stage, startDate, endDate, divisionId, universityId } =
+    filters;
+
+  const keywordStr =
+    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+  const stageStr = typeof stage === "string" ? stage : undefined;
+  const statusStr = typeof status === "string" ? status : undefined;
+  const startDateStr = typeof startDate === "string" ? startDate : undefined;
+  const endDateStr = typeof endDate === "string" ? endDate : undefined;
+  const divisionIdNum = toOptionalNumber(divisionId);
+  const universityIdNum = toOptionalNumber(universityId);
+
+  const where: Prisma.JobApplicationWhereInput = { jobId: careerId };
+
+  if (stageStr) {
+    where.stage = stageStr;
+  }
+
+  // In the test stage, "status" is a test type tab (or "overall") and is
+  // resolved against the assigned test rows, not JobApplication.status
+  let testTab: TestType | undefined;
+  if (stageStr === TEST_STAGE) {
+    if (!statusStr || statusStr === OVERALL_STATUS) {
+      // "overall" is not a status: anyone with at least one of the tests
+      where.tests = { some: {} };
+    } else if (isTestType(statusStr)) {
+      where.tests = { some: { testType: statusStr } };
+      testTab = statusStr;
+    } else {
+      return {
+        error: `Invalid status for test stage. Allowed: ${[...Object.values(TestType), OVERALL_STATUS].join(", ")}`,
+      };
+    }
+  } else if (statusStr) {
+    where.status = statusStr;
+  }
+
+  const applicantFilters: Prisma.ApplicantWhereInput = {};
+
+  if (keywordStr) {
+    applicantFilters.name = { contains: keywordStr, mode: "insensitive" };
+  }
+
+  if (universityIdNum) {
+    applicantFilters.universityId = universityIdNum;
+  }
+
+  if (divisionIdNum) {
+    applicantFilters.divisionId = divisionIdNum;
+  }
+
+  if (Object.keys(applicantFilters).length > 0) {
+    where.applicant = applicantFilters;
+  }
+
+  if (startDateStr || endDateStr) {
+    where.appliedOn = {
+      ...(startDateStr && { gte: new Date(startDateStr) }),
+      ...(endDateStr && { lte: new Date(endDateStr) }),
+    };
+  }
+
+  return { where, testTab };
+}
+
 // Remarks fields sent to the frontend alongside the application
 const remarksSelect = {
   remarks: true,
@@ -139,46 +230,229 @@ function buildRemarksData(
   };
 }
 
+type BulkError = { status: number; message: string };
+
+// Turns a bulk applicant payload into the rows it targets. Two modes:
+// - manual (isSelectAll=false): only the applicationIds in modifiedFields,
+//   all of which must belong to the career (404 otherwise)
+// - select all (isSelectAll=true): every applicant matching the list filters
+//   sent in the body, except excludedIds
+// Returns the action's `data` object alongside the where clause.
+async function resolveBulkApplicants(
+  careerId: number,
+  body: any,
+): Promise<{ where: Prisma.JobApplicationWhereInput; data: any } | BulkError> {
+  const { isSelectAll, modifiedFields, excludedIds, data, ...filters } =
+    body ?? {};
+
+  if (typeof isSelectAll !== "boolean") {
+    return { status: 400, message: "isSelectAll must be a boolean" };
+  }
+
+  // jobId is repeated in the body; it must not point at another career
+  if (
+    [filters.jobId, data?.jobId].some(
+      (jobId) => jobId !== undefined && Number(jobId) !== careerId,
+    )
+  ) {
+    return { status: 400, message: "jobId does not match the career ID" };
+  }
+
+  if (isSelectAll) {
+    if (
+      excludedIds !== undefined &&
+      excludedIds !== null &&
+      !(Array.isArray(excludedIds) &&
+        (excludedIds.length === 0 || isPositiveIntArray(excludedIds)))
+    ) {
+      return {
+        status: 400,
+        message: "excludedIds must be an array of application IDs",
+      };
+    }
+
+    const filter = buildApplicantWhere(careerId, filters);
+    if ("error" in filter) return { status: 400, message: filter.error };
+
+    const where = filter.where;
+    if (excludedIds?.length) {
+      where.applicationId = { notIn: [...new Set<number>(excludedIds)] };
+    }
+    return { where, data };
+  }
+
+  const applicationIds = Array.isArray(modifiedFields)
+    ? modifiedFields.map((field) => field?.applicationId)
+    : [];
+
+  if (!isPositiveIntArray(applicationIds)) {
+    return {
+      status: 400,
+      message: "modifiedFields must be a non-empty array of { applicationId }",
+    };
+  }
+
+  const uniqueIds = [...new Set(applicationIds)];
+  const where = { applicationId: { in: uniqueIds }, jobId: careerId };
+
+  const matched = await prisma.jobApplication.count({ where });
+  if (matched !== uniqueIds.length) {
+    return {
+      status: 404,
+      message: "One or more applicants not found for this career",
+    };
+  }
+  return { where, data };
+}
+
+// Values match the frontend StageTypeT / StatusTypeT
+const APPLICANT_STAGES = [
+  "submittedCv",
+  "shortlisted",
+  TEST_STAGE,
+  "finalSelection",
+  "rejected",
+];
+const APPLICANT_STATUSES = [
+  "newCv",
+  "viewed",
+  "notViewed",
+  "onboarded",
+  "notMovingForward",
+];
+
+type StageInput = { stage: string; status: string | null; testTypes: TestType[] };
+
+// Validates a stage move (frontend StageChangeT). For the test stage, status
+// is the array of test types to assign; for other stages it is an optional
+// status value.
+function parseStageInput(input: any): StageInput | { error: string } {
+  const { stage, status } = input ?? {};
+
+  if (!APPLICANT_STAGES.includes(stage)) {
+    return { error: `Invalid stage. Allowed: ${APPLICANT_STAGES.join(", ")}` };
+  }
+
+  if (stage === TEST_STAGE) {
+    if (
+      !Array.isArray(status) ||
+      status.length === 0 ||
+      !status.every(isTestType)
+    ) {
+      return {
+        error: `status must be a non-empty array of test types for the test stage. Allowed: ${Object.values(TestType).join(", ")}`,
+      };
+    }
+
+    return {
+      stage,
+      // Test-stage status lives on the test rows, so the column is cleared
+      status: null,
+      testTypes: [...new Set(status as TestType[])],
+    };
+  }
+
+  if (
+    status !== undefined &&
+    status !== null &&
+    !APPLICANT_STATUSES.includes(status)
+  ) {
+    return {
+      error: `Invalid status. Allowed: ${APPLICANT_STATUSES.join(", ")}`,
+    };
+  }
+
+  return { stage, status: status ?? null, testTypes: [] };
+}
+
+// Moves applications to a stage. For the test stage, each selected test type
+// is assigned by creating a pending test row; existing rows (and their
+// scores) are kept and only new types are added.
+async function moveApplicantsToStage(
+  careerId: number,
+  where: Prisma.JobApplicationWhereInput,
+  { stage, status, testTypes }: StageInput,
+) {
+  return prisma.$transaction(async (tx) => {
+    // Test rows are created per application, so the IDs are resolved first;
+    // only applications of this career are touched, test rows included
+    const ids = (
+      await tx.jobApplication.findMany({
+        where: { AND: [where, { jobId: careerId }] },
+        select: { applicationId: true },
+      })
+    ).map((row) => row.applicationId);
+    if (ids.length === 0) return 0;
+
+    const { count } = await tx.jobApplication.updateMany({
+      where: { applicationId: { in: ids } },
+      data: { stage, status },
+    });
+
+    if (testTypes.length > 0) {
+      await tx.jobApplicationTest.createMany({
+        data: ids.flatMap((applicationId) =>
+          testTypes.map((testType) => ({ applicationId, testType })),
+        ),
+        skipDuplicates: true,
+      });
+    }
+
+    return count;
+  });
+}
+
+const CAREER_STATUSES = ["Y", "N"];
+
+type CareerFilters = {
+  keyword?: unknown;
+  departmentId?: unknown;
+  status?: unknown;
+  startDate?: unknown;
+  endDate?: unknown;
+};
+
+// Career list filters, shared by the list endpoint (query string) and the
+// bulk status "select all" mode (body) so both match the same rows
+function buildCareerWhere(filters: CareerFilters): Prisma.CareerWhereInput {
+  const { keyword, departmentId, status, startDate, endDate } = filters;
+
+  const keywordStr =
+    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+  const departmentIdNum =
+    typeof departmentId === "string" || typeof departmentId === "number"
+      ? Number(departmentId)
+      : undefined;
+  const startDateStr = typeof startDate === "string" ? startDate : undefined;
+  const endDateStr = typeof endDate === "string" ? endDate : undefined;
+  const statusStr = typeof status === "string" ? status : undefined;
+
+  const where: Prisma.CareerWhereInput = {};
+  if (keywordStr) {
+    where.jobTitle = { contains: keywordStr, mode: "insensitive" };
+  }
+  if (departmentIdNum) {
+    where.departmentId = departmentIdNum;
+  }
+  if (statusStr) {
+    where.status = statusStr;
+  }
+  if (startDateStr || endDateStr) {
+    where.deadline = {
+      ...(startDateStr && { gte: new Date(startDateStr) }),
+      ...(endDateStr && { lte: new Date(endDateStr) }),
+    };
+  }
+  return where;
+}
+
 router.get(
   "/",
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        keyword,
-        departmentId,
-        status,
-        startDate,
-        endDate,
-        itemsPerPage,
-        currentPage,
-      } = req.query;
-
-      const keywordStr =
-        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-      const departmentIdNum =
-        typeof departmentId === "string" ? Number(departmentId) : undefined;
-      const startDateStr =
-        typeof startDate === "string" ? startDate : undefined;
-      const endDateStr = typeof endDate === "string" ? endDate : undefined;
-      const statusStr = typeof status === "string" ? status : undefined;
-
-      const where: any = {};
-      if (keywordStr) {
-        where.jobTitle = { contains: keywordStr, mode: "insensitive" };
-      }
-      if (departmentIdNum) {
-        where.departmentId = departmentIdNum;
-      }
-      if (statusStr) {
-        where.status = statusStr;
-      }
-      if (startDateStr || endDateStr) {
-        where.deadline = {
-          ...(startDateStr && { gte: new Date(startDateStr) }),
-          ...(endDateStr && { lte: new Date(endDateStr) }),
-        };
-      }
+      const { itemsPerPage, currentPage } = req.query;
+      const where = buildCareerWhere(req.query);
 
       const perPage =
         typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
@@ -269,6 +543,82 @@ router.get(
   },
 );
 
+// Bulk status change for career/job posts. Two modes:
+// - manual (isSelectAll=false): only the jobIds in modifiedFields
+// - select all (isSelectAll=true): every job matching the list filters sent
+//   in the body, except excludedIds
+router.patch(
+  "/status",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { isSelectAll, modifiedFields, excludedIds, data, ...filters } =
+        req.body ?? {};
+      const status = data?.status;
+
+      if (typeof isSelectAll !== "boolean") {
+        return res.status(400).json({
+          success: false,
+          message: "isSelectAll must be a boolean",
+        });
+      }
+
+      if (!CAREER_STATUSES.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid data.status. Allowed: ${CAREER_STATUSES.join(", ")}`,
+        });
+      }
+
+      let where: Prisma.CareerWhereInput;
+      if (isSelectAll) {
+        if (
+          excludedIds !== undefined &&
+          excludedIds !== null &&
+          !(Array.isArray(excludedIds) &&
+            (excludedIds.length === 0 || isPositiveIntArray(excludedIds)))
+        ) {
+          return res.status(400).json({
+            success: false,
+            message: "excludedIds must be an array of job IDs",
+          });
+        }
+
+        where = buildCareerWhere(filters);
+        if (excludedIds?.length) {
+          where.jobId = { notIn: [...new Set<number>(excludedIds)] };
+        }
+      } else {
+        const jobIds = Array.isArray(modifiedFields)
+          ? modifiedFields.map((field) => field?.jobId)
+          : [];
+
+        if (!isPositiveIntArray(jobIds)) {
+          return res.status(400).json({
+            success: false,
+            message: "modifiedFields must be a non-empty array of { jobId }",
+          });
+        }
+
+        where = { jobId: { in: [...new Set(jobIds)] } };
+      }
+
+      const { count } = await prisma.career.updateMany({
+        where,
+        data: { status },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: `${count} job(s) status updated successfully`,
+        data: { updatedCount: count, status },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
 router.get(
   "/:id/applicants",
   verifyAccessToken,
@@ -283,83 +633,15 @@ router.get(
         });
       }
 
-      const {
-        keyword,
-        status,
-        stage,
-        startDate,
-        endDate,
-        divisionId,
-        universityId,
-
-        itemsPerPage,
-        currentPage,
-      } = req.query;
-
-      const keywordStr =
-        typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+      const { stage, status, itemsPerPage, currentPage } = req.query;
       const stageStr = typeof stage === "string" ? stage : undefined;
       const statusStr = typeof status === "string" ? status : undefined;
-      const startDateStr =
-        typeof startDate === "string" ? startDate : undefined;
-      const endDateStr = typeof endDate === "string" ? endDate : undefined;
-      
-      const divisionIdNum =
-        typeof divisionId === "string" ? Number(divisionId) : undefined;
 
-      const universityIdNum =
-        typeof universityId === "string" ? Number(universityId) : undefined;
-
-      const where: any = { jobId: careerIdNum };
-
-      if (stageStr) {
-        where.stage = stageStr;
+      const filter = buildApplicantWhere(careerIdNum, req.query);
+      if ("error" in filter) {
+        return res.status(400).json({ success: false, message: filter.error });
       }
-
-      // In the test stage, "status" is a test type tab (or "overall") and is
-      // resolved against the assigned test rows, not JobApplication.status
-      let testTab: TestType | undefined;
-      if (stageStr === TEST_STAGE) {
-        if (!statusStr || statusStr === OVERALL_STATUS) {
-          // "overall" is not a status: anyone with at least one of the tests
-          where.tests = { some: {} };
-        } else if (isTestType(statusStr)) {
-          where.tests = { some: { testType: statusStr } };
-          testTab = statusStr;
-        } else {
-          return res.status(400).json({
-            success: false,
-            message: `Invalid status for test stage. Allowed: ${[...Object.values(TestType), OVERALL_STATUS].join(", ")}`,
-          });
-        }
-      } else if (statusStr) {
-        where.status = statusStr;
-      }
-
-      const applicantFilters: any = {};
-
-      if (keywordStr) {
-        applicantFilters.name = { contains: keywordStr, mode: "insensitive" };
-      }
-
-      if (universityIdNum) {
-        applicantFilters.universityId = universityIdNum;
-      }
-
-      if (divisionIdNum) {
-        applicantFilters.divisionId = divisionIdNum;
-      }
-
-      if (Object.keys(applicantFilters).length > 0) {
-        where.applicant = applicantFilters;
-      }
-
-      if (startDateStr || endDateStr) {
-        where.appliedOn = {
-          ...(startDateStr && { gte: new Date(startDateStr) }),
-          ...(endDateStr && { lte: new Date(endDateStr) }),
-        };
-      }
+      const { where, testTab } = filter;
 
       const perPage =
         typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
@@ -422,6 +704,181 @@ router.get(
           totalPages,
           totalItems,
         },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Bulk stage/status change for a career's applicants, manual or select-all
+// (see resolveBulkApplicants). The new stage, status and testTypes are in
+// `data`.
+router.patch(
+  "/:id/applicants/stage",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      if (Number.isNaN(careerIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      const target = await resolveBulkApplicants(careerIdNum, req.body);
+      if ("message" in target) {
+        return res
+          .status(target.status)
+          .json({ success: false, message: target.message });
+      }
+
+      const input = parseStageInput(target.data);
+      if ("error" in input) {
+        return res.status(400).json({ success: false, message: input.error });
+      }
+
+      const count = await moveApplicantsToStage(
+        careerIdNum,
+        target.where,
+        input,
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: `${count} applicant(s) moved to ${input.stage} successfully`,
+        data: { updatedCount: count, stage: input.stage, status: input.status },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Stage/status change for a single applicant; returns the updated applicant
+router.patch(
+  "/:id/applicants/:applicationId/stage",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      const applicationIdNum = Number(req.params.applicationId);
+      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID or applicant ID",
+        });
+      }
+
+      // jobId/applicationId are repeated in the body; they must match the URL
+      const { jobId, applicationId } = req.body ?? {};
+      if (
+        (jobId !== undefined && Number(jobId) !== careerIdNum) ||
+        (applicationId !== undefined && Number(applicationId) !== applicationIdNum)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "jobId or applicationId does not match the URL",
+        });
+      }
+
+      const input = parseStageInput(req.body);
+      if ("error" in input) {
+        return res.status(400).json({ success: false, message: input.error });
+      }
+
+      const count = await moveApplicantsToStage(
+        careerIdNum,
+        { applicationId: applicationIdNum },
+        input,
+      );
+      if (count === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Applicant not found for this career",
+        });
+      }
+
+      const { tests, ...application } =
+        await prisma.jobApplication.findUniqueOrThrow({
+          where: { applicationId: applicationIdNum },
+          include: {
+            applicant: true,
+            tests: { select: testSelect, orderBy: testOrder },
+          },
+        });
+
+      return res.status(200).json({
+        success: true,
+        message: `Applicant moved to ${input.stage} successfully`,
+        data: {
+          ...application,
+          ...(application.stage === TEST_STAGE && { status: OVERALL_STATUS }),
+          ...formatTests(tests),
+        },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Bulk remarks for a career's applicants, manual or select-all (see
+// resolveBulkApplicants). The new remarks are in `data`.
+router.patch(
+  "/:id/applicants/remarks",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      if (Number.isNaN(careerIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      const target = await resolveBulkApplicants(careerIdNum, req.body);
+      if ("message" in target) {
+        return res
+          .status(target.status)
+          .json({ success: false, message: target.message });
+      }
+      const { where } = target;
+
+      const remarks = target.data?.remarks;
+      if (remarks !== null && typeof remarks !== "string") {
+        return res.status(400).json({
+          success: false,
+          message: "data.remarks must be a string or null",
+        });
+      }
+
+      // Same rules as the single remarks update: blank clears, and rows that
+      // already have this text are skipped so their remarksAt doesn't move
+      const value = remarks?.trim() || null;
+      const user = (req as any).user as JwtPayload | undefined;
+      const { count } = await prisma.jobApplication.updateMany({
+        where: {
+          AND: [
+            where,
+            value === null
+              ? { remarks: { not: null } }
+              : { OR: [{ remarks: null }, { remarks: { not: value } }] },
+          ],
+        },
+        data: {
+          remarks: value,
+          remarksAt: value ? new Date() : null,
+          remarksBy: value ? (user?.username ?? null) : null,
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: `Remarks updated for ${count} applicant(s) successfully`,
+        data: { updatedCount: count, remarks: value },
       });
     } catch (err) {
       return next(err);
@@ -638,111 +1095,6 @@ router.post(
           remarksBy: updated.remarksBy,
           ...formatTests(updated.tests),
         },
-      });
-    } catch (err) {
-      return next(err);
-    }
-  },
-);
-
-// Move one or more applicants to another stage. For the test stage, the
-// selected test types are assigned by creating a pending test row for each.
-router.patch(
-  "/:id/applicants/stage",
-  verifyAccessToken,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const careerIdNum = Number(req.params.id);
-      if (Number.isNaN(careerIdNum)) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid career ID",
-        });
-      }
-
-      const { applicationIds, stage, status, testTypes } = req.body ?? {};
-
-      if (!isPositiveIntArray(applicationIds)) {
-        return res.status(400).json({
-          success: false,
-          message: "applicationIds must be a non-empty array of IDs",
-        });
-      }
-
-      if (typeof stage !== "string" || stage.trim() === "") {
-        return res.status(400).json({
-          success: false,
-          message: "stage is required",
-        });
-      }
-
-      if (status !== undefined && status !== null && typeof status !== "string") {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid status format",
-        });
-      }
-
-      const isTestStage = stage === TEST_STAGE;
-      if (
-        isTestStage &&
-        (!Array.isArray(testTypes) ||
-          testTypes.length === 0 ||
-          !testTypes.every(isTestType))
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: `testTypes is required for the test stage. Allowed: ${Object.values(TestType).join(", ")}`,
-        });
-      }
-
-      const uniqueIds = [...new Set(applicationIds)];
-      const uniqueTestTypes: TestType[] = isTestStage
-        ? [...new Set(testTypes as TestType[])]
-        : [];
-
-      const matched = await prisma.jobApplication.count({
-        where: { applicationId: { in: uniqueIds }, jobId: careerIdNum },
-      });
-      if (matched !== uniqueIds.length) {
-        return res.status(404).json({
-          success: false,
-          message: "One or more applicants not found for this career",
-        });
-      }
-
-      await prisma.$transaction(async (tx) => {
-        await tx.jobApplication.updateMany({
-          where: { applicationId: { in: uniqueIds }, jobId: careerIdNum },
-          // Test-stage status lives on the test rows, so the column is cleared
-          data: { stage, status: isTestStage ? null : (status ?? null) },
-        });
-
-        if (isTestStage) {
-          // Existing rows (and their scores) are kept; only new types are added
-          await tx.jobApplicationTest.createMany({
-            data: uniqueIds.flatMap((applicationId) =>
-              uniqueTestTypes.map((testType) => ({ applicationId, testType })),
-            ),
-            skipDuplicates: true,
-          });
-        }
-      });
-
-      const moved = await prisma.jobApplication.findMany({
-        where: { applicationId: { in: uniqueIds } },
-        include: { tests: { select: testSelect, orderBy: testOrder } },
-        orderBy: { applicationId: "asc" },
-      });
-
-      return res.status(200).json({
-        success: true,
-        message: `Applicants moved to ${stage} successfully`,
-        data: moved.map(({ tests, ...application }) => ({
-          ...application,
-          ...(application.stage === TEST_STAGE && { status: OVERALL_STATUS }),
-          ...formatTests(tests),
-        })),
       });
     } catch (err) {
       return next(err);
