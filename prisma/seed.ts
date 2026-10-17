@@ -33,6 +33,7 @@ import { applicants } from "../src/data/applicant";
 import { universities } from "../src/data/university";
 import { jobApplications } from "../src/data/jobApplication";
 import { jobApplicationTests } from "../src/data/jobApplicationTest";
+import { departments } from "../src/data/department";
 import { Prisma } from "@prisma/client";
 
 // Clears a table then bulk-inserts the rows in chunks (Postgres has a limit on
@@ -164,7 +165,19 @@ async function main() {
   await prisma.jobApplication.deleteMany({});
   await prisma.applicant.deleteMany({});
   await prisma.university.deleteMany({});
-  await reseed("careers", prisma.career, careers);
+  // Careers FK-reference departments, so clear careers before departments
+  await prisma.career.deleteMany({});
+  await reseed("departments", prisma.department, departments);
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('departments', 'departmentId'), (SELECT MAX("departmentId") FROM departments))`;
+  // departmentName is a joined field in responses, not a careers column
+  await reseed(
+    "careers",
+    prisma.career,
+    careers.map(({ departmentName, ...career }) => career),
+  );
+  // The mock rows carry explicit jobIds, which don't advance the autoincrement
+  // sequence; move it past them so POST /careers doesn't collide
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('careers', 'jobId'), (SELECT MAX("jobId") FROM careers))`;
   await reseed("universities", prisma.university, universities);
   await reseed("applicants", prisma.applicant, applicants);
   await reseed("jobApplications", prisma.jobApplication, jobApplications);

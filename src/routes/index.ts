@@ -21,6 +21,7 @@ import customerRoutes from './customers/customers';
 import addressRoutes from './address/address';
 import orderRoutes from './order/order';
 import careerRoutes from './careers/careers';
+import departmentRoutes from './departments/departments';
 
 const router = Router();
 
@@ -47,6 +48,7 @@ router.use("/customers", customerRoutes);
 router.use("/address", addressRoutes);
 router.use("/orders", orderRoutes);
 router.use("/careers", careerRoutes);
+router.use("/departments", departmentRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -77,6 +79,7 @@ router.get("/", (req: Request, res: Response) => {
       citywithareas: "/api/v1/citywithareas",
       orders: "/api/v1/orders",
       careers: "/api/v1/careers",
+      departments: "/api/v1/departments",
     },
   });
 });

@@ -3,7 +3,7 @@ export interface CareerT {
   jobTitle: string;
   slug?: string;
   position: string;
-  department: string;
+  departmentName: string;
   departmentId: number;
   vacancy: number;
   experience: string;

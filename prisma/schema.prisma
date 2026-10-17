@@ -762,13 +762,13 @@ model OrderPayment {
   @@map("order_payments")
 }
 
+
 // Mirrors src/data/career.ts.
 model Career {
   jobId                  Int     @id @default(autoincrement())
   jobTitle               String
   slug                   String?
   position               String?
-  department             String?
   departmentId           Int?
   vacancy                Int?
   experience             String?
@@ -792,7 +792,9 @@ model Career {
   ogTag       Json?
 
   applications JobApplication[]
+  department   Department? @relation(fields: [departmentId], references: [departmentId])
 
+  @@index([departmentId])
   @@map("careers")
 }
 
@@ -817,7 +819,6 @@ model Applicant {
   experience        Int?
   resume            String?
   coverLetter       String?
-  // appliedOn               String?
 
   university   University?      @relation(fields: [universityId], references: [universityId])
   applications JobApplication[]
@@ -886,4 +887,15 @@ model University {
   applicants Applicant[]
 
   @@map("universities")
+}
+
+// Mirrors src/data/department.ts. status is "Y" (active) or "N", like Career.
+model Department {
+  departmentId   Int     @id @default(autoincrement())
+  departmentName String
+  status         String? @default("Y")
+
+  careers Career[]
+
+  @@map("departments")
 }

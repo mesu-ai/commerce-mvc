@@ -1,7 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { Prisma, TestType, TestResult } from "@prisma/client";
 import { prisma } from "../../config/prisma";
-import { verifyAccessToken, JwtPayload } from "../../middleware/auth.middleware";
+import {
+  verifyAccessToken,
+  JwtPayload,
+} from "../../middleware/auth.middleware";
 
 const router = Router();
 
@@ -65,7 +68,9 @@ const testSelect = {
   evaluatedBy: true,
 } satisfies Prisma.JobApplicationTestSelect;
 
-type TestRow = Prisma.JobApplicationTestGetPayload<{ select: typeof testSelect }>;
+type TestRow = Prisma.JobApplicationTestGetPayload<{
+  select: typeof testSelect;
+}>;
 type TestView = Omit<TestRow, "testType">;
 type TestsView = Record<TestType, TestView | null>;
 type OverallView = { score: number | null; status: TestResult | null };
@@ -82,7 +87,11 @@ function getOverall(tests: TestRow[]): OverallView {
   );
 
   let status: TestResult | null = null;
-  if (tests.some((t) => t.status === TestResult.fail || t.status === TestResult.absent)) {
+  if (
+    tests.some(
+      (t) => t.status === TestResult.fail || t.status === TestResult.absent,
+    )
+  ) {
     status = TestResult.fail;
   } else if (tests.every((t) => t.status === TestResult.pass)) {
     status = TestResult.pass;
@@ -142,8 +151,15 @@ function buildApplicantWhere(
 ):
   | { where: Prisma.JobApplicationWhereInput; testTab?: TestType }
   | { error: string } {
-  const { keyword, status, stage, startDate, endDate, divisionId, universityId } =
-    filters;
+  const {
+    keyword,
+    status,
+    stage,
+    startDate,
+    endDate,
+    divisionId,
+    universityId,
+  } = filters;
 
   const keywordStr =
     typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
@@ -262,8 +278,10 @@ async function resolveBulkApplicants(
     if (
       excludedIds !== undefined &&
       excludedIds !== null &&
-      !(Array.isArray(excludedIds) &&
-        (excludedIds.length === 0 || isPositiveIntArray(excludedIds)))
+      !(
+        Array.isArray(excludedIds) &&
+        (excludedIds.length === 0 || isPositiveIntArray(excludedIds))
+      )
     ) {
       return {
         status: 400,
@@ -321,7 +339,11 @@ const APPLICANT_STATUSES = [
   "notMovingForward",
 ];
 
-type StageInput = { stage: string; status: string | null; testTypes: TestType[] };
+type StageInput = {
+  stage: string;
+  status: string | null;
+  testTypes: TestType[];
+};
 
 // Validates a stage move (frontend StageChangeT). For the test stage, status
 // is the array of test types to assign; for other stages it is an optional
@@ -404,6 +426,170 @@ async function moveApplicantsToStage(
 
 const CAREER_STATUSES = ["Y", "N"];
 
+// Optional free-text career fields: blank is saved as null
+const CAREER_TEXT_FIELDS = [
+  "position",
+  "experience",
+  "salary",
+  "location",
+  "email",
+  "context",
+  "requirements",
+  "additionalRequirements",
+  "skills",
+  "qualifications",
+  "benefits",
+] as const;
+
+// Keys kept from the SEO tag objects; anything else is dropped
+const META_TAG_KEYS = ["metaTitle", "metaKeywords", "metaDescription"];
+const OG_TAG_KEYS = ["ogType", "ogTitle", "ogDescription", "ogImage"];
+
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// SEO tag object -> JSON with only the known string keys; null clears it
+function parseTagObject(
+  value: unknown,
+  keys: string[],
+): Record<string, string | null> | typeof Prisma.DbNull | undefined | false {
+  if (value === undefined) return undefined;
+  if (value === null) return Prisma.DbNull;
+  if (typeof value !== "object" || Array.isArray(value)) return false;
+
+  const tags: Record<string, string | null> = {};
+  for (const key of keys) {
+    const tag = (value as Record<string, unknown>)[key];
+    if (tag === undefined) continue;
+    if (tag !== null && typeof tag !== "string") return false;
+    tags[key] = tag?.trim() || null;
+  }
+  return tags;
+}
+
+// Validates a create/update career body. Only fields present in the body are
+// returned, so an update leaves the rest untouched; jobTitle is required when
+// creating. Counters (applicants, viewed, ...) are never taken from the body.
+function parseCareerInput(
+  body: any,
+  { isCreate }: { isCreate: boolean },
+): Prisma.CareerUncheckedUpdateInput | { error: string } {
+  const input = body ?? {};
+  const data: Prisma.CareerUncheckedUpdateInput = {};
+
+  if (input.jobTitle !== undefined || isCreate) {
+    if (typeof input.jobTitle !== "string" || input.jobTitle.trim() === "") {
+      return { error: "jobTitle is required" };
+    }
+    data.jobTitle = input.jobTitle.trim();
+  }
+
+  if (input.slug !== undefined && input.slug !== null) {
+    if (typeof input.slug !== "string") return { error: "Invalid slug format" };
+    data.slug = slugify(input.slug) || null;
+  } else if (input.slug === null) {
+    data.slug = null;
+  }
+
+  for (const field of CAREER_TEXT_FIELDS) {
+    const value = input[field];
+    if (value === undefined) continue;
+    if (value !== null && typeof value !== "string") {
+      return { error: `Invalid ${field} format` };
+    }
+    data[field] = value?.trim() || null;
+  }
+
+  if (
+    typeof data.email === "string" &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)
+  ) {
+    return { error: "Invalid email format" };
+  }
+
+  // Existence is checked against the departments table by the caller
+  if (input.departmentId !== undefined) {
+    const departmentId =
+      input.departmentId === null ? null : Number(input.departmentId);
+    if (
+      departmentId !== null &&
+      !(Number.isInteger(departmentId) && departmentId > 0)
+    ) {
+      return { error: "Invalid departmentId" };
+    }
+    data.departmentId = departmentId;
+  }
+
+  if (input.vacancy !== undefined) {
+    const vacancy = input.vacancy === null ? null : Number(input.vacancy);
+    if (vacancy !== null && !(Number.isInteger(vacancy) && vacancy >= 0)) {
+      return { error: "vacancy must be a whole number of 0 or more" };
+    }
+    data.vacancy = vacancy;
+  }
+
+  if (input.deadline !== undefined) {
+    const deadline = parseTestDate(input.deadline);
+    if (deadline === undefined) return { error: "Invalid deadline format" };
+    data.deadline = deadline;
+  }
+
+  if (input.status !== undefined || isCreate) {
+    const status = input.status ?? "Y";
+    if (!CAREER_STATUSES.includes(status)) {
+      return { error: `Invalid status. Allowed: ${CAREER_STATUSES.join(", ")}` };
+    }
+    data.status = status;
+  }
+
+  const metaTag = parseTagObject(input.metaTag, META_TAG_KEYS);
+  if (metaTag === false) return { error: "Invalid metaTag format" };
+  if (metaTag !== undefined) data.metaTag = metaTag;
+
+  const ogTag = parseTagObject(input.ogTag, OG_TAG_KEYS);
+  if (ogTag === false) return { error: "Invalid ogTag format" };
+  if (ogTag !== undefined) data.ogTag = ogTag;
+
+  return data;
+}
+
+// A job may only point at a department that exists
+async function isDepartmentMissing(departmentId: unknown) {
+  if (typeof departmentId !== "number") return false;
+  const department = await prisma.department.findUnique({
+    where: { departmentId },
+    select: { departmentId: true },
+  });
+  return !department;
+}
+
+// Careers are returned with a flat departmentName (frontend CareerT) instead
+// of the nested department relation
+const careerInclude = {
+  department: { select: { departmentName: true } },
+} satisfies Prisma.CareerInclude;
+
+function withDepartmentName({
+  department,
+  ...career
+}: Prisma.CareerGetPayload<{ include: typeof careerInclude }>) {
+  return { ...career, departmentName: department?.departmentName ?? null };
+}
+
+// Slugs are used in public job URLs, so no two jobs may share one
+async function isSlugTaken(slug: string, exceptJobId?: number) {
+  const existing = await prisma.career.findFirst({
+    where: { slug, ...(exceptJobId && { jobId: { not: exceptJobId } }) },
+    select: { jobId: true },
+  });
+  return existing !== null;
+}
+
 type CareerFilters = {
   keyword?: unknown;
   departmentId?: unknown;
@@ -483,9 +669,10 @@ router.get(
       const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
       const skip = (currentPageNumber - 1) * perPage;
 
-      const data = await prisma.career.findMany({
+      const careers = await prisma.career.findMany({
         where,
-        orderBy: { jobId: "asc" },
+        include: careerInclude,
+        orderBy: { jobId: "desc" },
         skip,
         take: perPage,
       });
@@ -493,7 +680,7 @@ router.get(
       return res.status(200).json({
         success: true,
         message: "Careers retrieved successfully",
-        data,
+        data: careers.map(withDepartmentName),
         pagination: {
           currentPage: currentPageNumber,
           itemsPerPage: perPage,
@@ -523,6 +710,7 @@ router.get(
 
       const career = await prisma.career.findUnique({
         where: { jobId: careerIdNum },
+        include: careerInclude,
       });
 
       if (!career) {
@@ -535,7 +723,116 @@ router.get(
       return res.status(200).json({
         success: true,
         message: "Career retrieved successfully",
-        data: career,
+        data: withDepartmentName(career),
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Create a career/job post. A missing slug is generated from jobTitle.
+router.post(
+  "/",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data = parseCareerInput(req.body, { isCreate: true });
+      if ("error" in data) {
+        return res.status(400).json({ success: false, message: data.error });
+      }
+
+      if (await isDepartmentMissing(data.departmentId)) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid departmentId" });
+      }
+
+      data.slug ??= slugify(data.jobTitle as string) || null;
+      if (typeof data.slug === "string" && (await isSlugTaken(data.slug))) {
+        return res.status(409).json({
+          success: false,
+          message: `Slug "${data.slug}" is already used by another job`,
+        });
+      }
+
+      const career = await prisma.career.create({
+        data: data as Prisma.CareerUncheckedCreateInput,
+        include: careerInclude,
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Career created successfully",
+        data: withDepartmentName(career),
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Update a career/job post. Fields left out of the body are unchanged.
+router.put(
+  "/:id",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      if (Number.isNaN(careerIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      const data = parseCareerInput(req.body, { isCreate: false });
+      if ("error" in data) {
+        return res.status(400).json({ success: false, message: data.error });
+      }
+
+      const existing = await prisma.career.findUnique({
+        where: { jobId: careerIdNum },
+        select: { jobTitle: true },
+      });
+      if (!existing) {
+        return res.status(404).json({
+          success: false,
+          message: "Career not found",
+        });
+      }
+
+      if (await isDepartmentMissing(data.departmentId)) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid departmentId" });
+      }
+
+      // A blank slug is regenerated from the (new or current) title
+      if ("slug" in data && data.slug === null) {
+        data.slug =
+          slugify((data.jobTitle as string) ?? existing.jobTitle) || null;
+      }
+      if (
+        typeof data.slug === "string" &&
+        (await isSlugTaken(data.slug, careerIdNum))
+      ) {
+        return res.status(409).json({
+          success: false,
+          message: `Slug "${data.slug}" is already used by another job`,
+        });
+      }
+
+      const career = await prisma.career.update({
+        where: { jobId: careerIdNum },
+        data,
+        include: careerInclude,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Career updated successfully",
+        data: withDepartmentName(career),
       });
     } catch (err) {
       return next(err);
@@ -575,8 +872,10 @@ router.patch(
         if (
           excludedIds !== undefined &&
           excludedIds !== null &&
-          !(Array.isArray(excludedIds) &&
-            (excludedIds.length === 0 || isPositiveIntArray(excludedIds)))
+          !(
+            Array.isArray(excludedIds) &&
+            (excludedIds.length === 0 || isPositiveIntArray(excludedIds))
+          )
         ) {
           return res.status(400).json({
             success: false,
@@ -612,6 +911,55 @@ router.patch(
         success: true,
         message: `${count} job(s) status updated successfully`,
         data: { updatedCount: count, status },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Status change for a single career/job post; returns the updated job
+router.patch(
+  "/:id/status",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = Number(req.params.id);
+      if (Number.isNaN(careerIdNum)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      const { status } = req.body ?? {};
+      if (!CAREER_STATUSES.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid status. Allowed: ${CAREER_STATUSES.join(", ")}`,
+        });
+      }
+
+      // updateMany so a missing job is a 404 rather than a thrown error
+      const { count } = await prisma.career.updateMany({
+        where: { jobId: careerIdNum },
+        data: { status },
+      });
+      if (count === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Career not found",
+        });
+      }
+
+      const career = await prisma.career.findUnique({
+        where: { jobId: careerIdNum },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Job status updated successfully",
+        data: career,
       });
     } catch (err) {
       return next(err);
@@ -775,7 +1123,8 @@ router.patch(
       const { jobId, applicationId } = req.body ?? {};
       if (
         (jobId !== undefined && Number(jobId) !== careerIdNum) ||
-        (applicationId !== undefined && Number(applicationId) !== applicationIdNum)
+        (applicationId !== undefined &&
+          Number(applicationId) !== applicationIdNum)
       ) {
         return res.status(400).json({
           success: false,
@@ -1012,7 +1361,11 @@ router.post(
         });
       }
 
-      if (subjects !== undefined && subjects !== null && !isValidSubjects(subjects)) {
+      if (
+        subjects !== undefined &&
+        subjects !== null &&
+        !isValidSubjects(subjects)
+      ) {
         return res.status(400).json({
           success: false,
           message:
@@ -1027,7 +1380,11 @@ router.post(
         });
       }
 
-      if (remarks !== undefined && remarks !== null && typeof remarks !== "string") {
+      if (
+        remarks !== undefined &&
+        remarks !== null &&
+        typeof remarks !== "string"
+      ) {
         return res.status(400).json({
           success: false,
           message: "Invalid remarks format",
@@ -1055,7 +1412,9 @@ router.post(
           score:
             subjects === null
               ? null
-              : averageOf((subjects as TestSubject[]).map((s) => s.subjectScore)),
+              : averageOf(
+                  (subjects as TestSubject[]).map((s) => s.subjectScore),
+                ),
         }),
         ...(status !== undefined && { status }),
         evaluatedBy: evaluatedBy?.username ?? null,
@@ -1066,7 +1425,10 @@ router.post(
       const [, updated] = await prisma.$transaction([
         prisma.jobApplicationTest.upsert({
           where: {
-            applicationId_testType: { applicationId: applicationIdNum, testType },
+            applicationId_testType: {
+              applicationId: applicationIdNum,
+              testType,
+            },
           },
           create: { applicationId: applicationIdNum, testType, ...data },
           update: data,
@@ -1075,7 +1437,11 @@ router.post(
           where: { applicationId: applicationIdNum },
           data:
             remarks !== undefined
-              ? buildRemarksData(remarks, application.remarks, evaluatedBy?.username)
+              ? buildRemarksData(
+                  remarks,
+                  application.remarks,
+                  evaluatedBy?.username,
+                )
               : {},
           select: {
             applicationId: true,
