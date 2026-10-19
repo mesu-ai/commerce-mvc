@@ -21,12 +21,60 @@ type TestSubject = {
   subjectScore: number;
 };
 
-function parseTestDate(value: unknown): Date | null | undefined {
+// undefined = not sent or invalid, null = cleared
+function parseDate(value: unknown): Date | null | undefined {
   if (value === undefined) return undefined;
   if (value === null || value === "") return null;
 
   const date = new Date(String(value));
   return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+// Route params, query strings and JSON ids -> positive integer, else null
+function parseId(value: unknown): number | null {
+  const id = Number(value);
+  return Number.isInteger(id) && id > 0 ? id : null;
+}
+
+// Prisma's error for update/delete of a row that doesn't exist
+function isRecordNotFound(err: unknown) {
+  return (
+    err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025"
+  );
+}
+
+// Page window for a list endpoint. An empty result reports page 0, and a page
+// past the end is clamped to the last page.
+function paginate(query: Request["query"], totalItems: number) {
+  const perPage = parseId(query.itemsPerPage) ?? 15;
+  const totalPages = Math.ceil(totalItems / perPage);
+  const currentPage =
+    totalItems === 0
+      ? 0
+      : Math.min(parseId(query.currentPage) ?? 1, totalPages);
+
+  return {
+    skip: Math.max(currentPage - 1, 0) * perPage,
+    take: perPage,
+    pagination: { currentPage, itemsPerPage: perPage, totalPages, totalItems },
+  };
+}
+
+// Optional range filter; invalid dates are ignored rather than sent to Prisma
+function dateRange(start: unknown, end: unknown) {
+  const gte = parseDate(start) ?? undefined;
+  const lte = parseDate(end) ?? undefined;
+  return gte || lte ? { gte, lte } : undefined;
+}
+
+// excludedIds of a select-all bulk action: missing/null/[] = none excluded.
+// Returns null when the value is not a list of ids.
+function parseExcludedIds(value: unknown): number[] | null {
+  if (value === undefined || value === null) return [];
+  if (!Array.isArray(value)) return null;
+  return value.length === 0 || isPositiveIntArray(value)
+    ? [...new Set(value)]
+    : null;
 }
 
 function isFiniteNumber(value: unknown): value is number {
@@ -71,6 +119,7 @@ const testSelect = {
 type TestRow = Prisma.JobApplicationTestGetPayload<{
   select: typeof testSelect;
 }>;
+
 type TestView = Omit<TestRow, "testType">;
 type TestsView = Record<TestType, TestView | null>;
 type OverallView = { score: number | null; status: TestResult | null };
@@ -114,6 +163,8 @@ function formatTests(tests: TestRow[], onlyType?: TestType) {
   return { tests: view, overall: getOverall(tests) };
 }
 
+const SUBMITTED_STAGE = "submittedCv";
+const SHORTLISTED_STAGE = "shortlisted";
 const TEST_STAGE = "test";
 const OVERALL_STATUS = "overall";
 
@@ -161,12 +212,9 @@ function buildApplicantWhere(
     universityId,
   } = filters;
 
-  const keywordStr =
-    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
+  const keywordStr = typeof keyword === "string" ? keyword.trim() : undefined;
   const stageStr = typeof stage === "string" ? stage : undefined;
   const statusStr = typeof status === "string" ? status : undefined;
-  const startDateStr = typeof startDate === "string" ? startDate : undefined;
-  const endDateStr = typeof endDate === "string" ? endDate : undefined;
   const divisionIdNum = toOptionalNumber(divisionId);
   const universityIdNum = toOptionalNumber(universityId);
 
@@ -213,12 +261,8 @@ function buildApplicantWhere(
     where.applicant = applicantFilters;
   }
 
-  if (startDateStr || endDateStr) {
-    where.appliedOn = {
-      ...(startDateStr && { gte: new Date(startDateStr) }),
-      ...(endDateStr && { lte: new Date(endDateStr) }),
-    };
-  }
+  const appliedOn = dateRange(startDate, endDate);
+  if (appliedOn) where.appliedOn = appliedOn;
 
   return { where, testTab };
 }
@@ -275,14 +319,8 @@ async function resolveBulkApplicants(
   }
 
   if (isSelectAll) {
-    if (
-      excludedIds !== undefined &&
-      excludedIds !== null &&
-      !(
-        Array.isArray(excludedIds) &&
-        (excludedIds.length === 0 || isPositiveIntArray(excludedIds))
-      )
-    ) {
+    const excluded = parseExcludedIds(excludedIds);
+    if (!excluded) {
       return {
         status: 400,
         message: "excludedIds must be an array of application IDs",
@@ -293,9 +331,7 @@ async function resolveBulkApplicants(
     if ("error" in filter) return { status: 400, message: filter.error };
 
     const where = filter.where;
-    if (excludedIds?.length) {
-      where.applicationId = { notIn: [...new Set<number>(excludedIds)] };
-    }
+    if (excluded.length) where.applicationId = { notIn: excluded };
     return { where, data };
   }
 
@@ -325,19 +361,49 @@ async function resolveBulkApplicants(
 
 // Values match the frontend StageTypeT / StatusTypeT
 const APPLICANT_STAGES = [
-  "submittedCv",
-  "shortlisted",
+  SUBMITTED_STAGE,
+  SHORTLISTED_STAGE,
   TEST_STAGE,
   "finalSelection",
   "rejected",
 ];
-const APPLICANT_STATUSES = [
-  "newCv",
-  "viewed",
-  "notViewed",
-  "onboarded",
-  "notMovingForward",
-];
+// Status tabs within each stage; the test stage's tabs are test types instead
+const STAGE_STATUSES: Record<string, string[]> = {
+  [SUBMITTED_STAGE]: ["newCv", "viewed", "notViewed"],
+  finalSelection: ["onboarded", "notMovingForward"],
+};
+
+// A CV still "newCv" this long after it was submitted becomes "notViewed"
+const NEW_CV_EXPIRY_MS = 72 * 60 * 60 * 1000;
+const NEW_CV_CHECK_INTERVAL_MS = 60 * 1000;
+let lastNewCvCheck = 0;
+
+// Applies the newCv expiry before careers requests (at most once a minute), so
+// lists and counts never show an expired newCv and no scheduler is needed
+async function expireNewCvs(_req: Request, _res: Response, next: NextFunction) {
+  const now = Date.now();
+  if (now - lastNewCvCheck < NEW_CV_CHECK_INTERVAL_MS) return next();
+  lastNewCvCheck = now;
+
+  try {
+    await prisma.jobApplication.updateMany({
+      where: {
+        stage: SUBMITTED_STAGE,
+        status: "newCv",
+        appliedOn: { lt: new Date(now - NEW_CV_EXPIRY_MS) },
+      },
+      data: { status: "notViewed" },
+    });
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+
+// Status used when a move into a tabbed stage doesn't send one
+const DEFAULT_STAGE_STATUS: Record<string, string> = {
+  [SUBMITTED_STAGE]: "newCv",
+};
 
 type StageInput = {
   stage: string;
@@ -346,8 +412,9 @@ type StageInput = {
 };
 
 // Validates a stage move (frontend StageChangeT). For the test stage, status
-// is the array of test types to assign; for other stages it is an optional
-// status value.
+// is the array of test types to assign. A stage with status tabs needs one of
+// its own statuses (or its default), so every applicant lands in a tab; a
+// stage without tabs stores no status.
 function parseStageInput(input: any): StageInput | { error: string } {
   const { stage, status } = input ?? {};
 
@@ -374,17 +441,17 @@ function parseStageInput(input: any): StageInput | { error: string } {
     };
   }
 
-  if (
-    status !== undefined &&
-    status !== null &&
-    !APPLICANT_STATUSES.includes(status)
-  ) {
+  const tabs = STAGE_STATUSES[stage];
+  if (!tabs) return { stage, status: null, testTypes: [] };
+
+  const tabStatus = status ?? DEFAULT_STAGE_STATUS[stage];
+  if (!tabs.includes(tabStatus)) {
     return {
-      error: `Invalid status. Allowed: ${APPLICANT_STATUSES.join(", ")}`,
+      error: `status is required for the ${stage} stage. Allowed: ${tabs.join(", ")}`,
     };
   }
 
-  return { stage, status: status ?? null, testTypes: [] };
+  return { stage, status: tabStatus, testTypes: [] };
 }
 
 // Moves applications to a stage. For the test stage, each selected test type
@@ -426,7 +493,7 @@ async function moveApplicantsToStage(
 
 const CAREER_STATUSES = ["Y", "N"];
 
-// Optional free-text career fields: blank is saved as null
+// Required free-text career fields: must be a non-blank string
 const CAREER_TEXT_FIELDS = [
   "position",
   "experience",
@@ -435,7 +502,6 @@ const CAREER_TEXT_FIELDS = [
   "email",
   "context",
   "requirements",
-  "additionalRequirements",
   "skills",
   "qualifications",
   "benefits",
@@ -473,8 +539,10 @@ function parseTagObject(
 }
 
 // Validates a create/update career body. Only fields present in the body are
-// returned, so an update leaves the rest untouched; jobTitle is required when
-// creating. Counters (applicants, viewed, ...) are never taken from the body.
+// returned, so an update leaves the rest untouched; every required column must
+// be sent when creating. A missing or blank slug is left out for the caller to
+// generate from jobTitle. Counters (applicants, viewed, ...) are never taken
+// from the body.
 function parseCareerInput(
   body: any,
   { isCreate }: { isCreate: boolean },
@@ -491,18 +559,26 @@ function parseCareerInput(
 
   if (input.slug !== undefined && input.slug !== null) {
     if (typeof input.slug !== "string") return { error: "Invalid slug format" };
-    data.slug = slugify(input.slug) || null;
-  } else if (input.slug === null) {
-    data.slug = null;
+    const slug = slugify(input.slug);
+    if (slug) data.slug = slug;
   }
 
   for (const field of CAREER_TEXT_FIELDS) {
     const value = input[field];
-    if (value === undefined) continue;
-    if (value !== null && typeof value !== "string") {
-      return { error: `Invalid ${field} format` };
+    if (value === undefined && !isCreate) continue;
+    if (typeof value !== "string" || value.trim() === "") {
+      return { error: `${field} is required` };
     }
-    data[field] = value?.trim() || null;
+    data[field] = value.trim();
+  }
+
+  // Optional free text: blank is saved as null
+  if (input.additionalRequirements !== undefined) {
+    const value = input.additionalRequirements;
+    if (value !== null && typeof value !== "string") {
+      return { error: "Invalid additionalRequirements format" };
+    }
+    data.additionalRequirements = value?.trim() || null;
   }
 
   if (
@@ -513,36 +589,41 @@ function parseCareerInput(
   }
 
   // Existence is checked against the departments table by the caller
-  if (input.departmentId !== undefined) {
-    const departmentId =
-      input.departmentId === null ? null : Number(input.departmentId);
+  if (input.departmentId !== undefined || isCreate) {
+    const departmentId = Number(input.departmentId);
     if (
-      departmentId !== null &&
+      input.departmentId === null ||
       !(Number.isInteger(departmentId) && departmentId > 0)
     ) {
-      return { error: "Invalid departmentId" };
+      return { error: "departmentId is required" };
     }
     data.departmentId = departmentId;
   }
 
-  if (input.vacancy !== undefined) {
-    const vacancy = input.vacancy === null ? null : Number(input.vacancy);
-    if (vacancy !== null && !(Number.isInteger(vacancy) && vacancy >= 0)) {
+  if (input.vacancy !== undefined || isCreate) {
+    const vacancy = Number(input.vacancy);
+    if (
+      input.vacancy === null ||
+      input.vacancy === "" ||
+      !(Number.isInteger(vacancy) && vacancy >= 0)
+    ) {
       return { error: "vacancy must be a whole number of 0 or more" };
     }
     data.vacancy = vacancy;
   }
 
-  if (input.deadline !== undefined) {
-    const deadline = parseTestDate(input.deadline);
-    if (deadline === undefined) return { error: "Invalid deadline format" };
+  if (input.deadline !== undefined || isCreate) {
+    const deadline = parseDate(input.deadline);
+    if (!deadline) return { error: "deadline is required" };
     data.deadline = deadline;
   }
 
   if (input.status !== undefined || isCreate) {
     const status = input.status ?? "Y";
     if (!CAREER_STATUSES.includes(status)) {
-      return { error: `Invalid status. Allowed: ${CAREER_STATUSES.join(", ")}` };
+      return {
+        error: `Invalid status. Allowed: ${CAREER_STATUSES.join(", ")}`,
+      };
     }
     data.status = status;
   }
@@ -556,6 +637,85 @@ function parseCareerInput(
   if (ogTag !== undefined) data.ogTag = ogTag;
 
   return data;
+}
+
+// Applicant profile fields taken from a job application form:
+// [type, required, max]. Numbers must be 0 or more.
+const APPLICANT_FIELDS: Record<
+  string,
+  ["string" | "int" | "number", boolean, number?]
+> = {
+  name: ["string", true],
+  mobileNo: ["string", true],
+  email: ["string", true],
+  divisionId: ["int", true],
+  portfolioLink: ["string", false],
+  sscRegistrationNo: ["string", true],
+  sscRollNo: ["string", true],
+  sscGpa: ["number", true, 5],
+  hscRegistrationNo: ["string", true],
+  hscRollNo: ["string", true],
+  hscGpa: ["number", true, 5],
+  universityId: ["int", true],
+  bachelorSubject: ["string", true],
+  bachelorCgpa: ["number", true, 4],
+  masterSubject: ["string", false],
+  masterCgpa: ["number", false, 4],
+  currentSalary: ["int", false],
+  expectedSalary: ["int", true],
+  experience: ["int", false],
+  noticePeriod: ["int", false],
+  resume: ["string", true],
+  coverLetter: ["string", false],
+};
+
+// Validates a job application form; blank optional fields are saved as null
+function parseApplicantInput(
+  body: any,
+): Prisma.ApplicantUncheckedCreateInput | { error: string } {
+  const input = body ?? {};
+  const data: Record<string, any> = {};
+
+  for (const [field, [type, required, max]] of Object.entries(
+    APPLICANT_FIELDS,
+  )) {
+    const raw =
+      typeof input[field] === "string" ? input[field].trim() : input[field];
+
+    if (raw === undefined || raw === null || raw === "") {
+      if (required) return { error: `${field} is required` };
+      data[field] = null;
+    } else if (type === "string") {
+      if (typeof raw !== "string") return { error: `Invalid ${field} format` };
+      data[field] = raw;
+    } else {
+      const value = Number(raw);
+      if (
+        !Number.isFinite(value) ||
+        value < 0 ||
+        (type === "int" && !Number.isInteger(value)) ||
+        (max !== undefined && value > max)
+      ) {
+        return {
+          error: `${field} must be ${type === "int" ? "a whole number" : "a number"} from 0${max !== undefined ? ` to ${max}` : ""}`,
+        };
+      }
+      data[field] = value;
+    }
+  }
+
+  data.email = (data.email as string).toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    return { error: "Invalid email format" };
+  }
+
+  return data as Prisma.ApplicantUncheckedCreateInput;
+}
+
+function isUniqueViolation(err: unknown) {
+  return (
+    err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002"
+  );
 }
 
 // A job may only point at a department that exists
@@ -574,11 +734,43 @@ const careerInclude = {
   department: { select: { departmentName: true } },
 } satisfies Prisma.CareerInclude;
 
-function withDepartmentName({
-  department,
-  ...career
-}: Prisma.CareerGetPayload<{ include: typeof careerInclude }>) {
-  return { ...career, departmentName: department?.departmentName ?? null };
+type CareerRow = Prisma.CareerGetPayload<{ include: typeof careerInclude }>;
+
+// Response shape for careers: flat departmentName plus the applicant counters,
+// which are counted live from the applications in one grouped query (the
+// stored columns of the same name are not kept up to date)
+async function toCareerViews(careers: CareerRow[]) {
+  const groups = careers.length
+    ? await prisma.jobApplication.groupBy({
+        by: ["jobId", "stage", "status"],
+        where: { jobId: { in: careers.map((c) => c.jobId) } },
+        _count: { _all: true },
+      })
+    : [];
+
+  return careers.map(({ department, ...career }) => {
+    const counts = { shortListed: 0, viewed: 0, notViewed: 0, applicants: 0 };
+    for (const { jobId, stage, status, _count } of groups) {
+      if (jobId !== career.jobId) continue;
+      counts.applicants += _count._all;
+      if (stage === SHORTLISTED_STAGE) counts.shortListed += _count._all;
+      if (stage === SUBMITTED_STAGE && status === "viewed") {
+        counts.viewed += _count._all;
+      }
+      if (stage === SUBMITTED_STAGE && status === "notViewed") {
+        counts.notViewed += _count._all;
+      }
+    }
+    return {
+      ...career,
+      ...counts,
+      departmentName: department.departmentName,
+    };
+  });
+}
+
+async function toCareerView(career: CareerRow) {
+  return (await toCareerViews([career]))[0];
 }
 
 // Slugs are used in public job URLs, so no two jobs may share one
@@ -603,14 +795,8 @@ type CareerFilters = {
 function buildCareerWhere(filters: CareerFilters): Prisma.CareerWhereInput {
   const { keyword, departmentId, status, startDate, endDate } = filters;
 
-  const keywordStr =
-    typeof keyword === "string" ? keyword.toLowerCase().trim() : undefined;
-  const departmentIdNum =
-    typeof departmentId === "string" || typeof departmentId === "number"
-      ? Number(departmentId)
-      : undefined;
-  const startDateStr = typeof startDate === "string" ? startDate : undefined;
-  const endDateStr = typeof endDate === "string" ? endDate : undefined;
+  const keywordStr = typeof keyword === "string" ? keyword.trim() : undefined;
+  const departmentIdNum = toOptionalNumber(departmentId);
   const statusStr = typeof status === "string" ? status : undefined;
 
   const where: Prisma.CareerWhereInput = {};
@@ -623,70 +809,37 @@ function buildCareerWhere(filters: CareerFilters): Prisma.CareerWhereInput {
   if (statusStr) {
     where.status = statusStr;
   }
-  if (startDateStr || endDateStr) {
-    where.deadline = {
-      ...(startDateStr && { gte: new Date(startDateStr) }),
-      ...(endDateStr && { lte: new Date(endDateStr) }),
-    };
-  }
+  const deadline = dateRange(startDate, endDate);
+  if (deadline) where.deadline = deadline;
   return where;
 }
+
+router.use(expireNewCvs);
 
 router.get(
   "/",
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { itemsPerPage, currentPage } = req.query;
       const where = buildCareerWhere(req.query);
-
-      const perPage =
-        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-          ? Number(itemsPerPage)
-          : 15;
-      const page =
-        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-          ? Number(currentPage)
-          : 1;
-
       const totalItems = await prisma.career.count({ where });
+      const { skip, take, pagination } = paginate(req.query, totalItems);
 
-      if (totalItems === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "Careers retrieved successfully",
-          data: [],
-          pagination: {
-            currentPage: 0,
-            itemsPerPage: perPage,
-            totalPages: 0,
-            totalItems: 0,
-          },
-        });
-      }
-
-      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-      const skip = (currentPageNumber - 1) * perPage;
-
-      const careers = await prisma.career.findMany({
-        where,
-        include: careerInclude,
-        orderBy: { jobId: "desc" },
-        skip,
-        take: perPage,
-      });
+      const careers = totalItems
+        ? await prisma.career.findMany({
+            where,
+            include: careerInclude,
+            orderBy: { jobId: "desc" },
+            skip,
+            take,
+          })
+        : [];
 
       return res.status(200).json({
         success: true,
         message: "Careers retrieved successfully",
-        data: careers.map(withDepartmentName),
-        pagination: {
-          currentPage: currentPageNumber,
-          itemsPerPage: perPage,
-          totalPages,
-          totalItems,
-        },
+        data: await toCareerViews(careers),
+        pagination,
       });
     } catch (err) {
       return next(err);
@@ -699,9 +852,8 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const careerIdNum = Number(id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID",
@@ -723,7 +875,7 @@ router.get(
       return res.status(200).json({
         success: true,
         message: "Career retrieved successfully",
-        data: withDepartmentName(career),
+        data: await toCareerView(career),
       });
     } catch (err) {
       return next(err);
@@ -748,8 +900,14 @@ router.post(
           .json({ success: false, message: "Invalid departmentId" });
       }
 
-      data.slug ??= slugify(data.jobTitle as string) || null;
-      if (typeof data.slug === "string" && (await isSlugTaken(data.slug))) {
+      data.slug ??= slugify(data.jobTitle as string);
+      if (!data.slug) {
+        return res.status(400).json({
+          success: false,
+          message: "slug is required when jobTitle has no letters or digits",
+        });
+      }
+      if (await isSlugTaken(data.slug as string)) {
         return res.status(409).json({
           success: false,
           message: `Slug "${data.slug}" is already used by another job`,
@@ -764,7 +922,122 @@ router.post(
       return res.status(201).json({
         success: true,
         message: "Career created successfully",
-        data: withDepartmentName(career),
+        data: await toCareerView(career),
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Public: a candidate applies for an open job. The applicant profile is matched
+// by email, so someone applying for several jobs keeps one profile (updated
+// with their latest details). The application starts as Submitted CV / newCv.
+router.post(
+  "/:id/apply",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      const data = parseApplicantInput(req.body);
+      if ("error" in data) {
+        return res.status(400).json({ success: false, message: data.error });
+      }
+
+      const [career, university, existing] = await Promise.all([
+        prisma.career.findUnique({
+          where: { jobId: careerIdNum },
+          select: { status: true, deadline: true },
+        }),
+        prisma.university.findUnique({
+          where: { universityId: data.universityId },
+          select: { universityId: true },
+        }),
+        prisma.applicant.findFirst({
+          where: { email: data.email },
+          select: { applicantId: true },
+        }),
+      ]);
+
+      if (!career || career.status !== "Y") {
+        return res.status(404).json({
+          success: false,
+          message: "Job not found or no longer open",
+        });
+      }
+      if (career.deadline < new Date()) {
+        return res.status(400).json({
+          success: false,
+          message: "The application deadline for this job has passed",
+        });
+      }
+      if (!university) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid universityId",
+        });
+      }
+
+      const alreadyApplied = {
+        success: false,
+        message: "You have already applied for this job",
+      };
+      if (existing) {
+        const applied = await prisma.jobApplication.findUnique({
+          where: {
+            applicantId_jobId: {
+              applicantId: existing.applicantId,
+              jobId: careerIdNum,
+            },
+          },
+          select: { applicationId: true },
+        });
+        if (applied) return res.status(409).json(alreadyApplied);
+      }
+
+      const application = await prisma
+        .$transaction(async (tx) => {
+          const { applicantId } = existing
+            ? await tx.applicant.update({
+                where: { applicantId: existing.applicantId },
+                data,
+              })
+            : await tx.applicant.create({ data });
+
+          return tx.jobApplication.create({
+            data: {
+              applicantId,
+              jobId: careerIdNum,
+              stage: SUBMITTED_STAGE,
+              status: DEFAULT_STAGE_STATUS[SUBMITTED_STAGE],
+            },
+            select: {
+              applicationId: true,
+              applicantId: true,
+              jobId: true,
+              stage: true,
+              status: true,
+              appliedOn: true,
+            },
+          });
+        })
+        .catch((err) => {
+          // Two submissions at the same moment: the unique index rejects one
+          if (isUniqueViolation(err)) return null;
+          throw err;
+        });
+      if (!application) return res.status(409).json(alreadyApplied);
+
+      return res.status(201).json({
+        success: true,
+        message: "Application submitted successfully",
+        data: application,
       });
     } catch (err) {
       return next(err);
@@ -778,8 +1051,8 @@ router.put(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID",
@@ -809,9 +1082,15 @@ router.put(
       }
 
       // A blank slug is regenerated from the (new or current) title
-      if ("slug" in data && data.slug === null) {
-        data.slug =
-          slugify((data.jobTitle as string) ?? existing.jobTitle) || null;
+      if (req.body?.slug !== undefined && data.slug === undefined) {
+        const slug = slugify((data.jobTitle as string) ?? existing.jobTitle);
+        if (!slug) {
+          return res.status(400).json({
+            success: false,
+            message: "slug is required when jobTitle has no letters or digits",
+          });
+        }
+        data.slug = slug;
       }
       if (
         typeof data.slug === "string" &&
@@ -832,7 +1111,7 @@ router.put(
       return res.status(200).json({
         success: true,
         message: "Career updated successfully",
-        data: withDepartmentName(career),
+        data: await toCareerView(career),
       });
     } catch (err) {
       return next(err);
@@ -869,14 +1148,8 @@ router.patch(
 
       let where: Prisma.CareerWhereInput;
       if (isSelectAll) {
-        if (
-          excludedIds !== undefined &&
-          excludedIds !== null &&
-          !(
-            Array.isArray(excludedIds) &&
-            (excludedIds.length === 0 || isPositiveIntArray(excludedIds))
-          )
-        ) {
+        const excluded = parseExcludedIds(excludedIds);
+        if (!excluded) {
           return res.status(400).json({
             success: false,
             message: "excludedIds must be an array of job IDs",
@@ -884,9 +1157,7 @@ router.patch(
         }
 
         where = buildCareerWhere(filters);
-        if (excludedIds?.length) {
-          where.jobId = { notIn: [...new Set<number>(excludedIds)] };
-        }
+        if (excluded.length) where.jobId = { notIn: excluded };
       } else {
         const jobIds = Array.isArray(modifiedFields)
           ? modifiedFields.map((field) => field?.jobId)
@@ -924,8 +1195,8 @@ router.patch(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID",
@@ -940,26 +1211,27 @@ router.patch(
         });
       }
 
-      // updateMany so a missing job is a 404 rather than a thrown error
-      const { count } = await prisma.career.updateMany({
-        where: { jobId: careerIdNum },
-        data: { status },
-      });
-      if (count === 0) {
+      const career = await prisma.career
+        .update({
+          where: { jobId: careerIdNum },
+          data: { status },
+          include: careerInclude,
+        })
+        .catch((err) => {
+          if (isRecordNotFound(err)) return null;
+          throw err;
+        });
+      if (!career) {
         return res.status(404).json({
           success: false,
           message: "Career not found",
         });
       }
 
-      const career = await prisma.career.findUnique({
-        where: { jobId: careerIdNum },
-      });
-
       return res.status(200).json({
         success: true,
         message: "Job status updated successfully",
-        data: career,
+        data: await toCareerView(career),
       });
     } catch (err) {
       return next(err);
@@ -972,18 +1244,13 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const careerIdNum = Number(id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid Job ID",
         });
       }
-
-      const { stage, status, itemsPerPage, currentPage } = req.query;
-      const stageStr = typeof stage === "string" ? stage : undefined;
-      const statusStr = typeof status === "string" ? status : undefined;
 
       const filter = buildApplicantWhere(careerIdNum, req.query);
       if ("error" in filter) {
@@ -991,51 +1258,29 @@ router.get(
       }
       const { where, testTab } = filter;
 
-      const perPage =
-        typeof itemsPerPage === "string" && !Number.isNaN(Number(itemsPerPage))
-          ? Number(itemsPerPage)
-          : 15;
-      const page =
-        typeof currentPage === "string" && !Number.isNaN(Number(currentPage))
-          ? Number(currentPage)
-          : 1;
-
       const totalItems = await prisma.jobApplication.count({ where });
+      const { skip, take, pagination } = paginate(req.query, totalItems);
 
-      if (totalItems === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "Applicants retrieved successfully",
-          data: [],
-          pagination: {
-            currentPage: 0,
-            itemsPerPage: perPage,
-            totalPages: 0,
-            totalItems: 0,
-          },
-        });
-      }
-
-      const totalPages = perPage > 0 ? Math.ceil(totalItems / perPage) : 0;
-      const currentPageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-      const skip = (currentPageNumber - 1) * perPage;
-
-      const data = await prisma.jobApplication.findMany({
-        where,
-        include: {
-          applicant: true,
-          // All tests are loaded so overall is correct even on a single-test tab
-          tests: { select: testSelect, orderBy: testOrder },
-        },
-        orderBy: { applicationId: "asc" },
-        skip,
-        take: perPage,
-      });
+      const data = totalItems
+        ? await prisma.jobApplication.findMany({
+            where,
+            include: {
+              applicant: true,
+              // All tests are loaded so overall is correct even on a single-test tab
+              tests: { select: testSelect, orderBy: testOrder },
+            },
+            orderBy: { applicationId: "asc" },
+            skip,
+            take,
+          })
+        : [];
 
       // Test-stage status isn't stored on the application; echo the requested
       // tab (a test type or "overall") so the frontend still gets a root status
       const testTabStatus =
-        stageStr === TEST_STAGE ? (statusStr ?? OVERALL_STATUS) : undefined;
+        req.query.stage === TEST_STAGE
+          ? (testTab ?? OVERALL_STATUS)
+          : undefined;
       const response = data.map(({ tests, ...application }) => ({
         ...application,
         ...(testTabStatus && { status: testTabStatus }),
@@ -1046,12 +1291,86 @@ router.get(
         success: true,
         message: "Applicants retrieved successfully",
         data: response,
-        pagination: {
-          currentPage: currentPageNumber,
-          itemsPerPage: perPage,
-          totalPages,
-          totalItems,
+        pagination,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+// Tab badge counts for a career's applicants list: one per stage, plus one per
+// status tab inside a stage. Always the job's totals; search filters don't
+// apply.
+router.get(
+  "/:id/applicants/counts",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid Job ID",
+        });
+      }
+
+      const where = { jobId: careerIdNum };
+      const inTestStage = { ...where, stage: TEST_STAGE };
+
+      // Test tabs count the assigned test rows, the same way the list
+      // resolves them; "overall" is anyone in the stage with at least one test
+      const [groups, testGroups, testOverall] = await Promise.all([
+        prisma.jobApplication.groupBy({
+          by: ["stage", "status"],
+          where,
+          _count: { _all: true },
+        }),
+        prisma.jobApplicationTest.groupBy({
+          by: ["testType"],
+          where: { application: inTestStage },
+          _count: { _all: true },
+        }),
+        prisma.jobApplication.count({
+          where: { ...inTestStage, tests: { some: {} } },
+        }),
+      ]);
+
+      const zeros = (keys: string[]) =>
+        Object.fromEntries(keys.map((key) => [key, 0]));
+      const stages = zeros(APPLICANT_STAGES);
+      const statuses: Record<string, Record<string, number>> = {
+        ...Object.fromEntries(
+          Object.entries(STAGE_STATUSES).map(([s, list]) => [s, zeros(list)]),
+        ),
+        [TEST_STAGE]: {
+          ...zeros(Object.values(TestType)),
+          [OVERALL_STATUS]: testOverall,
         },
+      };
+
+      // A stage with status tabs counts only applicants inside one of its tabs;
+      // a stage without tabs counts everyone in it
+      for (const { stage, status, _count } of groups) {
+        const tabs = STAGE_STATUSES[stage] && statuses[stage];
+        if (!tabs) {
+          if (stage in stages) stages[stage] += _count._all;
+        } else if (status && status in tabs) {
+          tabs[status] += _count._all;
+          stages[stage] += _count._all;
+        }
+      }
+      for (const { testType, _count } of testGroups) {
+        statuses[TEST_STAGE][testType] = _count._all;
+      }
+      // Test tabs overlap (one applicant can have several tests), so the
+      // stage count is overall rather than their sum
+      stages[TEST_STAGE] = testOverall;
+
+      return res.status(200).json({
+        success: true,
+        message: "Applicant counts retrieved successfully",
+        data: { stages, statuses },
       });
     } catch (err) {
       return next(err);
@@ -1067,8 +1386,8 @@ router.patch(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID",
@@ -1110,9 +1429,9 @@ router.patch(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      const applicationIdNum = Number(req.params.applicationId);
-      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      const applicationIdNum = parseId(req.params.applicationId);
+      if (!careerIdNum || !applicationIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID or applicant ID",
@@ -1180,8 +1499,8 @@ router.patch(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      if (Number.isNaN(careerIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID",
@@ -1240,9 +1559,9 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      const applicationIdNum = Number(req.params.applicationId);
-      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      const applicationIdNum = parseId(req.params.applicationId);
+      if (!careerIdNum || !applicationIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID or applicant ID",
@@ -1254,7 +1573,8 @@ router.get(
           applicationId: applicationIdNum,
         },
         include: {
-          applicant: true,
+          applicant: { include: { university: { select: { universityName: true } } } },
+          career: { select: { jobTitle: true } },
           tests: { select: testSelect, orderBy: testOrder },
         },
       });
@@ -1268,12 +1588,14 @@ router.get(
 
       // Always the full applicant with every test; tab filtering is only done
       // by the list endpoint
-      const { tests, ...rest } = application;
+      const { tests, career, applicant: { university, ...applicant }, ...rest } = application;
       return res.status(200).json({
         success: true,
         message: "Applicant retrieved successfully",
         data: {
           ...rest,
+          applicant: { ...applicant, universityName: university.universityName },
+          jobTitle: career.jobTitle,
           ...(rest.stage === TEST_STAGE && { status: OVERALL_STATUS }),
           ...formatTests(tests),
         },
@@ -1289,9 +1611,9 @@ router.get(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      const applicationIdNum = Number(req.params.applicationId);
-      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      const applicationIdNum = parseId(req.params.applicationId);
+      if (!careerIdNum || !applicationIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID or applicant ID",
@@ -1314,16 +1636,11 @@ router.get(
         });
       }
 
+      const { tests, ...rest } = application;
       return res.status(200).json({
         success: true,
         message: "Applicant test results retrieved successfully",
-        data: {
-          applicationId: application.applicationId,
-          remarks: application.remarks,
-          remarksAt: application.remarksAt,
-          remarksBy: application.remarksBy,
-          ...formatTests(application.tests),
-        },
+        data: { ...rest, ...formatTests(tests) },
       });
     } catch (err) {
       return next(err);
@@ -1336,15 +1653,11 @@ router.post(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      const applicationIdNum = Number(req.params.applicationId);
+      const careerIdNum = parseId(req.params.id);
+      const applicationIdNum = parseId(req.params.applicationId);
       const testType = req.params.testType;
 
-      if (
-        Number.isNaN(careerIdNum) ||
-        Number.isNaN(applicationIdNum) ||
-        !isTestType(testType)
-      ) {
+      if (!careerIdNum || !applicationIdNum || !isTestType(testType)) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID, applicant ID, or test type",
@@ -1353,7 +1666,7 @@ router.post(
 
       // score is not taken from the body; it is always derived from subjects
       const { testDate, subjects, status, remarks } = req.body ?? {};
-      const parsedDate = parseTestDate(testDate);
+      const parsedDate = parseDate(testDate);
       if (testDate !== undefined && parsedDate === undefined) {
         return res.status(400).json({
           success: false,
@@ -1422,7 +1735,7 @@ router.post(
 
       // Remarks belong to the application, so they are saved there alongside
       // the test result
-      const [, updated] = await prisma.$transaction([
+      const [, { tests, ...updated }] = await prisma.$transaction([
         prisma.jobApplicationTest.upsert({
           where: {
             applicationId_testType: {
@@ -1454,13 +1767,7 @@ router.post(
       return res.status(200).json({
         success: true,
         message: `${testType} test results updated successfully`,
-        data: {
-          applicationId: updated.applicationId,
-          remarks: updated.remarks,
-          remarksAt: updated.remarksAt,
-          remarksBy: updated.remarksBy,
-          ...formatTests(updated.tests),
-        },
+        data: { ...updated, ...formatTests(tests) },
       });
     } catch (err) {
       return next(err);
@@ -1474,9 +1781,9 @@ router.patch(
   verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const careerIdNum = Number(req.params.id);
-      const applicationIdNum = Number(req.params.applicationId);
-      if (Number.isNaN(careerIdNum) || Number.isNaN(applicationIdNum)) {
+      const careerIdNum = parseId(req.params.id);
+      const applicationIdNum = parseId(req.params.applicationId);
+      if (!careerIdNum || !applicationIdNum) {
         return res.status(400).json({
           success: false,
           message: "Invalid career ID or applicant ID",

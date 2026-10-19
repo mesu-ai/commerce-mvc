@@ -180,8 +180,28 @@ async function main() {
   await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('careers', 'jobId'), (SELECT MAX("jobId") FROM careers))`;
   await reseed("universities", prisma.university, universities);
   await reseed("applicants", prisma.applicant, applicants);
-  await reseed("jobApplications", prisma.jobApplication, jobApplications);
+  // newCv expires to notViewed 72h after appliedOn, so the mock newCv rows get
+  // a recent appliedOn (1-71h ago) to keep the New CV tab populated after seeding
+  const seededAt = Date.now();
+  await reseed(
+    "jobApplications",
+    prisma.jobApplication,
+    jobApplications.map((application) =>
+      application.status === "newCv"
+        ? {
+            ...application,
+            appliedOn: new Date(
+              seededAt - ((application.applicationId % 71) + 1) * 60 * 60 * 1000,
+            ),
+          }
+        : application,
+    ),
+  );
   await reseed("jobApplicationTests", prisma.jobApplicationTest, jobApplicationTests);
+  // Same as careers: explicit mock ids, so move the sequences past them for
+  // POST /careers/:id/apply
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('applicants', 'applicantId'), (SELECT MAX("applicantId") FROM applicants))`;
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('job_applications', 'applicationId'), (SELECT MAX("applicationId") FROM job_applications))`;
   console.log("✅ Seeding complete.");
 }
 

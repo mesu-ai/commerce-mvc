@@ -1,7 +1,7 @@
 export interface CareerT {
   jobId: number;
   jobTitle: string;
-  slug?: string;
+  slug: string;
   position: string;
   departmentName: string;
   departmentId: number;
@@ -13,7 +13,7 @@ export interface CareerT {
   email: string;
   context: string;
   requirements: string;
-  additionalRequirements: string;
+  additionalRequirements?: string;
   skills: string;
   qualifications: string;
   benefits: string;

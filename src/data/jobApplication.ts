@@ -327,7 +327,7 @@ export const jobApplications = [
     applicantId: 39,
     jobId: 9,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     remarks: "Rejected after salary discussion",
     remarksAt: new Date("2026-07-16T06:00:00.000Z"),
     remarksBy: "emon123",
@@ -338,7 +338,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 10,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-19T06:00:00.000Z"),
   },
   {
@@ -448,7 +448,7 @@ export const jobApplications = [
     applicantId: 50,
     jobId: 19,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-16T10:17:26.119Z"),
   },
   {
@@ -680,7 +680,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 24,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-03-07T04:12:53.277Z"),
   },
   {
@@ -928,7 +928,7 @@ export const jobApplications = [
     applicantId: 13,
     jobId: 11,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-09-03T10:17:58.752Z"),
   },
   {
@@ -1008,7 +1008,7 @@ export const jobApplications = [
     applicantId: 27,
     jobId: 5,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-06-17T10:21:40.678Z"),
   },
   {
@@ -1248,7 +1248,7 @@ export const jobApplications = [
     applicantId: 21,
     jobId: 7,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-03-30T14:26:50.401Z"),
   },
   {
@@ -1656,7 +1656,7 @@ export const jobApplications = [
     applicantId: 13,
     jobId: 30,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-18T08:24:36.552Z"),
   },
   {
@@ -1704,7 +1704,7 @@ export const jobApplications = [
     applicantId: 45,
     jobId: 18,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-04T00:18:20.542Z"),
   },
   {
@@ -1728,7 +1728,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 10,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-02-20T12:31:44.395Z"),
   },
   {
@@ -2416,7 +2416,7 @@ export const jobApplications = [
     applicantId: 33,
     jobId: 15,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-30T16:39:47.322Z"),
   },
   {
@@ -2432,7 +2432,7 @@ export const jobApplications = [
     applicantId: 29,
     jobId: 15,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-21T12:28:44.396Z"),
   },
   {
@@ -2440,7 +2440,7 @@ export const jobApplications = [
     applicantId: 2,
     jobId: 7,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-06-10T18:32:12.570Z"),
   },
   {
@@ -2504,7 +2504,7 @@ export const jobApplications = [
     applicantId: 10,
     jobId: 2,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-08-29T14:05:38.397Z"),
   },
   {
@@ -2880,7 +2880,7 @@ export const jobApplications = [
     applicantId: 20,
     jobId: 12,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-30T23:04:32.682Z"),
   },
   {
@@ -3104,7 +3104,7 @@ export const jobApplications = [
     applicantId: 46,
     jobId: 13,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-11T09:31:27.381Z"),
   },
   {
@@ -3160,7 +3160,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 5,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-02-19T15:50:21.521Z"),
   },
   {
@@ -3640,7 +3640,7 @@ export const jobApplications = [
     applicantId: 34,
     jobId: 1,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-13T12:14:26.651Z"),
   },
   {
@@ -3752,7 +3752,7 @@ export const jobApplications = [
     applicantId: 11,
     jobId: 12,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-03-15T09:37:50.092Z"),
   },
   {
@@ -4040,7 +4040,7 @@ export const jobApplications = [
     applicantId: 42,
     jobId: 30,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-05T07:47:48.086Z"),
   },
   {
@@ -4232,7 +4232,7 @@ export const jobApplications = [
     applicantId: 34,
     jobId: 15,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-02-01T13:41:39.350Z"),
   },
   {
@@ -4360,7 +4360,7 @@ export const jobApplications = [
     applicantId: 51,
     jobId: 23,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-01-23T10:54:22.452Z"),
   },
   {
@@ -4504,7 +4504,7 @@ export const jobApplications = [
     applicantId: 24,
     jobId: 26,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-08-27T16:30:09.477Z"),
   },
   {
@@ -4528,7 +4528,7 @@ export const jobApplications = [
     applicantId: 20,
     jobId: 7,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-03-01T14:03:30.628Z"),
   },
   {
@@ -4752,7 +4752,7 @@ export const jobApplications = [
     applicantId: 32,
     jobId: 5,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-31T12:31:19.187Z"),
   },
   {
@@ -5040,7 +5040,7 @@ export const jobApplications = [
     applicantId: 27,
     jobId: 25,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-05T10:51:33.305Z"),
   },
   {
@@ -5168,7 +5168,7 @@ export const jobApplications = [
     applicantId: 26,
     jobId: 27,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-31T18:55:11.842Z"),
   },
   {
@@ -5504,7 +5504,7 @@ export const jobApplications = [
     applicantId: 31,
     jobId: 29,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-20T02:47:05.443Z"),
   },
   {
@@ -5632,7 +5632,7 @@ export const jobApplications = [
     applicantId: 45,
     jobId: 1,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-09-05T18:35:57.568Z"),
   },
   {
@@ -5672,7 +5672,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 16,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-02-14T19:47:21.744Z"),
   },
   {
@@ -5784,7 +5784,7 @@ export const jobApplications = [
     applicantId: 48,
     jobId: 6,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-06T02:25:55.161Z"),
   },
   {
@@ -5832,7 +5832,7 @@ export const jobApplications = [
     applicantId: 9,
     jobId: 30,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-02-02T03:38:02.116Z"),
   },
   {
@@ -5928,7 +5928,7 @@ export const jobApplications = [
     applicantId: 23,
     jobId: 30,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-23T22:21:17.669Z"),
   },
   {
@@ -6184,7 +6184,7 @@ export const jobApplications = [
     applicantId: 45,
     jobId: 14,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-05T09:44:51.308Z"),
   },
   {
@@ -6560,7 +6560,7 @@ export const jobApplications = [
     applicantId: 19,
     jobId: 18,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-06-29T18:52:04.183Z"),
   },
   {
@@ -6752,7 +6752,7 @@ export const jobApplications = [
     applicantId: 37,
     jobId: 16,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-05-19T14:27:55.299Z"),
   },
   {
@@ -6872,7 +6872,7 @@ export const jobApplications = [
     applicantId: 35,
     jobId: 10,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-17T20:24:38.266Z"),
   },
   {
@@ -6944,7 +6944,7 @@ export const jobApplications = [
     applicantId: 4,
     jobId: 7,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-07-25T17:38:14.421Z"),
   },
   {
@@ -7136,7 +7136,7 @@ export const jobApplications = [
     applicantId: 40,
     jobId: 8,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-03-19T02:25:40.801Z"),
   },
   {
@@ -7240,7 +7240,7 @@ export const jobApplications = [
     applicantId: 20,
     jobId: 26,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-06-22T19:25:36.176Z"),
   },
   {
@@ -7488,7 +7488,7 @@ export const jobApplications = [
     applicantId: 27,
     jobId: 28,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-04-23T23:59:21.252Z"),
   },
   {
@@ -7544,7 +7544,7 @@ export const jobApplications = [
     applicantId: 8,
     jobId: 7,
     stage: "finalSelection",
-    status: "rejected",
+    status: "notMovingForward",
     appliedOn: new Date("2026-06-25T10:36:29.874Z"),
   },
   {

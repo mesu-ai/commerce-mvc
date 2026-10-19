@@ -767,21 +767,21 @@ model OrderPayment {
 model Career {
   jobId                  Int     @id @default(autoincrement())
   jobTitle               String
-  slug                   String?
-  position               String?
-  departmentId           Int?
-  vacancy                Int?
-  experience             String?
-  salary                 String?
-  deadline               DateTime?
-  location               String?
-  email                  String?
-  context                String?
-  requirements           String?
+  slug                   String
+  position               String
+  departmentId           Int
+  vacancy                Int
+  experience             String
+  salary                 String
+  deadline               DateTime
+  location               String
+  email                  String
+  context                String
+  requirements           String
   additionalRequirements String?
-  skills                 String?
-  qualifications         String?
-  benefits               String?
+  skills                 String
+  qualifications         String
+  benefits               String
 
   shortListed Int?    @default(0)
   viewed      Int?    @default(0)
@@ -792,7 +792,7 @@ model Career {
   ogTag       Json?
 
   applications JobApplication[]
-  department   Department? @relation(fields: [departmentId], references: [departmentId])
+  department   Department @relation(fields: [departmentId], references: [departmentId])
 
   @@index([departmentId])
   @@map("careers")
@@ -805,22 +805,25 @@ model Applicant {
   email             String
   divisionId        Int
   portfolioLink     String?
-  sscRegistrationNo String?
-  sscRollNo         String?
-  sscGpa            Float?
-  hscRegistrationNo String?
-  hscRollNo         String?
-  hscGpa            Float?
+  sscRegistrationNo String
+  sscRollNo         String
+  sscGpa            Float
+  hscRegistrationNo String
+  hscRollNo         String
+  hscGpa            Float
   universityId      Int
-  bachelorSubject   String?
-  cgpa              Float?
-  currentSalary     Float?
-  expectedSalary    Float?
+  bachelorSubject   String
+  bachelorCgpa      Float
+  masterSubject     String?
+  masterCgpa        Float?
+  currentSalary     Int?
+  expectedSalary    Int
   experience        Int?
-  resume            String?
+  noticePeriod      Int?
+  resume            String
   coverLetter       String?
 
-  university   University?      @relation(fields: [universityId], references: [universityId])
+  university   University      @relation(fields: [universityId], references: [universityId])
   applications JobApplication[]
 
   @@index([universityId])
@@ -880,9 +883,9 @@ model JobApplicationTest {
 }
 
 model University {
-  universityId   Int     @id
+  universityId   Int     @id @default(autoincrement())
   universityName String
-  isActive       String?
+  status         String? @default("Y")
 
   applicants Applicant[]
 

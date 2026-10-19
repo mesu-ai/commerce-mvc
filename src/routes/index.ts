@@ -22,6 +22,7 @@ import addressRoutes from './address/address';
 import orderRoutes from './order/order';
 import careerRoutes from './careers/careers';
 import departmentRoutes from './departments/departments';
+import universityRoutes from './universities/universities';
 
 const router = Router();
 
@@ -49,6 +50,7 @@ router.use("/address", addressRoutes);
 router.use("/orders", orderRoutes);
 router.use("/careers", careerRoutes);
 router.use("/departments", departmentRoutes);
+router.use("/universities", universityRoutes);
 
 // Root API route
 router.get("/", (req: Request, res: Response) => {
@@ -80,6 +82,7 @@ router.get("/", (req: Request, res: Response) => {
       orders: "/api/v1/orders",
       careers: "/api/v1/careers",
       departments: "/api/v1/departments",
+      universities: "/api/v1/universities",
     },
   });
 });
