@@ -6,7 +6,8 @@ export interface UserT {
   email: string;
   nid: string;
   photo: File | string;
-  department: string;
+  departmentId: number;
+  departmentName?: string;
   roleId: number;
   roleName: string;
   gender: "female" | "male";

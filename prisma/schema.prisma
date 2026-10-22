@@ -321,7 +321,8 @@ model User {
   status      String?
   gender      String?
   mobileNo    String?
-  department  String?
+  departmentId Int
+  departmentName String?
   nid         String?
   photo       String?
   permissions String[]

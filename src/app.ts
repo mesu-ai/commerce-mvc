@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
 import { config } from "./config";
 import { logger } from "./utils/logger";
 import { errorHandler } from "./utils/errorHandler";
@@ -18,6 +19,8 @@ app.use(cors({
 // Middleware for parsing JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/images", express.static(path.join(process.cwd(), "images")));
 
 // Middleware for parsing cookies
 app.use(cookieParser());

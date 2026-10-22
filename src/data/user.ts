@@ -11,7 +11,8 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: "01521316455",
-    department: "2",
+    departmentId: 2,
+    departmentName: "Marketing",
     nid: "2154784541",
     photo: "/images/user44.jpg",
     permissions: [
@@ -38,7 +39,8 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: "01912345678",
-    department: "2",
+    departmentId: 2,
+    departmentName: "Marketing",
     nid: "2154784541",
     photo: "/images/user54.png",
     permissions: [
@@ -65,7 +67,8 @@ export const users: UserT[] = [
     status: "Y",
     gender: "male",
     mobileNo: "01812547896",
-    department: "4",
+    departmentId: 4,
+    departmentName: "Human Resources",
     nid: "2154784541",
     photo: "/images/user66.jpg",
     permissions: [
