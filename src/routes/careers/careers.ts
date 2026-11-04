@@ -1,12 +1,68 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { Prisma, TestType, TestResult } from "@prisma/client";
+import multer from "multer";
+import crypto from "crypto";
+import fs from "fs";
+import path from "path";
 import { prisma } from "../../config/prisma";
+import { apiPrefix } from "../../config";
 import {
   verifyAccessToken,
   JwtPayload,
 } from "../../middleware/auth.middleware";
+import careerOtpRouter from "./otp";
 
 const router = Router();
+
+// Resumes are personal data, so they are kept outside the public images folder
+// and only served to signed-in users through GET /resumes/:fileName
+const resumeUploadDirectory = path.join(process.cwd(), "uploads", "resumes");
+fs.mkdirSync(resumeUploadDirectory, { recursive: true });
+
+const RESUME_TYPES: Record<string, string> = {
+  "application/pdf": ".pdf",
+  "application/msword": ".doc",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    ".docx",
+};
+const RESUME_MAX_MB = 5;
+const RESUME_FILE_NAME = /^[0-9a-f-]{36}\.(pdf|docx?)$/;
+// Saved in applicant.resume, so the frontend can call it as-is
+const RESUME_URL_PREFIX = `${apiPrefix}/careers/resumes/`;
+
+const resumeUpload = multer({
+  storage: multer.diskStorage({
+    destination: resumeUploadDirectory,
+    // Extension comes from the checked file type, never the uploaded name
+    filename: (_req, file, callback) => {
+      callback(null, `${crypto.randomUUID()}${RESUME_TYPES[file.mimetype]}`);
+    },
+  }),
+  limits: { fileSize: RESUME_MAX_MB * 1024 * 1024, files: 1 },
+  fileFilter: (_req, file, callback) => {
+    callback(null, file.mimetype in RESUME_TYPES);
+  },
+}).single("resume");
+
+// multer errors (file too large, wrong field name) become 400s, not 500s
+function uploadResume(req: Request, res: Response, next: NextFunction) {
+  resumeUpload(req, res, (err: unknown) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({
+        success: false,
+        message:
+          err.code === "LIMIT_FILE_SIZE"
+            ? `resume must be ${RESUME_MAX_MB} MB or smaller`
+            : `Invalid resume upload: ${err.message}`,
+      });
+    }
+    return next(err);
+  });
+}
+
+function removeResumeFile(fileName: string) {
+  fs.unlink(path.join(resumeUploadDirectory, fileName), () => {});
+}
 
 function isTestType(value: unknown): value is TestType {
   return Object.values(TestType).includes(value as TestType);
@@ -250,7 +306,10 @@ function buildApplicantWhere(
   }
 
   if (universityIdNum) {
-    applicantFilters.universityId = universityIdNum;
+    applicantFilters.OR = [
+      { bachelorUniversityId: universityIdNum },
+      { masterUniversityId: universityIdNum },
+    ];
   }
 
   if (divisionIdNum) {
@@ -656,9 +715,10 @@ const APPLICANT_FIELDS: Record<
   hscRegistrationNo: ["string", true],
   hscRollNo: ["string", true],
   hscGpa: ["number", true, 5],
-  universityId: ["int", true],
+  bachelorUniversityId: ["int", true],
   bachelorSubject: ["string", true],
   bachelorCgpa: ["number", true, 4],
+  masterUniversityId: ["int", false],
   masterSubject: ["string", false],
   masterCgpa: ["number", false, 4],
   currentSalary: ["int", false],
@@ -703,6 +763,9 @@ function parseApplicantInput(
       data[field] = value;
     }
   }
+
+  // Dropdowns send 0 when no master's university is picked
+  if (data.masterUniversityId === 0) data.masterUniversityId = null;
 
   data.email = (data.email as string).toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
@@ -816,9 +879,12 @@ function buildCareerWhere(filters: CareerFilters): Prisma.CareerWhereInput {
 
 router.use(expireNewCvs);
 
+// Public email verification before applying: POST /:id/otp/send and /verify
+router.use("/:id/otp", careerOtpRouter);
+
 router.get(
   "/",
-  verifyAccessToken,
+  // verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const where = buildCareerWhere(req.query);
@@ -847,9 +913,50 @@ router.get(
   },
 );
 
+// Signed-in users view a resume (PDFs open in the browser) or download it with
+// ?download=true. Only files that belong to an applicant are served.
+router.get(
+  "/resumes/:fileName",
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { fileName } = req.params;
+      const notFound = { success: false, message: "Resume not found" };
+      if (typeof fileName !== "string" || !RESUME_FILE_NAME.test(fileName)) {
+        return res.status(404).json(notFound);
+      }
+
+      const applicant = await prisma.applicant.findFirst({
+        where: { resume: `${RESUME_URL_PREFIX}${fileName}` },
+        select: { name: true },
+      });
+      if (!applicant) return res.status(404).json(notFound);
+
+      const extension = path.extname(fileName);
+      const downloadName = `${applicant.name.replace(/[^\w.-]+/g, "_")}_resume${extension}`;
+      const inline = extension === ".pdf" && req.query.download !== "true";
+
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader(
+        "Content-Disposition",
+        `${inline ? "inline" : "attachment"}; filename="${downloadName}"`,
+      );
+      return res.sendFile(
+        fileName,
+        { root: resumeUploadDirectory },
+        (err) => {
+          if (err && !res.headersSent) res.status(404).json(notFound);
+        },
+      );
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
 router.get(
   "/:id",
-  verifyAccessToken,
+  // verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const careerIdNum = parseId(req.params.id);
@@ -930,120 +1037,6 @@ router.post(
   },
 );
 
-// Public: a candidate applies for an open job. The applicant profile is matched
-// by email, so someone applying for several jobs keeps one profile (updated
-// with their latest details). The application starts as Submitted CV / newCv.
-router.post(
-  "/:id/apply",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const careerIdNum = parseId(req.params.id);
-      if (!careerIdNum) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid career ID",
-        });
-      }
-
-      const data = parseApplicantInput(req.body);
-      if ("error" in data) {
-        return res.status(400).json({ success: false, message: data.error });
-      }
-
-      const [career, university, existing] = await Promise.all([
-        prisma.career.findUnique({
-          where: { jobId: careerIdNum },
-          select: { status: true, deadline: true },
-        }),
-        prisma.university.findUnique({
-          where: { universityId: data.universityId },
-          select: { universityId: true },
-        }),
-        prisma.applicant.findFirst({
-          where: { email: data.email },
-          select: { applicantId: true },
-        }),
-      ]);
-
-      if (!career || career.status !== "Y") {
-        return res.status(404).json({
-          success: false,
-          message: "Job not found or no longer open",
-        });
-      }
-      if (career.deadline < new Date()) {
-        return res.status(400).json({
-          success: false,
-          message: "The application deadline for this job has passed",
-        });
-      }
-      if (!university) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid universityId",
-        });
-      }
-
-      const alreadyApplied = {
-        success: false,
-        message: "You have already applied for this job",
-      };
-      if (existing) {
-        const applied = await prisma.jobApplication.findUnique({
-          where: {
-            applicantId_jobId: {
-              applicantId: existing.applicantId,
-              jobId: careerIdNum,
-            },
-          },
-          select: { applicationId: true },
-        });
-        if (applied) return res.status(409).json(alreadyApplied);
-      }
-
-      const application = await prisma
-        .$transaction(async (tx) => {
-          const { applicantId } = existing
-            ? await tx.applicant.update({
-                where: { applicantId: existing.applicantId },
-                data,
-              })
-            : await tx.applicant.create({ data });
-
-          return tx.jobApplication.create({
-            data: {
-              applicantId,
-              jobId: careerIdNum,
-              stage: SUBMITTED_STAGE,
-              status: DEFAULT_STAGE_STATUS[SUBMITTED_STAGE],
-            },
-            select: {
-              applicationId: true,
-              applicantId: true,
-              jobId: true,
-              stage: true,
-              status: true,
-              appliedOn: true,
-            },
-          });
-        })
-        .catch((err) => {
-          // Two submissions at the same moment: the unique index rejects one
-          if (isUniqueViolation(err)) return null;
-          throw err;
-        });
-      if (!application) return res.status(409).json(alreadyApplied);
-
-      return res.status(201).json({
-        success: true,
-        message: "Application submitted successfully",
-        data: application,
-      });
-    } catch (err) {
-      return next(err);
-    }
-  },
-);
 
 // Update a career/job post. Fields left out of the body are unchanged.
 router.put(
@@ -1115,6 +1108,156 @@ router.put(
       });
     } catch (err) {
       return next(err);
+    }
+  },
+);
+
+// Public: a candidate applies for an open job. The applicant profile is matched
+// by email, so someone applying for several jobs keeps one profile (updated
+// with their latest details). The application starts as Submitted CV / newCv.
+router.post(
+  "/:id/apply",
+  uploadResume,
+  async (req: Request, res: Response, next: NextFunction) => {
+    // The uploaded file is kept only once the application is saved
+    let resumeSaved = false;
+    try {
+      const careerIdNum = parseId(req.params.id);
+      if (!careerIdNum) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid career ID",
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: `resume is required: a PDF, DOC or DOCX file up to ${RESUME_MAX_MB} MB`,
+        });
+      }
+
+      // resume is always the uploaded file's URL, never a value from the form
+      const data = parseApplicantInput({
+        ...req.body,
+        resume: `${RESUME_URL_PREFIX}${req.file.filename}`,
+      });
+      if ("error" in data) {
+        return res.status(400).json({ success: false, message: data.error });
+      }
+
+      const { bachelorUniversityId, masterUniversityId } = data;
+      const [career, bachelorUniversity, masterUniversity, existing] = await Promise.all([
+        prisma.career.findUnique({
+          where: { jobId: careerIdNum },
+          select: { status: true, deadline: true },
+        }),
+        prisma.university.findUnique({
+          where: { universityId: bachelorUniversityId },
+          select: { universityId: true },
+        }),
+        masterUniversityId != null
+          ? prisma.university.findUnique({
+              where: { universityId: masterUniversityId },
+              select: { universityId: true },
+            })
+          : null,
+        prisma.applicant.findFirst({
+          where: { email: data.email },
+          select: { applicantId: true, resume: true },
+        }),
+      ]);
+
+      if (!career || career.status !== "Y") {
+        return res.status(404).json({
+          success: false,
+          message: "Job not found or no longer open",
+        });
+      }
+      if (career.deadline < new Date()) {
+        return res.status(400).json({
+          success: false,
+          message: "The application deadline for this job has passed",
+        });
+      }
+      if (!bachelorUniversity) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid bachelorUniversityId",
+        });
+      }
+      if (masterUniversityId != null && !masterUniversity) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid masterUniversityId",
+        });
+      }
+
+      const alreadyApplied = {
+        success: false,
+        message: "You have already applied for this job",
+      };
+      if (existing) {
+        const applied = await prisma.jobApplication.findUnique({
+          where: {
+            applicantId_jobId: {
+              applicantId: existing.applicantId,
+              jobId: careerIdNum,
+            },
+          },
+          select: { applicationId: true },
+        });
+        if (applied) return res.status(409).json(alreadyApplied);
+      }
+
+      const application = await prisma
+        .$transaction(async (tx) => {
+          const { applicantId } = existing
+            ? await tx.applicant.update({
+                where: { applicantId: existing.applicantId },
+                data,
+              })
+            : await tx.applicant.create({ data });
+
+          return tx.jobApplication.create({
+            data: {
+              applicantId,
+              jobId: careerIdNum,
+              stage: SUBMITTED_STAGE,
+              status: DEFAULT_STAGE_STATUS[SUBMITTED_STAGE],
+            },
+            select: {
+              applicationId: true,
+              applicantId: true,
+              jobId: true,
+              stage: true,
+              status: true,
+              appliedOn: true,
+            },
+          });
+        })
+        .catch((err) => {
+          // Two submissions at the same moment: the unique index rejects one
+          if (isUniqueViolation(err)) return null;
+          throw err;
+        });
+      if (!application) return res.status(409).json(alreadyApplied);
+      resumeSaved = true;
+
+      // A returning applicant's profile now points at the new resume
+      if (existing?.resume.startsWith(RESUME_URL_PREFIX)) {
+        removeResumeFile(existing.resume.slice(RESUME_URL_PREFIX.length));
+      }
+
+      return res.status(201).json({
+        success: true,
+        message: "Application submitted successfully",
+        data: { ...application, resume: data.resume },
+      });
+    } catch (err) {
+      return next(err);
+    } finally {
+      if (!resumeSaved && req.file) removeResumeFile(req.file.filename);
     }
   },
 );
@@ -1573,7 +1716,12 @@ router.get(
           applicationId: applicationIdNum,
         },
         include: {
-          applicant: { include: { university: { select: { universityName: true } } } },
+          applicant: {
+            include: {
+              bachelorUniversity: { select: { universityName: true } },
+              masterUniversity: { select: { universityName: true } },
+            },
+          },
           career: { select: { jobTitle: true } },
           tests: { select: testSelect, orderBy: testOrder },
         },
@@ -1588,13 +1736,22 @@ router.get(
 
       // Always the full applicant with every test; tab filtering is only done
       // by the list endpoint
-      const { tests, career, applicant: { university, ...applicant }, ...rest } = application;
+      const {
+        tests,
+        career,
+        applicant: { bachelorUniversity, masterUniversity, ...applicant },
+        ...rest
+      } = application;
       return res.status(200).json({
         success: true,
         message: "Applicant retrieved successfully",
         data: {
           ...rest,
-          applicant: { ...applicant, universityName: university.universityName },
+          applicant: {
+            ...applicant,
+            bachelorUniversityName: bachelorUniversity.universityName,
+            masterUniversityName: masterUniversity?.universityName ?? null,
+          },
           jobTitle: career.jobTitle,
           ...(rest.stage === TEST_STAGE && { status: OVERALL_STATUS }),
           ...formatTests(tests),

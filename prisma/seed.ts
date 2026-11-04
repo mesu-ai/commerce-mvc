@@ -27,6 +27,7 @@ import { bannerPlacements } from "../src/data/bannerPlacement";
 import { bannerContents } from "../src/data/bannerContent";
 import { customerAddresses } from "../src/data/customerAddress";
 import { citiesWithAreas } from "../src/data/cityWithArea";
+import { divisions } from "../src/data/division";
 import { orders } from "../src/data/order";
 import { careers } from "../src/data/career";
 import { applicants } from "../src/data/applicant";
@@ -133,6 +134,8 @@ async function main() {
   await reseed("shops", prisma.shop, shops);
   await reseedProducts();
   await reseed("roles", prisma.role, roles);
+  // Explicit mock roleIds don't advance the sequence; move it past them
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('roles', 'roleId'), (SELECT MAX("roleId") FROM roles))`;
   await reseed("users", prisma.user, users);
   await reseed("columnSettings", prisma.columnSetting, columns);
   await reseed("warrantyTypes", prisma.warrantyType, warrantyTypes);
@@ -160,7 +163,26 @@ async function main() {
   await reseed("bannerPlacements", prisma.bannerPlacement, bannerPlacements);
   await reseed("bannerContents", prisma.bannerContent, bannerContents);
   await reseed("customerAddresses", prisma.customerAddress, customerAddresses);
-  await reseed("cityWithAreas", prisma.cityWithArea, citiesWithAreas);
+  // Cities FK-reference divisions, so clear cities before divisions
+  await prisma.cityWithArea.deleteMany({});
+  await reseed(
+    "divisions",
+    prisma.division,
+    divisions.map(({ cityIds, ...division }) => division),
+  );
+  const cityDivisionIds = new Map(
+    divisions.flatMap(({ divisionId, cityIds }) =>
+      cityIds.map((cityId) => [cityId, divisionId] as const),
+    ),
+  );
+  await reseed(
+    "cityWithAreas",
+    prisma.cityWithArea,
+    citiesWithAreas.map((city) => ({
+      ...city,
+      divisionId: cityDivisionIds.get(city.cityId) ?? null,
+    })),
+  );
   await reseedOrders();
   await prisma.jobApplication.deleteMany({});
   await prisma.applicant.deleteMany({});

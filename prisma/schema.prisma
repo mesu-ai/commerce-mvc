@@ -302,7 +302,7 @@ model Shop {
 
 // Mirrors src/data/role.ts. permissions string[] -> Postgres text[].
 model Role {
-  roleId      Int      @id
+  roleId      Int      @id @default(autoincrement())
   roleName    String
   status      String?
   permissions String[]
@@ -312,20 +312,20 @@ model Role {
 
 // Mirrors src/data/user.ts. employeeId is the natural id.
 model User {
-  employeeId  String   @id
-  name        String
-  username    String   @unique
-  email       String?
-  roleId      Int?
-  roleName    String?
-  status      String?
-  gender      String?
-  mobileNo    String?
-  departmentId Int
+  employeeId     String   @id
+  name           String
+  username       String   @unique
+  email          String?
+  roleId         Int?
+  roleName       String?
+  status         String?
+  gender         String?
+  mobileNo       String?
+  departmentId   Int
   departmentName String?
-  nid         String?
-  photo       String?
-  permissions String[]
+  nid            String?
+  photo          String?
+  permissions    String[]
 
   @@map("users")
 }
@@ -603,11 +603,22 @@ model CustomerAddress {
   @@map("customer_addresses")
 }
 
-model CityWithArea {
-  cityId   Int    @id
-  cityName String
-  areas    Json?
+model Division {
+  divisionId   Int            @id
+  divisionName String
+  cities       CityWithArea[]
 
+  @@map("divisions")
+}
+
+model CityWithArea {
+  cityId     Int       @id
+  cityName   String
+  areas      Json?
+  divisionId Int?
+  division   Division? @relation(fields: [divisionId], references: [divisionId])
+
+  @@index([divisionId])
   @@map("city_with_area")
 }
 
@@ -763,10 +774,9 @@ model OrderPayment {
   @@map("order_payments")
 }
 
-
 // Mirrors src/data/career.ts.
 model Career {
-  jobId                  Int     @id @default(autoincrement())
+  jobId                  Int      @id @default(autoincrement())
   jobTitle               String
   slug                   String
   position               String
@@ -793,46 +803,70 @@ model Career {
   ogTag       Json?
 
   applications JobApplication[]
-  department   Department @relation(fields: [departmentId], references: [departmentId])
+  otps         CareerOtp[]
+  department   Department       @relation(fields: [departmentId], references: [departmentId])
 
   @@index([departmentId])
   @@map("careers")
 }
 
-model Applicant {
-  applicantId       Int     @id @default(autoincrement())
-  name              String
-  mobileNo          String
+// One-time codes that prove an applicant owns their email before applying.
+// Only hashes are stored; the code and the verification token are sent once.
+model CareerOtp {
+  otpId             Int       @id @default(autoincrement())
+  jobId             Int
   email             String
-  divisionId        Int
-  portfolioLink     String?
   sscRegistrationNo String
-  sscRollNo         String
-  sscGpa            Float
-  hscRegistrationNo String
-  hscRollNo         String
-  hscGpa            Float
-  universityId      Int
-  bachelorSubject   String
-  bachelorCgpa      Float
-  masterSubject     String?
-  masterCgpa        Float?
-  currentSalary     Int?
-  expectedSalary    Int
-  experience        Int?
-  noticePeriod      Int?
-  resume            String
-  coverLetter       String?
+  codeHash          String
+  attempts          Int       @default(0) // wrong codes entered
+  expiresAt         DateTime
+  verifiedAt        DateTime?
+  tokenHash         String?   @unique // set once verified
+  createdAt         DateTime  @default(now())
 
-  university   University      @relation(fields: [universityId], references: [universityId])
-  applications JobApplication[]
+  career Career @relation(fields: [jobId], references: [jobId], onDelete: Cascade)
 
-  @@index([universityId])
+  @@index([jobId, email])
+  @@map("career_otps")
+}
+
+model Applicant {
+  applicantId          Int     @id @default(autoincrement())
+  name                 String
+  mobileNo             String
+  email                String
+  divisionId           Int
+  portfolioLink        String?
+  sscRegistrationNo    String
+  sscRollNo            String
+  sscGpa               Float
+  hscRegistrationNo    String
+  hscRollNo            String
+  hscGpa               Float
+  bachelorUniversityId Int
+  bachelorSubject      String
+  bachelorCgpa         Float
+  masterUniversityId   Int?
+  masterSubject        String?
+  masterCgpa           Float?
+  currentSalary        Int?
+  expectedSalary       Int
+  experience           Int?
+  noticePeriod         Int?
+  resume               String
+  coverLetter          String?
+
+  bachelorUniversity   University       @relation("BachelorUniversity", fields: [bachelorUniversityId], references: [universityId])
+  masterUniversity     University?      @relation("MasterUniversity", fields: [masterUniversityId], references: [universityId])
+  applications           JobApplication[]
+
+  @@index([bachelorUniversityId])
+  @@index([masterUniversityId])
   @@map("applicants")
 }
 
 model JobApplication {
-  applicationId Int      @id @default(autoincrement())
+  applicationId Int       @id @default(autoincrement())
   applicantId   Int
   jobId         Int
   stage         String
@@ -840,7 +874,7 @@ model JobApplication {
   remarks       String?
   remarksAt     DateTime? // last time remarks were changed
   remarksBy     String? // username of whoever last changed them
-  appliedOn     DateTime @default(now())
+  appliedOn     DateTime  @default(now())
 
   career    Career               @relation(fields: [jobId], references: [jobId])
   applicant Applicant            @relation(fields: [applicantId], references: [applicantId])
@@ -865,7 +899,7 @@ enum TestResult {
 }
 
 model JobApplicationTest {
-  id            Int        @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   applicationId Int
   testType      TestType
   testDate      DateTime?
@@ -873,8 +907,8 @@ model JobApplicationTest {
   score         Float? // percentage (0-100), the mean of the subject scores
   status        TestResult? // null until the test is evaluated
   evaluatedBy   String? // username from the access token of whoever last saved it
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   application JobApplication @relation(fields: [applicationId], references: [applicationId], onDelete: Cascade)
 
@@ -888,8 +922,9 @@ model University {
   universityName String
   status         String? @default("Y")
 
-  applicants Applicant[]
-
+  bachelorApplicants Applicant[] @relation("BachelorUniversity")
+  masterApplicants   Applicant[] @relation("MasterUniversity")
+  
   @@map("universities")
 }
 

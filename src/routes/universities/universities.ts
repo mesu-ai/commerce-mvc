@@ -54,7 +54,7 @@ function parseId(value: string | string[] | undefined) {
 
 router.get(
   "/",
-  verifyAccessToken,
+  // verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { keyword, currentPage, status, itemsPerPage } = req.query;
@@ -253,16 +253,22 @@ router.delete(
           .json({ success: false, message: "Invalid university ID" });
       const university = await prisma.university.findUnique({
         where: { universityId },
-        select: { _count: { select: { applicants: true } } },
+        select: {
+          _count: {
+            select: { bachelorApplicants: true, masterApplicants: true },
+          },
+        },
       });
       if (!university)
         return res
           .status(404)
           .json({ success: false, message: "University not found" });
-      if (university._count.applicants > 0)
+      // An applicant counts twice if both degrees are from this university
+      const { bachelorApplicants, masterApplicants } = university._count;
+      if (bachelorApplicants + masterApplicants > 0)
         return res.status(409).json({
           success: false,
-          message: `University is used by ${university._count.applicants} applicant(s); set its status to "N" instead`,
+          message: `University is used by ${bachelorApplicants} bachelor and ${masterApplicants} master applicant(s); set its status to "N" instead`,
         });
       await prisma.university.delete({ where: { universityId } });
       return res.status(200).json({

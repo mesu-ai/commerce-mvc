@@ -15,6 +15,9 @@ build/
 .env.test.local
 .env.production.local
 
+# Uploaded files (applicant resumes)
+uploads/
+
 # Logs
 logs
 *.log

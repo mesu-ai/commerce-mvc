@@ -52,6 +52,90 @@ router.get(
   },
 );
 
+router.get(
+  "/divisions", verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const divisions = await prisma.division.findMany({
+        orderBy: { divisionName: "asc" },
+      });
+      return res.status(200).json({
+        success: true,
+        message: "Divisions retrieved successfully",
+        data: divisions,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
+// Division -> cities -> areas tree. ?divisionId narrows to one division,
+// ?keyword matches division or city name.
+router.get(
+  "/division-city-areas",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { keyword, divisionId } = req.query;
+      const where: any = {};
+      if (divisionId !== undefined) {
+        const id = Number(divisionId);
+        if (!Number.isInteger(id) || id <= 0)
+          return res
+            .status(400)
+            .json({ success: false, message: "Invalid division ID" });
+        where.divisionId = id;
+      }
+      const keywordStr =
+        typeof keyword === "string" ? keyword.trim() : undefined;
+      const cityWhere = keywordStr
+        ? { cityName: { contains: keywordStr, mode: "insensitive" as const } }
+        : undefined;
+      if (keywordStr) {
+        where.OR = [
+          { divisionName: { contains: keywordStr, mode: "insensitive" } },
+          { cities: { some: cityWhere } },
+        ];
+      }
+
+      const divisions = await prisma.division.findMany({
+        where,
+        orderBy: { divisionName: "asc" },
+        include: {
+          cities: {
+            orderBy: { cityName: "asc" },
+            select: { cityId: true, cityName: true, areas: true },
+          },
+        },
+      });
+
+      // A keyword that matches a city (not the division) only keeps those cities
+      const data = keywordStr
+        ? divisions.map((division) =>
+            division.divisionName
+              .toLowerCase()
+              .includes(keywordStr.toLowerCase())
+              ? division
+              : {
+                  ...division,
+                  cities: division.cities.filter((city) =>
+                    city.cityName
+                      .toLowerCase()
+                      .includes(keywordStr.toLowerCase()),
+                  ),
+                },
+          )
+        : divisions;
+
+      return res.status(200).json({
+        success: true,
+        message: "Divisions with cities and areas retrieved successfully",
+        data,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
 
 export default router;

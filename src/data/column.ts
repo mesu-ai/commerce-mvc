@@ -187,7 +187,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-cv" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-cv" },
-  { label: "University Name", value: "universityName", type: "applicant-cv" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-cv" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-cv" },
   {
     label: "Years of Experience",
@@ -249,7 +249,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-shortlisted" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-shortlisted" },
-  { label: "University Name", value: "universityName", type: "applicant-shortlisted" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-shortlisted" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-shortlisted" },
   {
     label: "Years of Experience",
@@ -317,7 +317,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-test-written" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-test-written" },
-  { label: "University Name", value: "universityName", type: "applicant-test-written" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-test-written" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-test-written" },
   {
     label: "Years of Experience",
@@ -392,7 +392,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-test-technical" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-test-technical" },
-  { label: "University Name", value: "universityName", type: "applicant-test-technical" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-test-technical" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-test-technical" },
   {
     label: "Years of Experience",
@@ -467,7 +467,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-test-interview" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-test-interview" },
-  { label: "University Name", value: "universityName", type: "applicant-test-interview" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-test-interview" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-test-interview" },
   {
     label: "Years of Experience",
@@ -563,7 +563,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-test-overall" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-test-overall" },
-  { label: "University Name", value: "universityName", type: "applicant-test-overall" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-test-overall" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-test-overall" },
   {
     label: "Years of Experience",
@@ -728,7 +728,7 @@ export const columns: ColumnSetting[] = [
   },
   { label: "HSC Roll No", value: "hscRollNo", type: "applicant-rejected" },
   { label: "HSC GPA", value: "hscGpa", type: "applicant-rejected" },
-  { label: "University Name", value: "universityName", type: "applicant-rejected" },
+  { label: "Bachelor University", value: "bachelorUniversityName", type: "applicant-rejected" },
   { label: "Current Salary", value: "currentSalary", type: "applicant-rejected" },
   {
     label: "Years of Experience",
